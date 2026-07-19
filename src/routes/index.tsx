@@ -12,6 +12,7 @@ import {
   Mail,
   Phone,
 } from "lucide-react";
+import kronaLogo from "@/assets/krona-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -57,9 +58,12 @@ function Nav() {
   return (
     <header className="sticky top-0 z-40 backdrop-blur-md bg-[#FAFAF7]/80 border-b border-black/5">
       <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Leaf className="w-5 h-5" style={{ color: forest }} strokeWidth={1.5} />
-          <span className="text-lg tracking-[0.3em] font-normal">КРОНА</span>
+        <div className="flex items-center">
+          <img
+            src={kronaLogo.url}
+            alt="Крона — мебельная студия"
+            className="h-10 w-auto rounded-sm"
+          />
         </div>
         <nav className="hidden md:flex items-center gap-10 text-sm text-neutral-600">
           <a href="#assistant" className="hover:text-black transition">Подбор</a>
