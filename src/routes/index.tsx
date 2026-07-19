@@ -13,6 +13,7 @@ import {
   Phone,
 } from "lucide-react";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
+import kronaLogoMark from "@/assets/krona-logo-mark.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
