@@ -13,6 +13,7 @@ import {
   Phone,
 } from "lucide-react";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
+import kronaLogoMark from "@/assets/krona-logo-mark.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -56,13 +57,19 @@ function Index() {
 /* ---------- Nav ---------- */
 function Nav() {
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-md bg-[#FAFAF7]/80 border-b border-black/5">
-      <div className="max-w-7xl mx-auto px-8 h-16 flex items-center justify-between">
+    <header
+      className="sticky top-0 z-40 backdrop-blur-md border-b border-black/5"
+      style={{
+        background:
+          "linear-gradient(90deg, #1F3A2E 0%, #1F3A2E 22%, rgba(31,58,46,0.55) 38%, rgba(250,250,247,0.85) 60%, rgba(250,250,247,0.85) 100%)",
+      }}
+    >
+      <div className="max-w-7xl mx-auto pl-6 pr-8 h-20 flex items-center justify-between">
         <div className="flex items-center">
           <img
-            src={kronaLogo.url}
+            src={kronaLogoMark.url}
             alt="Крона — мебельная студия"
-            className="h-10 w-auto rounded-sm"
+            className="h-14 w-auto"
           />
         </div>
         <nav className="hidden md:flex items-center gap-10 text-sm text-neutral-600">
