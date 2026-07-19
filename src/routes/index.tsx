@@ -61,23 +61,23 @@ function Nav() {
       className="sticky top-0 z-40 backdrop-blur-md border-b border-black/5"
       style={{
         background:
-          "linear-gradient(90deg, #1F3A2E 0%, #1F3A2E 22%, rgba(31,58,46,0.55) 38%, rgba(250,250,247,0.85) 60%, rgba(250,250,247,0.85) 100%)",
+          "linear-gradient(90deg, #1F3A2E 0%, #1F3A2E 68%, rgba(31,58,46,0.6) 82%, #FAFAF7 100%)",
       }}
     >
-      <div className="max-w-7xl mx-auto pl-6 pr-8 h-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto pl-6 pr-8 h-28 flex items-center justify-between">
         <div className="flex items-center">
           <img
             src={kronaLogoMark.url}
             alt="Крона — мебельная студия"
-            className="h-14 w-auto"
+            className="h-20 md:h-24 w-auto"
           />
         </div>
-        <nav className="hidden md:flex items-center gap-10 text-sm text-neutral-600">
-          <a href="#assistant" className="hover:text-black transition">Подбор</a>
-          <a href="#portfolio" className="hover:text-black transition">Проекты</a>
-          <a href="#expert" className="hover:text-black transition">Журнал</a>
-          <a href="#reviews" className="hover:text-black transition">Отзывы</a>
-          <a href="#request" className="hover:text-black transition">Контакты</a>
+        <nav className="hidden md:flex items-center gap-10 text-sm text-[#EDE6D3]">
+          <a href="#assistant" className="hover:text-white transition">Подбор</a>
+          <a href="#portfolio" className="hover:text-white transition">Проекты</a>
+          <a href="#expert" className="hover:text-white transition">Журнал</a>
+          <a href="#reviews" className="hover:text-white transition">Отзывы</a>
+          <a href="#request" className="hover:text-white transition">Контакты</a>
         </nav>
         <a
           href="#request"
@@ -88,6 +88,7 @@ function Nav() {
         </a>
       </div>
     </header>
+
   );
 }
 
