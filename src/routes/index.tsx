@@ -78,6 +78,7 @@ function Nav() {
           <a href="#expert" className="hover:text-white transition">Журнал</a>
           <a href="#reviews" className="hover:text-white transition">Отзывы</a>
           <a href="#request" className="hover:text-white transition">Контакты</a>
+          <a href="/partners" className="hover:text-white transition">Партнёрам</a>
         </nav>
         <a
           href="#request"
