@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check, TrendingUp, Handshake, ShieldCheck, Clock } from "lucide-react";
-import kronaLogoMark from "@/assets/krona-logo-mark.png.asset.json";
+import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
