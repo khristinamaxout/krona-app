@@ -495,7 +495,7 @@ function Footer() {
   return (
     <footer className="border-t border-black/10">
       <div className="max-w-7xl mx-auto px-8 py-10 flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-500">
-        <div>© Крона, мебельная студия</div>
+        <div>© Крона — мебельная студия Елены Трифан</div>
         <Link to="/" className="hover:text-black transition">На главную →</Link>
       </div>
     </footer>
