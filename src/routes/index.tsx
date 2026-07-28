@@ -13,7 +13,7 @@ import {
   Phone,
 } from "lucide-react";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
-import kronaLogoMark from "@/assets/krona-logo-mark.png.asset.json";
+import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -65,22 +65,21 @@ function Nav() {
       }}
     >
       <div className="max-w-7xl mx-auto pl-6 pr-8 h-28 flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-col items-center gap-1">
           <img
-            src={kronaLogoMark.url}
+            src={kronaWordmark.url}
             alt="Крона — мебельная студия Елены Трифан"
-            className="h-20 md:h-24 w-auto"
+            className="h-12 md:h-14 w-auto"
           />
-          <span className="hidden sm:block h-10 w-px bg-[#EDE6D3]/30" />
-          <span className="hidden sm:block leading-tight text-[#EDE6D3]">
-            <span className="block text-[10px] tracking-[0.28em] uppercase opacity-70">
-              студия
-            </span>
-            <span className="block text-base md:text-lg" style={{ fontFamily: "'Playfair Display', serif" }}>
-              Елены Трифан
-            </span>
-          </span>
+          <div
+            className="text-center text-[#EDE6D3] leading-[1.25] text-[11px] md:text-[13px] font-light tracking-[0.18em] uppercase"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            <div>Мебельная студия</div>
+            <div>Елены Трифан</div>
+          </div>
         </div>
+
 
         <nav className="hidden md:flex items-center gap-10 text-sm text-[#EDE6D3]">
           <a href="#assistant" className="hover:text-white transition">Подбор</a>
