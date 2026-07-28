@@ -65,13 +65,23 @@ function Nav() {
       }}
     >
       <div className="max-w-7xl mx-auto pl-6 pr-8 h-28 flex items-center justify-between">
-        <div className="flex items-center">
+        <div className="flex items-center gap-4">
           <img
             src={kronaLogoMark.url}
-            alt="Крона — мебельная студия"
+            alt="Крона — мебельная студия Елены Трифан"
             className="h-20 md:h-24 w-auto"
           />
+          <span className="hidden sm:block h-10 w-px bg-[#EDE6D3]/30" />
+          <span className="hidden sm:block leading-tight text-[#EDE6D3]">
+            <span className="block text-[10px] tracking-[0.28em] uppercase opacity-70">
+              студия
+            </span>
+            <span className="block text-base md:text-lg" style={{ fontFamily: "'Playfair Display', serif" }}>
+              Елены Трифан
+            </span>
+          </span>
         </div>
+
         <nav className="hidden md:flex items-center gap-10 text-sm text-[#EDE6D3]">
           <a href="#assistant" className="hover:text-white transition">Подбор</a>
           <a href="#portfolio" className="hover:text-white transition">Проекты</a>
