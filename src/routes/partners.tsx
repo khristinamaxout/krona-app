@@ -5,13 +5,13 @@ import kronaLogoMark from "@/assets/krona-logo-mark.png.asset.json";
 export const Route = createFileRoute("/partners")({
   head: () => ({
     meta: [
-      { title: "Партнёрам — Крона" },
+      { title: "Партнёрам — Крона, мебельная студия Елены Трифан" },
       {
         name: "description",
         content:
           "Сотрудничество с мебельной студией Крона: понятные условия, довольные клиенты и партнёрское вознаграждение, на которое можно рассчитывать.",
       },
-      { property: "og:title", content: "Партнёрам — Крона" },
+      { property: "og:title", content: "Партнёрам — Крона, мебельная студия Елены Трифан" },
       {
         property: "og:description",
         content:

@@ -18,13 +18,13 @@ import kronaLogoMark from "@/assets/krona-logo-mark.png.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Крона — Мебель на заказ" },
+      { title: "Крона — Мебельная студия Елены Трифан" },
       {
         name: "description",
         content:
           "Помогаем создать мебель, которая подходит именно вашему пространству. Студия мебели на заказ Крона.",
       },
-      { property: "og:title", content: "Крона — Мебель на заказ" },
+      { property: "og:title", content: "Крона — Мебельная студия Елены Трифан" },
       {
         property: "og:description",
         content:
