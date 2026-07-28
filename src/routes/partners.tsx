@@ -35,6 +35,7 @@ function PartnersPage() {
       <How />
       <Terms />
       <Voices />
+      <Faq />
       <CTA />
       <Footer />
     </div>
