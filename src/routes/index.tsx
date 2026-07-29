@@ -84,21 +84,22 @@ function Nav() {
 
 
 
-        <nav className="hidden md:flex items-center gap-10 text-sm text-[#EDE6D3]">
-          <a href="#assistant" className="hover:text-white transition">Подбор</a>
-          <a href="#portfolio" className="hover:text-white transition">Проекты</a>
-          <a href="#expert" className="hover:text-white transition">Журнал</a>
-          <a href="#reviews" className="hover:text-white transition">Отзывы</a>
-          <a href="#request" className="hover:text-white transition">Контакты</a>
-          <a href="/partners" className="hover:text-white transition">Партнёрам</a>
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
+          <a href="#assistant" className="hover:text-white transition whitespace-nowrap">Подбор</a>
+          <a href="#portfolio" className="hover:text-white transition whitespace-nowrap">Проекты</a>
+          <a href="#expert" className="hover:text-white transition whitespace-nowrap">Журнал</a>
+          <a href="#reviews" className="hover:text-white transition whitespace-nowrap">Отзывы</a>
+          <a href="#request" className="hover:text-white transition whitespace-nowrap">Контакты</a>
+          <a href="/partners" className="hover:text-white transition whitespace-nowrap">Партнёрам</a>
         </nav>
         <a
           href="#request"
-          className="text-sm px-5 py-2 rounded-full text-white transition hover:opacity-90"
+          className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full text-white transition hover:opacity-90"
           style={{ backgroundColor: graphite }}
         >
           Консультация
         </a>
+
       </div>
     </header>
 
@@ -117,7 +118,7 @@ function Hero() {
             <span className="w-8 h-px bg-neutral-400" />
             Студия мебели на заказ
           </div>
-          <h1 className="text-5xl md:text-7xl leading-[1.05] tracking-tight font-normal">
+          <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight font-normal">
             Помогаем создать мебель,
             <br />
             которая подходит{" "}

@@ -71,19 +71,20 @@ function Nav() {
 
 
 
-        <nav className="hidden md:flex items-center gap-10 text-sm text-[#EDE6D3]">
-          <Link to="/" className="hover:text-white transition">Главная</Link>
-          <Link to="/" hash="portfolio" className="hover:text-white transition">Проекты</Link>
-          <Link to="/" hash="expert" className="hover:text-white transition">Журнал</Link>
-          <Link to="/partners" className="text-white">Партнёрам</Link>
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
+          <Link to="/" className="hover:text-white transition whitespace-nowrap">Главная</Link>
+          <Link to="/" hash="portfolio" className="hover:text-white transition whitespace-nowrap">Проекты</Link>
+          <Link to="/" hash="expert" className="hover:text-white transition whitespace-nowrap">Журнал</Link>
+          <Link to="/partners" className="text-white whitespace-nowrap">Партнёрам</Link>
         </nav>
         <a
           href="#partner-request"
-          className="text-sm px-5 py-2 rounded-full text-white transition hover:opacity-90"
+          className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full text-white transition hover:opacity-90"
           style={{ backgroundColor: graphite }}
         >
           Стать партнёром
         </a>
+
       </div>
     </header>
   );
@@ -99,7 +100,7 @@ function Hero() {
             <span className="w-8 h-px bg-neutral-400" />
             Партнёрская программа
           </div>
-          <h1 className="text-5xl md:text-7xl leading-[1.05] tracking-tight font-normal">
+          <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight font-normal">
             Ваши клиенты получают мебель,
             <br />
             которую{" "}
