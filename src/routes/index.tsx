@@ -65,20 +65,22 @@ function Nav() {
       }}
     >
       <div className="max-w-7xl mx-auto pl-6 pr-8 h-28 flex items-center justify-between">
-        <div className="flex flex-col items-center gap-1">
+        <div className="flex flex-col items-center gap-0.5 shrink-0">
           <img
             src={kronaWordmark.url}
             alt="Крона — мебельная студия Елены Трифан"
-            className="h-12 md:h-14 w-auto"
+            className="h-10 sm:h-12 md:h-14 w-auto"
           />
+          {/* Вариант A: обе строки заглавными, вторая — легче */}
           <div
-            className="text-center text-[#EDE6D3] leading-[1.25] text-[11px] md:text-[13px] font-light tracking-[0.18em] uppercase"
+            className="text-center text-[#EDE6D3] leading-[1.05] text-[9px] sm:text-[11px] md:text-[13px] tracking-[0.16em] md:tracking-[0.18em] uppercase whitespace-nowrap"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            <div>Мебельная студия</div>
-            <div>Елены Трифан</div>
+            <div className="font-light">Мебельная студия</div>
+            <div className="font-extralight text-[#EDE6D3]/75">Елены Трифан</div>
           </div>
         </div>
+
 
 
         <nav className="hidden md:flex items-center gap-10 text-sm text-[#EDE6D3]">
