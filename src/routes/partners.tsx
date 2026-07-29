@@ -57,16 +57,18 @@ function Nav() {
           <img
             src={kronaWordmark.url}
             alt="Крона — мебельная студия Елены Трифан"
-            className="h-12 md:h-14 w-auto"
+            className="h-10 sm:h-12 md:h-14 w-auto"
           />
+          {/* Вариант B: «МЕБЕЛЬНАЯ СТУДИЯ» капсом, имя — обычным регистром */}
           <div
-            className="text-center text-[#EDE6D3] leading-[1.25] text-[11px] md:text-[13px] font-light tracking-[0.18em] uppercase"
+            className="text-center text-[#EDE6D3] leading-[1.05] text-[9px] sm:text-[11px] md:text-[13px] tracking-[0.16em] md:tracking-[0.18em] whitespace-nowrap"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            <div>Мебельная студия</div>
-            <div>Елены Трифан</div>
+            <div className="font-light uppercase">Мебельная студия</div>
+            <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
           </div>
         </Link>
+
 
 
         <nav className="hidden md:flex items-center gap-10 text-sm text-[#EDE6D3]">
