@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ArrowRight,
   Check,
@@ -11,6 +11,14 @@ import {
   ChevronRight,
   Mail,
   Phone,
+  Menu,
+  X,
+  Gem,
+  Scale,
+  Fingerprint,
+  Factory,
+  Wrench,
+  LifeBuoy,
 } from "lucide-react";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
@@ -44,8 +52,10 @@ function Index() {
     <div className="min-h-screen bg-[#FAFAF7] text-[#1A1A1A] font-light">
       <Nav />
       <Hero />
+      <WhyUs />
       <Assistant />
       <Portfolio />
+      <Brands />
       <Expert />
       <Reviews />
       <RequestForm />
@@ -55,54 +65,134 @@ function Index() {
 }
 
 /* ---------- Nav ---------- */
+const navLinks = [
+  { href: "#assistant", label: "Подбор" },
+  { href: "#portfolio", label: "Проекты" },
+  { href: "#expert", label: "Журнал" },
+  { href: "#reviews", label: "Отзывы" },
+  { href: "#request", label: "Контакты" },
+  { href: "/partners", label: "Партнёрам" },
+];
+
 function Nav() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <header
-      className="sticky top-0 z-40 backdrop-blur-md border-b border-black/5"
-      style={{
-        background:
-          "linear-gradient(90deg, #1F3A2E 0%, #1F3A2E 68%, rgba(31,58,46,0.6) 82%, #FAFAF7 100%)",
-      }}
-    >
-      <div className="max-w-7xl mx-auto pl-6 pr-8 h-28 flex items-center justify-between">
-        <div className="flex flex-col items-center gap-0.5 shrink-0">
-          <img
-            src={kronaWordmark.url}
-            alt="Крона — мебельная студия Елены Трифан"
-            className="h-10 sm:h-12 md:h-14 w-auto"
-          />
-          {/* Вариант B: «МЕБЕЛЬНАЯ СТУДИЯ» капсом, имя — обычным регистром */}
-          <div
-            className="text-center text-[#EDE6D3] leading-[1.05] text-[9px] sm:text-[11px] md:text-[13px] tracking-[0.16em] md:tracking-[0.18em] whitespace-nowrap"
-            style={{ fontFamily: "Inter, sans-serif" }}
-          >
-            <div className="font-light uppercase">Мебельная студия</div>
-            <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
+    <>
+      <header
+        className="sticky top-0 z-40 backdrop-blur-md border-b border-black/5"
+        style={{
+          background:
+            "linear-gradient(90deg, #1F3A2E 0%, #1F3A2E 68%, rgba(31,58,46,0.6) 82%, #FAFAF7 100%)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto pl-4 sm:pl-6 pr-4 sm:pr-8 h-24 sm:h-28 flex items-center justify-between gap-3">
+          <div className="flex flex-col items-center gap-0.5 shrink-0">
+            <img
+              src={kronaWordmark.url}
+              alt="Крона — мебельная студия Елены Трифан"
+              className="h-9 sm:h-12 md:h-14 w-auto"
+            />
+            <div
+              className="text-center text-[#EDE6D3] leading-[1.05] text-[9px] sm:text-[11px] md:text-[13px] tracking-[0.16em] md:tracking-[0.18em] whitespace-nowrap"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              <div className="font-light uppercase">Мебельная студия</div>
+              <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
+            </div>
           </div>
 
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
+            {navLinks.map((l) => (
+              <a key={l.href} href={l.href} className="hover:text-white transition whitespace-nowrap">
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a
+              href="#request"
+              className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full text-white transition hover:opacity-90"
+              style={{ backgroundColor: graphite }}
+            >
+              Консультация
+            </a>
+            <button
+              type="button"
+              aria-label="Открыть меню"
+              aria-expanded={open}
+              onClick={() => setOpen(true)}
+              className="lg:hidden w-10 h-10 rounded-full border border-[#EDE6D3]/40 text-[#EDE6D3] flex items-center justify-center hover:bg-white/10 transition"
+            >
+              <Menu className="w-5 h-5" strokeWidth={1.5} />
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Мобильное полноэкранное меню */}
+      <div
+        className={`fixed inset-0 z-50 lg:hidden transition-opacity duration-300 ${
+          open ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        style={{ backgroundColor: forest }}
+      >
+        <div className="h-24 sm:h-28 px-4 sm:px-8 flex items-center justify-between">
+          <img src={kronaWordmark.url} alt="Крона" className="h-9 sm:h-12 w-auto" />
+          <button
+            type="button"
+            aria-label="Закрыть меню"
+            onClick={() => setOpen(false)}
+            className="w-10 h-10 rounded-full border border-[#EDE6D3]/40 text-[#EDE6D3] flex items-center justify-center hover:bg-white/10 transition"
+          >
+            <X className="w-5 h-5" strokeWidth={1.5} />
+          </button>
         </div>
 
-
-
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
-          <a href="#assistant" className="hover:text-white transition whitespace-nowrap">Подбор</a>
-          <a href="#portfolio" className="hover:text-white transition whitespace-nowrap">Проекты</a>
-          <a href="#expert" className="hover:text-white transition whitespace-nowrap">Журнал</a>
-          <a href="#reviews" className="hover:text-white transition whitespace-nowrap">Отзывы</a>
-          <a href="#request" className="hover:text-white transition whitespace-nowrap">Контакты</a>
-          <a href="/partners" className="hover:text-white transition whitespace-nowrap">Партнёрам</a>
+        <nav className="px-6 sm:px-10 mt-6 flex flex-col">
+          {navLinks.map((l, idx) => (
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              className="group py-4 border-b border-[#EDE6D3]/15 flex items-center justify-between text-[#EDE6D3] text-2xl sm:text-3xl font-light transition-all duration-500"
+              style={{
+                opacity: open ? 1 : 0,
+                transform: open ? "translateY(0)" : "translateY(12px)",
+                transitionDelay: open ? `${80 + idx * 60}ms` : "0ms",
+              }}
+            >
+              <span>{l.label}</span>
+              <ArrowRight className="w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition" />
+            </a>
+          ))}
         </nav>
-        <a
-          href="#request"
-          className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full text-white transition hover:opacity-90"
-          style={{ backgroundColor: graphite }}
-        >
-          Консультация
-        </a>
 
+        <div className="px-6 sm:px-10 mt-10 space-y-3 text-[#EDE6D3]/70 text-sm">
+          <a href="tel:+78120000000" className="flex items-center gap-3">
+            <Phone className="w-4 h-4" /> +7 (812) 000-00-00
+          </a>
+          <a href="mailto:hello@krona.studio" className="flex items-center gap-3">
+            <Mail className="w-4 h-4" /> hello@krona.studio
+          </a>
+          <a
+            href="#request"
+            onClick={() => setOpen(false)}
+            className="mt-6 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#EDE6D3] text-[#1F3A2E] text-sm"
+          >
+            Записаться на консультацию <ArrowRight className="w-4 h-4" />
+          </a>
+        </div>
       </div>
-    </header>
-
+    </>
   );
 }
 
@@ -118,20 +208,21 @@ function Hero() {
             <span className="w-8 h-px bg-neutral-400" />
             Студия мебели на заказ
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.05] tracking-tight font-normal">
-            Помогаем создать мебель,
+          <h1 className="text-[2rem] sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight font-normal">
+            Мы проектируем мебель,
             <br />
-            которая подходит{" "}
+            которая становится{" "}
             <span style={{ color: forest }} className="italic font-serif">
-              именно
+              частью
             </span>
             <br />
-            вашему пространству.
+            вашей жизни.
           </h1>
-          <p className="mt-8 max-w-lg text-lg text-neutral-600 leading-relaxed">
-            Крона — это не магазин каталогов. Это тихий диалог между вашим домом,
-            материалом и мастером. Мы задаём правильные вопросы — и делаем меньше,
-            но точнее.
+          <p className="mt-8 max-w-lg text-base sm:text-lg text-neutral-600 leading-relaxed">
+            Каждый проект создаётся индивидуально. Без шаблонов. Без повторений.
+            С учётом привычек, образа жизни и особенностей помещения. Мы не
+            продаём мебель — мы проектируем пространство, которое отражает
+            характер человека.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
             <a
@@ -177,14 +268,149 @@ function Metric({ num, label }: { num: string; label: string }) {
   );
 }
 
+/* ---------- Почему выбирают нас ---------- */
+const advantages = [
+  {
+    icon: Gem,
+    title: "Средний и средний+ сегмент",
+    text: "Мы создаём мебель уровня премиум без переплаты за громкое имя.",
+  },
+  {
+    icon: Scale,
+    title: "Премиальные материалы по честной цене",
+    text: "Рассчитайте мебель из массива или эмали и сравните стоимость с другими компаниями. Вы будете приятно удивлены.",
+  },
+  {
+    icon: Fingerprint,
+    title: "20 лет без повторений",
+    text: "За двадцать лет работы мы не повторили ни одного проекта. Каждая мебель создаётся индивидуально под конкретного человека.",
+  },
+  {
+    icon: Factory,
+    title: "Производство в Пензе",
+    text: "Наше производство находится в одном из крупнейших мебельных центров России. Это позволяет реализовывать нестандартные решения практически любой сложности.",
+  },
+  {
+    icon: Wrench,
+    title: "Надёжная фурнитура",
+    text: "Используем только проверенные комплектующие мировых производителей.",
+    brands: ["Blum", "Hettich", "Boyard"],
+  },
+  {
+    icon: LifeBuoy,
+    title: "Поддержка после установки",
+    text: "Мы остаёмся рядом и после завершения проекта. Возможность сервисного обслуживания обсуждается индивидуально в зависимости от материалов и комплектации изделия.",
+  },
+];
+
+function WhyUs() {
+  return (
+    <section id="why" className="bg-white border-y border-black/5">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
+        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
+          Почему выбирают нас
+        </div>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-tight max-w-2xl mb-12 sm:mb-14">
+          Авторская студия, а не{" "}
+          <span style={{ color: forest }} className="italic font-serif">
+            мебельная фабрика
+          </span>
+          .
+        </h2>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          {advantages.map((a) => (
+            <div
+              key={a.title}
+              className="rounded-3xl border border-black/10 p-7 sm:p-8 flex flex-col hover:border-black/40 transition bg-[#FAFAF7]"
+            >
+              <a.icon className="w-6 h-6 mb-6 shrink-0" style={{ color: forest }} strokeWidth={1.5} />
+              <h3 className="text-lg sm:text-xl leading-snug break-words">{a.title}</h3>
+              <p className="mt-3 text-sm text-neutral-600 leading-relaxed break-words">{a.text}</p>
+              {a.brands && (
+                <div className="mt-6 pt-5 border-t border-black/10 flex flex-wrap gap-2">
+                  {a.brands.map((b) => (
+                    <span
+                      key={b}
+                      className="text-[11px] tracking-[0.18em] uppercase px-3 py-1.5 rounded-full border border-black/10 text-neutral-500"
+                    >
+                      {b}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Партнёры / бренды ---------- */
+const brandPlaceholders = [
+  "Blum",
+  "Hettich",
+  "Boyard",
+  "Egger",
+  "Kronospan",
+  "Grass",
+  "Rehau",
+  "Cleaf",
+];
+
+function Brands() {
+  return (
+    <section id="brands" className="bg-white border-y border-black/5">
+      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
+        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
+          Партнёры
+        </div>
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-tight max-w-3xl mb-12 sm:mb-14">
+          Работаем с лучшими производителями{" "}
+          <span style={{ color: forest }} className="italic font-serif">
+            материалов и фурнитуры
+          </span>
+          .
+        </h2>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
+          {brandPlaceholders.map((b) => (
+            <div
+              key={b}
+              className="h-24 sm:h-28 rounded-2xl border border-black/10 bg-[#F5F3EE] flex items-center justify-center px-4 hover:border-black/30 transition"
+            >
+              <span className="text-xs sm:text-sm tracking-[0.22em] uppercase text-neutral-500 text-center break-words">
+                {b}
+              </span>
+            </div>
+          ))}
+        </div>
+        <p className="mt-8 text-sm text-neutral-500 max-w-xl">
+          Место под логотипы брендов — заглушки заменяются на официальные
+          изображения партнёров.
+        </p>
+      </div>
+    </section>
+  );
+}
+
 /* ---------- Assistant ---------- */
 type Step = { key: string; title: string; question: string; options: string[] };
 const steps: Step[] = [
   {
     key: "type",
     title: "Тип мебели",
-    question: "Что вы хотите сделать?",
-    options: ["Кухня", "Гардеробная", "Спальня", "Гостиная", "Кабинет", "Прихожая"],
+    question: "Какая мебель вам нужна?",
+    options: [
+      "Кухня",
+      "Гардеробная",
+      "Спальня",
+      "Гостиная",
+      "Кабинет",
+      "Прихожая",
+      "Детская / Молодёжная",
+    ],
   },
   {
     key: "room",
@@ -273,7 +499,7 @@ function Assistant() {
                 <h3 className="mt-4 text-3xl md:text-4xl font-normal max-w-lg leading-tight">
                   {step.question}
                 </h3>
-                <div className="mt-10 flex flex-wrap gap-3">
+                <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
                   {step.options.map((opt) => (
                     <button
                       key={opt}
@@ -281,7 +507,7 @@ function Assistant() {
                         setAns({ ...ans, [step.key]: opt });
                         setI(i + 1);
                       }}
-                      className="px-5 py-3 rounded-full bg-white border border-black/10 hover:border-black transition text-sm"
+                      className="w-full px-5 py-3.5 rounded-full bg-white border border-black/10 hover:border-black transition text-sm text-center"
                     >
                       {opt}
                     </button>
