@@ -208,7 +208,7 @@ function Hero() {
             <span className="w-8 h-px bg-neutral-400" />
             Студия мебели на заказ
           </div>
-          <h1 className="text-[2rem] sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight font-normal">
+          <h1 className="text-[2rem] sm:text-[2.6rem] md:text-[2.6rem] lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight font-normal">
             Мы проектируем мебель,
             <br />
             которая становится{" "}
