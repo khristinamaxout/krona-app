@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, Check, TrendingUp, Handshake, ShieldCheck, Clock } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowRight, Check, TrendingUp, Handshake, ShieldCheck, Clock, Menu, X } from "lucide-react";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 
 export const Route = createFileRoute("/partners")({
@@ -43,50 +44,126 @@ function PartnersPage() {
 }
 
 /* ---------- Nav ---------- */
+const navLinks = [
+  { to: "/", hash: undefined as string | undefined, label: "Главная" },
+  { to: "/", hash: "assistant", label: "Подбор" },
+  { to: "/", hash: "portfolio", label: "Проекты" },
+  { to: "/", hash: "expert", label: "Журнал" },
+  { to: "/", hash: "reviews", label: "Отзывы" },
+  { to: "/", hash: "request", label: "Контакты" },
+  { to: "/partners", hash: undefined as string | undefined, label: "Партнёрам" },
+];
+
 function Nav() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <header
-      className="sticky top-0 z-40 backdrop-blur-md border-b border-black/5"
-      style={{
-        background:
-          "linear-gradient(90deg, #1F3A2E 0%, #1F3A2E 68%, rgba(31,58,46,0.6) 82%, #FAFAF7 100%)",
-      }}
-    >
-      <div className="max-w-7xl mx-auto pl-6 pr-8 h-28 flex items-center justify-between">
-        <Link to="/" className="flex flex-col items-center gap-1">
-          <img
-            src={kronaWordmark.url}
-            alt="Крона — мебельная студия Елены Трифан"
-            className="h-10 sm:h-12 md:h-14 w-auto"
-          />
-          {/* Вариант B: «МЕБЕЛЬНАЯ СТУДИЯ» капсом, имя — обычным регистром */}
-          <div
-            className="text-center text-[#EDE6D3] leading-[1.05] text-[9px] sm:text-[11px] md:text-[13px] tracking-[0.16em] md:tracking-[0.18em] whitespace-nowrap"
-            style={{ fontFamily: "Inter, sans-serif" }}
-          >
-            <div className="font-light uppercase">Мебельная студия</div>
-            <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
+    <>
+      <header
+        className="sticky top-0 z-40 backdrop-blur-md border-b border-black/5"
+        style={{
+          background:
+            "linear-gradient(90deg, #1F3A2E 0%, #1F3A2E 68%, rgba(31,58,46,0.6) 82%, #FAFAF7 100%)",
+        }}
+      >
+        <div className="max-w-7xl mx-auto pl-4 sm:pl-6 pr-4 sm:pr-8 h-24 sm:h-28 flex items-center justify-between gap-3">
+          <Link to="/" className="flex flex-col items-center gap-1 shrink-0">
+            <img
+              src={kronaWordmark.url}
+              alt="Крона — мебельная студия Елены Трифан"
+              className="h-9 sm:h-12 md:h-14 w-auto"
+            />
+            <div
+              className="text-center text-[#EDE6D3] leading-[1.05] text-[9px] sm:text-[11px] md:text-[13px] tracking-[0.16em] md:tracking-[0.18em] whitespace-nowrap"
+              style={{ fontFamily: "Inter, sans-serif" }}
+            >
+              <div className="font-light uppercase">Мебельная студия</div>
+              <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
+            </div>
+          </Link>
+
+          <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
+            <Link to="/" className="hover:text-white transition whitespace-nowrap">Главная</Link>
+            <Link to="/" hash="portfolio" className="hover:text-white transition whitespace-nowrap">Проекты</Link>
+            <Link to="/" hash="expert" className="hover:text-white transition whitespace-nowrap">Журнал</Link>
+            <Link to="/partners" className="text-white whitespace-nowrap">Партнёрам</Link>
+          </nav>
+
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            <a
+              href="#partner-request"
+              className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full text-white transition hover:opacity-90"
+              style={{ backgroundColor: graphite }}
+            >
+              Стать партнёром
+            </a>
+            <button
+              type="button"
+              aria-label="Открыть меню"
+              aria-expanded={open}
+              onClick={() => setOpen(true)}
+              className="lg:hidden w-10 h-10 rounded-full border border-[#EDE6D3]/40 text-[#EDE6D3] flex items-center justify-center hover:bg-white/10 transition"
+            >
+              <Menu className="w-5 h-5" strokeWidth={1.5} />
+            </button>
           </div>
-        </Link>
+        </div>
+      </header>
 
+      <div
+        className={`fixed inset-0 z-50 lg:hidden transition-opacity duration-300 ${
+          open ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        style={{ backgroundColor: forest }}
+      >
+        <div className="h-24 sm:h-28 px-4 sm:px-8 flex items-center justify-between">
+          <img src={kronaWordmark.url} alt="Крона" className="h-9 sm:h-12 w-auto" />
+          <button
+            type="button"
+            aria-label="Закрыть меню"
+            onClick={() => setOpen(false)}
+            className="w-10 h-10 rounded-full border border-[#EDE6D3]/40 text-[#EDE6D3] flex items-center justify-center hover:bg-white/10 transition"
+          >
+            <X className="w-5 h-5" strokeWidth={1.5} />
+          </button>
+        </div>
 
-
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
-          <Link to="/" className="hover:text-white transition whitespace-nowrap">Главная</Link>
-          <Link to="/" hash="portfolio" className="hover:text-white transition whitespace-nowrap">Проекты</Link>
-          <Link to="/" hash="expert" className="hover:text-white transition whitespace-nowrap">Журнал</Link>
-          <Link to="/partners" className="text-white whitespace-nowrap">Партнёрам</Link>
+        <nav className="px-6 sm:px-10 mt-6 flex flex-col">
+          {navLinks.map((l, idx) => (
+            <Link
+              key={l.label}
+              to={l.to}
+              hash={l.hash}
+              onClick={() => setOpen(false)}
+              className="group py-4 border-b border-[#EDE6D3]/15 flex items-center justify-between text-[#EDE6D3] text-2xl sm:text-3xl font-light transition-all duration-500"
+              style={{
+                opacity: open ? 1 : 0,
+                transform: open ? "translateY(0)" : "translateY(12px)",
+                transitionDelay: open ? `${80 + idx * 60}ms` : "0ms",
+              }}
+            >
+              <span>{l.label}</span>
+              <ArrowRight className="w-5 h-5 opacity-40 group-hover:opacity-100 group-hover:translate-x-1 transition" />
+            </Link>
+          ))}
         </nav>
+
         <a
           href="#partner-request"
-          className="shrink-0 whitespace-nowrap text-xs sm:text-sm px-4 sm:px-5 py-2 rounded-full text-white transition hover:opacity-90"
-          style={{ backgroundColor: graphite }}
+          onClick={() => setOpen(false)}
+          className="mx-6 sm:mx-10 mt-10 inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#EDE6D3] text-[#1F3A2E] text-sm w-fit"
         >
-          Стать партнёром
+          Стать партнёром <ArrowRight className="w-4 h-4" />
         </a>
-
       </div>
-    </header>
+    </>
   );
 }
 
