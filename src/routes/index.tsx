@@ -249,7 +249,7 @@ function Hero() {
             />
           </div>
           <div className="mt-6 grid grid-cols-3 gap-3 text-xs text-neutral-500">
-            <Metric num="12" label="лет практики" />
+            <Metric num="20" label="лет практики" />
             <Metric num="340+" label="проектов" />
             <Metric num="98%" label="возвращаются" />
           </div>
