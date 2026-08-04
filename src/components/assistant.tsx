@@ -132,21 +132,73 @@ const steps: Step[] = [
     mode: "multi",
     variant: "card",
     options: [
-      { label: "Современный", grad: "linear-gradient(135deg,#D9D4CB,#8E8B84)", hint: "Чистые линии, спокойный тон" },
-      { label: "Минимализм", grad: "linear-gradient(135deg,#F2F0EB,#C9C5BC)", hint: "Ничего лишнего" },
-      { label: "Неоклассика", grad: "linear-gradient(135deg,#EFE7DA,#B9A78C)", hint: "Мягкая классика, филёнка" },
-      { label: "Лофт", grad: "linear-gradient(135deg,#6E6862,#2E2B28)", hint: "Металл, бетон, дерево" },
-      { label: "Скандинавский", grad: "linear-gradient(135deg,#FAF7F0,#D7C9AE)", hint: "Свет и светлое дерево" },
-      { label: "Japandi", grad: "linear-gradient(135deg,#E4DDD1,#7F7A6C)", hint: "Японская сдержанность" },
-      { label: "Контемпорари", grad: "linear-gradient(135deg,#DCD8D2,#6F7A72)", hint: "Актуально и вне моды" },
-      { label: "Классика", grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)", hint: "Симметрия, массив" },
-      { label: "Ар-деко", grad: "linear-gradient(135deg,#2C2A28,#B79A5B)", hint: "Графика и латунь" },
+      {
+        label: "Современный",
+        grad: "linear-gradient(135deg,#D9D4CB,#8E8B84)",
+        hint: "Чистые линии, спокойный тон",
+      },
+      {
+        label: "Минимализм",
+        grad: "linear-gradient(135deg,#F2F0EB,#C9C5BC)",
+        hint: "Ничего лишнего",
+      },
+      {
+        label: "Неоклассика",
+        grad: "linear-gradient(135deg,#EFE7DA,#B9A78C)",
+        hint: "Мягкая классика, филёнка",
+      },
+      {
+        label: "Лофт",
+        grad: "linear-gradient(135deg,#6E6862,#2E2B28)",
+        hint: "Металл, бетон, дерево",
+      },
+      {
+        label: "Скандинавский",
+        grad: "linear-gradient(135deg,#FAF7F0,#D7C9AE)",
+        hint: "Свет и светлое дерево",
+      },
+      {
+        label: "Japandi",
+        grad: "linear-gradient(135deg,#E4DDD1,#7F7A6C)",
+        hint: "Японская сдержанность",
+      },
+      {
+        label: "Контемпорари",
+        grad: "linear-gradient(135deg,#DCD8D2,#6F7A72)",
+        hint: "Актуально и вне моды",
+      },
+      {
+        label: "Классика",
+        grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)",
+        hint: "Симметрия, массив",
+      },
+      {
+        label: "Ар-деко",
+        grad: "linear-gradient(135deg,#2C2A28,#B79A5B)",
+        hint: "Графика и латунь",
+      },
       { label: "Прованс", grad: "linear-gradient(135deg,#F5F1E6,#C4CDBD)", hint: "Тёплый винтаж" },
-      { label: "Хай-тек", grad: "linear-gradient(135deg,#C9CED2,#3A4046)", hint: "Глянец, стекло, металл" },
+      {
+        label: "Хай-тек",
+        grad: "linear-gradient(135deg,#C9CED2,#3A4046)",
+        hint: "Глянец, стекло, металл",
+      },
       { label: "Эко", grad: "linear-gradient(135deg,#E7E3D5,#5C7355)", hint: "Дерево и растения" },
-      { label: "Средиземноморский", grad: "linear-gradient(135deg,#F3EFE4,#8FA9B4)", hint: "Свет, камень, синева" },
-      { label: "Американская классика", grad: "linear-gradient(135deg,#E6E0D4,#4C5A55)", hint: "Крашеная филёнка" },
-      { label: "Не знаю — помогите подобрать", grad: "linear-gradient(135deg,#1F3A2E,#6C8A78)", hint: "Подберём вместе" },
+      {
+        label: "Средиземноморский",
+        grad: "linear-gradient(135deg,#F3EFE4,#8FA9B4)",
+        hint: "Свет, камень, синева",
+      },
+      {
+        label: "Американская классика",
+        grad: "linear-gradient(135deg,#E6E0D4,#4C5A55)",
+        hint: "Крашеная филёнка",
+      },
+      {
+        label: "Не знаю — помогите подобрать",
+        grad: "linear-gradient(135deg,#1F3A2E,#6C8A78)",
+        hint: "Подберём вместе",
+      },
     ],
   },
   {
@@ -439,9 +491,8 @@ export default function Assistant() {
             </span>
           </h2>
           <p className="mt-6 text-neutral-600 leading-relaxed">
-            Мы задаём те же вопросы, что и дизайнер на первой встрече. В конце вы
-            увидите свой профиль проекта — и мы придём на консультацию уже
-            подготовленными.
+            Мы задаём те же вопросы, что и дизайнер на первой встрече. В конце вы увидите свой
+            профиль проекта — и мы придём на консультацию уже подготовленными.
           </p>
 
           <div className="mt-10 hidden lg:block space-y-2.5">
@@ -496,9 +547,7 @@ export default function Assistant() {
                 <h3 className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight">
                   {step.question}
                 </h3>
-                {step.note && (
-                  <p className="mt-3 text-sm text-neutral-500">{step.note}</p>
-                )}
+                {step.note && <p className="mt-3 text-sm text-neutral-500">{step.note}</p>}
 
                 {/* Опции шага */}
                 {step.options && (
@@ -513,8 +562,7 @@ export default function Assistant() {
                   >
                     {step.options.map((opt) => {
                       const active = get(step.key).includes(opt.label);
-                      const blocked =
-                        !!step.max && !active && get(step.key).length >= step.max;
+                      const blocked = !!step.max && !active && get(step.key).length >= step.max;
                       return optionButton(
                         opt,
                         active,
@@ -587,18 +635,14 @@ export default function Assistant() {
                         rows={5}
                         value={texts[step.free.key] ?? ""}
                         placeholder={step.free.placeholder}
-                        onChange={(e) =>
-                          setTexts({ ...texts, [step.free!.key]: e.target.value })
-                        }
+                        onChange={(e) => setTexts({ ...texts, [step.free!.key]: e.target.value })}
                         className="w-full rounded-2xl bg-white border border-black/10 px-5 py-4 text-sm outline-none focus:border-black/50 transition resize-none"
                       />
                     ) : (
                       <input
                         value={texts[step.free.key] ?? ""}
                         placeholder={step.free.placeholder}
-                        onChange={(e) =>
-                          setTexts({ ...texts, [step.free!.key]: e.target.value })
-                        }
+                        onChange={(e) => setTexts({ ...texts, [step.free!.key]: e.target.value })}
                         className="w-full rounded-full bg-white border border-black/10 px-5 py-3.5 text-sm outline-none focus:border-black/50 transition"
                       />
                     )}
@@ -652,17 +696,15 @@ export default function Assistant() {
                   ))}
                   {summary.length === 0 && (
                     <div className="text-sm text-neutral-500">
-                      Вы прошли ассистента без выбора — не страшно, обсудим всё на
-                      консультации.
+                      Вы прошли ассистента без выбора — не страшно, обсудим всё на консультации.
                     </div>
                   )}
                 </div>
 
                 <p className="mt-8 text-neutral-600 leading-relaxed max-w-2xl">
-                  На основе ваших ответов мы подготовим несколько решений, которые
-                  максимально соответствуют вашим пожеланиям. Дизайнер получит всю
-                  информацию заранее — поэтому первая консультация пройдёт предметно,
-                  без долгих уточняющих вопросов.
+                  На основе ваших ответов мы подготовим несколько решений, которые максимально
+                  соответствуют вашим пожеланиям. Дизайнер получит всю информацию заранее — поэтому
+                  первая консультация пройдёт предметно, без долгих уточняющих вопросов.
                 </p>
 
                 <div className="mt-8 rounded-3xl bg-white p-6 sm:p-8">
