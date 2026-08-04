@@ -20,6 +20,7 @@ import {
   Wrench,
   LifeBuoy,
 } from "lucide-react";
+import Assistant from "@/components/assistant";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 
