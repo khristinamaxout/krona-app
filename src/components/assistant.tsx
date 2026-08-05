@@ -1,10 +1,59 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, Check, Sparkles, Upload, Image as ImageIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  Bath,
+  Baby,
+  BedDouble,
+  Blinds,
+  BookOpen,
+  Briefcase,
+  Building2,
+  Camera,
+  CalendarDays,
+  Check,
+  ChefHat,
+  Coffee,
+  Compass,
+  DoorOpen,
+  DoorClosed,
+  FileText,
+  Gem,
+  Images,
+  Layers,
+  Lightbulb,
+  Leaf,
+  Package,
+  Paintbrush,
+  Palette,
+  PanelsTopLeft,
+  Paperclip,
+  PenLine,
+  Ruler,
+  ShieldCheck,
+  Shirt,
+  Sofa,
+  Sparkles,
+  SprayCan,
+  Square,
+  RectangleHorizontal,
+  Star,
+  Timer,
+  TreePine,
+  Tv,
+  Upload,
+  Users,
+  Utensils,
+  Wallet,
+  WashingMachine,
+  Wine,
+  Home,
+} from "lucide-react";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
 
-type Opt = { label: string; swatch?: string; grad?: string; hint?: string };
+type Opt = { label: string; swatch?: string; grad?: string; hint?: string; icon?: LucideIcon };
 type Sub = {
   key: string;
   label: string;
