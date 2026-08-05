@@ -1,6 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, Check, TrendingUp, Handshake, ShieldCheck, Clock, Menu, X } from "lucide-react";
+import {
+  ArrowRight,
+  Check,
+  TrendingUp,
+  Handshake,
+  ShieldCheck,
+  Clock,
+  Menu,
+  X,
+} from "lucide-react";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 
 export const Route = createFileRoute("/partners")({
@@ -85,15 +94,25 @@ function Nav() {
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               <div className="font-light uppercase">Мебельная студия</div>
-              <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
+              <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">
+                Елены Трифан
+              </div>
             </div>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
-            <Link to="/" className="hover:text-white transition whitespace-nowrap">Главная</Link>
-            <Link to="/" hash="portfolio" className="hover:text-white transition whitespace-nowrap">Проекты</Link>
-            <Link to="/" hash="expert" className="hover:text-white transition whitespace-nowrap">Журнал</Link>
-            <Link to="/partners" className="text-white whitespace-nowrap">Партнёрам</Link>
+            <Link to="/" className="hover:text-white transition whitespace-nowrap">
+              Главная
+            </Link>
+            <Link to="/" hash="portfolio" className="hover:text-white transition whitespace-nowrap">
+              Проекты
+            </Link>
+            <Link to="/" hash="expert" className="hover:text-white transition whitespace-nowrap">
+              Журнал
+            </Link>
+            <Link to="/partners" className="text-white whitespace-nowrap">
+              Партнёрам
+            </Link>
           </nav>
 
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -189,10 +208,9 @@ function Hero() {
             Вы — стабильный доход.
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-neutral-600 leading-relaxed">
-            Мы работаем с дизайнерами, архитекторами и студиями, для которых
-            репутация — рабочий инструмент. Берём на себя авторское производство
-            и монтаж. Оставляем вам — проект и благодарного клиента, который
-            показывает вашу работу близким.
+            Мы работаем с дизайнерами, архитекторами и студиями, для которых репутация — рабочий
+            инструмент. Берём на себя авторское производство и монтаж. Оставляем вам — проект и
+            благодарного клиента, который показывает вашу работу близким.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
@@ -327,24 +345,19 @@ function How() {
               на первом.
             </h2>
             <p className="mt-6 text-neutral-600 leading-relaxed">
-              Мы не подписываем «партнёрство ради партнёрства». Сначала —
-              совместный проект. Дальше уже решаем, интересно ли работать вдолгую.
+              Мы не подписываем «партнёрство ради партнёрства». Сначала — совместный проект. Дальше
+              уже решаем, интересно ли работать вдолгую.
             </p>
           </div>
           <div className="md:col-span-8 space-y-px bg-black/10">
             {steps.map((s) => (
               <div key={s.n} className="bg-[#F5F3EE] p-8 md:p-10 grid grid-cols-12 gap-6">
-                <div
-                  className="col-span-2 text-sm tracking-[0.2em]"
-                  style={{ color: forest }}
-                >
+                <div className="col-span-2 text-sm tracking-[0.2em]" style={{ color: forest }}>
                   {s.n}
                 </div>
                 <div className="col-span-10">
                   <h3 className="text-2xl tracking-tight">{s.t}</h3>
-                  <p className="mt-3 text-neutral-600 leading-relaxed max-w-xl">
-                    {s.d}
-                  </p>
+                  <p className="mt-3 text-neutral-600 leading-relaxed max-w-xl">{s.d}</p>
                 </div>
               </div>
             ))}
@@ -372,9 +385,7 @@ function Terms() {
       <div className="max-w-7xl mx-auto px-8 py-24">
         <div className="grid md:grid-cols-12 gap-12">
           <div className="md:col-span-5">
-            <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-6">
-              Условия
-            </div>
+            <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-6">Условия</div>
             <h2 className="text-4xl md:text-5xl leading-tight tracking-tight">
               Прозрачно.
               <br />
@@ -383,19 +394,20 @@ function Terms() {
               </span>
             </h2>
             <p className="mt-6 text-neutral-600 leading-relaxed max-w-md">
-              Мы намеренно держим партнёрскую программу простой. Один договор,
-              одна ставка, один менеджер. Всё, что перечислено справа — входит
-              по умолчанию, без «пакетов» и апгрейдов.
+              Мы намеренно держим партнёрскую программу простой. Один договор, одна ставка, один
+              менеджер. Всё, что перечислено справа — входит по умолчанию, без «пакетов» и
+              апгрейдов.
             </p>
           </div>
           <div className="md:col-span-7">
             <ul className="grid sm:grid-cols-2 gap-x-8">
               {yes.map((t) => (
-                <li
-                  key={t}
-                  className="flex items-start gap-3 py-4 border-t border-black/10"
-                >
-                  <Check className="w-4 h-4 mt-1 shrink-0" style={{ color: forest }} strokeWidth={1.5} />
+                <li key={t} className="flex items-start gap-3 py-4 border-t border-black/10">
+                  <Check
+                    className="w-4 h-4 mt-1 shrink-0"
+                    style={{ color: forest }}
+                    strokeWidth={1.5}
+                  />
                   <span className="text-[15px] leading-relaxed">{t}</span>
                 </li>
               ))}
@@ -488,17 +500,15 @@ function Faq() {
             на первой встрече.
           </h2>
           <p className="mt-6 text-neutral-600 leading-relaxed">
-            Если вашего вопроса здесь нет — напишите, ответим так же прямо, без
-            обтекаемых формулировок.
+            Если вашего вопроса здесь нет — напишите, ответим так же прямо, без обтекаемых
+            формулировок.
           </p>
         </div>
         <div className="md:col-span-8">
           {items.map((it) => (
             <details key={it.q} className="group border-t border-black/10 py-6">
               <summary className="flex items-start justify-between gap-6 cursor-pointer list-none">
-                <h3 className="text-xl md:text-2xl tracking-tight leading-snug">
-                  {it.q}
-                </h3>
+                <h3 className="text-xl md:text-2xl tracking-tight leading-snug">{it.q}</h3>
                 <span
                   className="mt-1 shrink-0 text-2xl leading-none transition-transform group-open:rotate-45"
                   style={{ color: forest }}
@@ -506,9 +516,7 @@ function Faq() {
                   +
                 </span>
               </summary>
-              <p className="mt-4 max-w-2xl text-neutral-600 leading-relaxed">
-                {it.a}
-              </p>
+              <p className="mt-4 max-w-2xl text-neutral-600 leading-relaxed">{it.a}</p>
             </details>
           ))}
         </div>
@@ -531,8 +539,8 @@ function CTA() {
             .
           </h2>
           <p className="mt-6 text-neutral-600 leading-relaxed max-w-md">
-            Оставьте контакты — партнёрский менеджер напишет в течение рабочего
-            дня. Никаких массовых рассылок и презентаций на 40 слайдов.
+            Оставьте контакты — партнёрский менеджер напишет в течение рабочего дня. Никаких
+            массовых рассылок и презентаций на 40 слайдов.
           </p>
           <div className="mt-10 space-y-3 text-sm text-neutral-600">
             <div>partners@krona.studio</div>
@@ -585,7 +593,9 @@ function Footer() {
     <footer className="border-t border-black/10">
       <div className="max-w-7xl mx-auto px-8 py-10 flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-500">
         <div>© Крона — мебельная студия Елены Трифан</div>
-        <Link to="/" className="hover:text-black transition">На главную →</Link>
+        <Link to="/" className="hover:text-black transition">
+          На главную →
+        </Link>
       </div>
     </footer>
   );
