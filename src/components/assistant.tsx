@@ -762,14 +762,14 @@ export default function Assistant() {
               </div>
             ) : (
               /* Итоговое резюме */
-              <div className="flex-1 flex flex-col animate-fade-in">
+              <div className="flex-1 flex flex-col krona-veil">
                 <div className="mt-8 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5" style={{ color: forest }} />
+                  <Sparkles className="w-5 h-5" strokeWidth={1.4} style={{ color: forest }} />
                   <span className="text-xs tracking-[0.25em] uppercase text-neutral-500">
                     Ваш профиль проекта
                   </span>
                 </div>
-                <h3 className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight">
+                <h3 className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight krona-rise">
                   Вот как мы вас{" "}
                   <span style={{ color: forest }} className="italic font-serif">
                     услышали.
@@ -777,9 +777,16 @@ export default function Assistant() {
                 </h3>
 
                 <div className="mt-8 grid sm:grid-cols-2 gap-3">
-                  {summary.map((r) => (
-                    <div key={r.label} className="bg-white rounded-2xl p-5">
-                      <div className="text-xs text-neutral-500">{r.label}</div>
+                  {summary.map((r, ri) => (
+                    <div
+                      key={r.label}
+                      className="bg-white rounded-2xl p-5 krona-rise krona-lift"
+                      style={{ animationDelay: `${Math.min(ri, 12) * 45}ms` }}
+                    >
+                      <div className="text-xs text-neutral-500 flex items-center gap-2">
+                        <r.icon className="w-3.5 h-3.5" strokeWidth={1.4} style={{ color: forest }} />
+                        {r.label}
+                      </div>
                       <div className="mt-1.5 text-sm leading-relaxed">{r.value}</div>
                     </div>
                   ))}
@@ -789,6 +796,7 @@ export default function Assistant() {
                     </div>
                   )}
                 </div>
+
 
                 <p className="mt-8 text-neutral-600 leading-relaxed max-w-2xl">
                   На основе ваших ответов мы подготовим несколько решений, которые максимально
