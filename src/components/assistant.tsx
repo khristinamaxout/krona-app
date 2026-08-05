@@ -827,7 +827,7 @@ export default function Assistant() {
                     </a>
                   </div>
                   <div className="mt-3 text-xs text-neutral-500 flex items-center gap-2">
-                    <ImageIcon className="w-3.5 h-3.5" />
+                    <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.4} />
                     Ответ в течение рабочего дня. Никаких звонков «просто так».
                   </div>
                 </div>
