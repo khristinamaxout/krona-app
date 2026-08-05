@@ -369,13 +369,13 @@ const steps: Step[] = [
     mode: "multi",
     optional: true,
     upload: true,
-    options: o([
-      "📷 Фото помещения",
-      "📐 План или обмеры",
-      "🖼 Референсы из Pinterest",
-      "📄 Дизайн-проект",
-      "✨ Пока ничего нет",
-    ]),
+    options: [
+      { label: "Фото помещения", icon: Camera },
+      { label: "План или обмеры", icon: Ruler },
+      { label: "Референсы из Pinterest", icon: Images },
+      { label: "Дизайн-проект", icon: FileText },
+      { label: "Пока ничего нет", icon: Sparkles },
+    ],
     free: {
       key: "links",
       label: "Ссылка на доску вдохновения (Pinterest, соцсети)",
