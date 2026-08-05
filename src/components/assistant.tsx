@@ -659,20 +659,31 @@ export default function Assistant() {
                       <div key={sub.key}>
                         <div className="text-sm text-neutral-500 mb-3">{sub.label}</div>
                         <div className="flex flex-wrap gap-2.5">
-                          {sub.options.map((opt) => {
+                          {sub.options.map((opt, oi) => {
                             const active = get(sub.key).includes(opt.label);
+                            const SubIcon = opt.icon;
                             return (
                               <button
                                 key={opt.label}
                                 type="button"
                                 onClick={() => toggle(sub.key, opt.label, sub.mode)}
-                                className={`px-4 py-2.5 rounded-full border text-sm transition ${
+                                className={`group inline-flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm krona-rise krona-lift ${
                                   active
                                     ? "text-white border-transparent"
                                     : "bg-white border-black/10 hover:border-black/50"
                                 }`}
-                                style={active ? { backgroundColor: forest } : {}}
+                                style={{
+                                  animationDelay: `${Math.min(oi, 12) * 30}ms`,
+                                  ...(active ? { backgroundColor: forest } : {}),
+                                }}
                               >
+                                {SubIcon && (
+                                  <SubIcon
+                                    className="w-4 h-4 shrink-0 transition-transform duration-500 group-hover:scale-110"
+                                    strokeWidth={1.4}
+                                    style={{ color: active ? "#FFFFFF" : forest }}
+                                  />
+                                )}
                                 {opt.label}
                               </button>
                             );
