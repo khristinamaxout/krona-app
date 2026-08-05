@@ -597,7 +597,7 @@ export default function Assistant() {
             <div className="flex items-center gap-4">
               <div className="h-1 flex-1 rounded-full bg-black/10 overflow-hidden">
                 <div
-                  className="h-full rounded-full transition-all duration-500"
+                  className="h-full rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] krona-sheen"
                   style={{ width: `${done ? 100 : progress}%`, backgroundColor: forest }}
                 />
               </div>
@@ -607,14 +607,24 @@ export default function Assistant() {
             </div>
 
             {!done ? (
-              <div key={step.key} className="flex flex-col flex-1 animate-fade-in">
-                <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500">
+              <div key={step.key} className="flex flex-col flex-1 krona-veil">
+                <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500 krona-rise">
                   {step.title}
                 </div>
-                <h3 className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight">
+                <h3
+                  className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight krona-rise"
+                  style={{ animationDelay: "70ms" }}
+                >
                   {step.question}
                 </h3>
-                {step.note && <p className="mt-3 text-sm text-neutral-500">{step.note}</p>}
+                {step.note && (
+                  <p
+                    className="mt-3 text-sm text-neutral-500 krona-rise"
+                    style={{ animationDelay: "120ms" }}
+                  >
+                    {step.note}
+                  </p>
+                )}
 
                 {/* Опции шага */}
                 {step.options && (
@@ -627,7 +637,7 @@ export default function Assistant() {
                           : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
                     }`}
                   >
-                    {step.options.map((opt) => {
+                    {step.options.map((opt, oi) => {
                       const active = get(step.key).includes(opt.label);
                       const blocked = !!step.max && !active && get(step.key).length >= step.max;
                       return optionButton(
@@ -636,6 +646,7 @@ export default function Assistant() {
                         () => toggle(step.key, opt.label, step.mode ?? "multi", step.max),
                         step.variant,
                         blocked,
+                        oi,
                       );
                     })}
                   </div>
