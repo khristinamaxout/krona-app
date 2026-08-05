@@ -428,27 +428,33 @@ export default function Assistant() {
     return get(step.key).length > 0;
   }, [i, ans, done]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const summary = [
-    { label: "🏠 Помещение", value: get("rooms").join(" · ") },
-    { label: "🪑 Мебель", value: get("furniture").join(" · ") },
+  const summary: { icon: LucideIcon; label: string; value: string }[] = [
+    { icon: Home, label: "Помещение", value: get("rooms").join(" · ") },
+    { icon: Sofa, label: "Мебель", value: get("furniture").join(" · ") },
     {
-      label: "📐 Пространство",
+      icon: Ruler,
+      label: "Пространство",
       value: [get("area")[0], get("ceiling")[0], ...get("shape")].filter(Boolean).join(" · "),
     },
-    { label: "🎨 Стиль", value: get("style").join(" · ") },
-    { label: "🌈 Цвета", value: get("colors").join(" · ") },
-    { label: "🌳 Материалы", value: get("materials").join(" · ") },
-    { label: "⭐ Главное для вас", value: get("important").join(" · ") },
-    { label: "💰 Бюджет", value: get("budget")[0] ?? "" },
-    { label: "🗓 Сроки", value: get("timing")[0] ?? "" },
+    { icon: Paintbrush, label: "Стиль", value: get("style").join(" · ") },
+    { icon: Palette, label: "Цвета", value: get("colors").join(" · ") },
+    { icon: TreePine, label: "Материалы", value: get("materials").join(" · ") },
+    { icon: Star, label: "Главное для вас", value: get("important").join(" · ") },
+    { icon: Wallet, label: "Бюджет", value: get("budget")[0] ?? "" },
+    { icon: CalendarDays, label: "Сроки", value: get("timing")[0] ?? "" },
     {
-      label: "👨‍👩‍👧 Кто пользуется",
+      icon: Users,
+      label: "Кто пользуется",
       value: [get("users")[0], get("kids")[0] && `дети: ${get("kids")[0]}`, ...get("pets")]
         .filter(Boolean)
         .join(" · "),
     },
-    { label: "📎 Материалы от вас", value: [...get("inspiration"), ...files].join(" · ") },
-    { label: "✍️ Пожелания", value: texts["notes"] ?? "" },
+    {
+      icon: Paperclip,
+      label: "Материалы от вас",
+      value: [...get("inspiration"), ...files].join(" · "),
+    },
+    { icon: PenLine, label: "Пожелания", value: texts["notes"] ?? "" },
   ].filter((r) => r.value);
 
   const optionButton = (
