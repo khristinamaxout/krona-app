@@ -106,13 +106,19 @@ function Nav() {
               style={{ fontFamily: "Inter, sans-serif" }}
             >
               <div className="font-light uppercase">Мебельная студия</div>
-              <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
+              <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">
+                Елены Трифан
+              </div>
             </div>
           </div>
 
           <nav className="hidden lg:flex items-center gap-5 xl:gap-10 text-sm text-[#EDE6D3] min-w-0">
             {navLinks.map((l) => (
-              <a key={l.href} href={l.href} className="hover:text-white transition whitespace-nowrap">
+              <a
+                key={l.href}
+                href={l.href}
+                className="hover:text-white transition whitespace-nowrap"
+              >
                 {l.label}
               </a>
             ))}
@@ -203,9 +209,7 @@ function Hero() {
     <section className="max-w-7xl mx-auto px-8 pt-24 pb-32">
       <div className="grid md:grid-cols-12 gap-12 items-end">
         <div className="md:col-span-7">
-          <div
-            className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase mb-8 text-neutral-500"
-          >
+          <div className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase mb-8 text-neutral-500">
             <span className="w-8 h-px bg-neutral-400" />
             Студия мебели на заказ
           </div>
@@ -217,9 +221,9 @@ function Hero() {
             .
           </h1>
           <p className="mt-8 max-w-lg text-base sm:text-lg text-neutral-600 leading-relaxed">
-            Как хороший костюм шьётся под конкретного человека, так и наша
-            мебель проектируется под ваш интерьер, привычки и образ жизни.
-            Именно поэтому за двадцать лет мы не повторили ни одного проекта.
+            Как хороший костюм шьётся под конкретного человека, так и наша мебель проектируется под
+            ваш интерьер, привычки и образ жизни. Именно поэтому за двадцать лет мы не повторили ни
+            одного проекта.
           </p>
 
           <div className="mt-10 flex flex-wrap gap-4">
@@ -270,8 +274,8 @@ function Metric({ num, label }: { num: string; label: string }) {
 const advantages = [
   {
     icon: Gem,
-    title: "Средний и средний+ сегмент",
-    text: "Мы создаём мебель уровня премиум без переплаты за громкое имя.",
+    title: "Авторская мебель по индивидуальному проекту",
+    text: "Каждый проект рождается заново — под ваш интерьер, привычки и характер дома. Мы не собираем мебель из готовых решений.",
   },
   {
     icon: Scale,
@@ -281,12 +285,12 @@ const advantages = [
   {
     icon: Fingerprint,
     title: "20 лет без повторений",
-    text: "За двадцать лет работы мы не повторили ни одного проекта. Каждая мебель создаётся индивидуально под конкретного человека.",
+    text: "За двадцать лет работы мы не повторили ни одного проекта. Каждая мебель проектируется индивидуально — под конкретного человека.",
   },
   {
     icon: Factory,
-    title: "Производство в Пензе",
-    text: "Наше производство находится в одном из крупнейших мебельных центров России. Это позволяет реализовывать нестандартные решения практически любой сложности.",
+    title: "Собственное производство в Пензе",
+    text: "Наша мастерская находится в одном из крупнейших мебельных центров России. Это позволяет реализовывать нестандартные решения практически любой сложности — с ручной проработкой деталей.",
   },
   {
     icon: Wrench,
@@ -309,9 +313,9 @@ function WhyUs() {
           Почему выбирают нас
         </div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-tight max-w-2xl mb-12 sm:mb-14">
-          Авторская студия, а не{" "}
+          Авторская студия и мебель{" "}
           <span style={{ color: forest }} className="italic font-serif">
-            мебельная фабрика
+            по индивидуальному проекту
           </span>
           .
         </h2>
@@ -322,7 +326,11 @@ function WhyUs() {
               key={a.title}
               className="rounded-3xl border border-black/10 p-7 sm:p-8 flex flex-col hover:border-black/40 transition bg-[#FAFAF7]"
             >
-              <a.icon className="w-6 h-6 mb-6 shrink-0" style={{ color: forest }} strokeWidth={1.5} />
+              <a.icon
+                className="w-6 h-6 mb-6 shrink-0"
+                style={{ color: forest }}
+                strokeWidth={1.5}
+              />
               <h3 className="text-lg sm:text-xl leading-snug break-words">{a.title}</h3>
               <p className="mt-3 text-sm text-neutral-600 leading-relaxed break-words">{a.text}</p>
               {a.brands && (
@@ -361,9 +369,7 @@ function Brands() {
   return (
     <section id="brands" className="bg-white border-y border-black/5">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
-        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
-          Партнёры
-        </div>
+        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">Партнёры</div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-tight max-w-3xl mb-12 sm:mb-14">
           Работаем с лучшими производителями{" "}
           <span style={{ color: forest }} className="italic font-serif">
@@ -385,8 +391,7 @@ function Brands() {
           ))}
         </div>
         <p className="mt-8 text-sm text-neutral-500 max-w-xl">
-          Место под логотипы брендов — заглушки заменяются на официальные
-          изображения партнёров.
+          Место под логотипы брендов — заглушки заменяются на официальные изображения партнёров.
         </p>
       </div>
     </section>
@@ -394,7 +399,6 @@ function Brands() {
 }
 
 /* ---------- Assistant (см. src/components/assistant.tsx) ---------- */
-
 
 /* ---------- Portfolio ---------- */
 const projects = [
@@ -407,15 +411,13 @@ const projects = [
   },
   {
     title: "Гардеробная Северный свет",
-    story:
-      "Пространство 14 м² под потолок 3.2 м. Ясень, стеклянные фасады, мягкая LED-подсветка.",
+    story: "Пространство 14 м² под потолок 3.2 м. Ясень, стеклянные фасады, мягкая LED-подсветка.",
     materials: ["Ясень белёный", "Матовое стекло", "Тканевые вставки"],
     img: "https://images.unsplash.com/photo-1616627981927-8b98a4c0b52d?w=1200&q=80",
   },
   {
     title: "Гостиная Мох",
-    story:
-      "Стеллаж и медиа-зона по индивидуальному чертежу. Тёплый графит с зелёными акцентами.",
+    story: "Стеллаж и медиа-зона по индивидуальному чертежу. Тёплый графит с зелёными акцентами.",
     materials: ["Шпон ореха", "Металл матовый", "Войлок"],
     img: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=1200&q=80",
   },
@@ -576,9 +578,7 @@ function Expert() {
   return (
     <section id="expert" className="bg-white border-y border-black/5">
       <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
-        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
-          03 — Журнал
-        </div>
+        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">03 — Журнал</div>
         <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-tight max-w-2xl mb-6">
           Экспертиза, которой мы делимся{" "}
           <span style={{ color: forest }} className="italic font-serif">
@@ -587,8 +587,8 @@ function Expert() {
           .
         </h2>
         <p className="max-w-xl text-neutral-600 leading-relaxed mb-14">
-          Короткие материалы из практики студии: цифры, чек-листы и решения,
-          которыми мы пользуемся сами. Читаются за несколько минут.
+          Короткие материалы из практики студии: цифры, чек-листы и решения, которыми мы пользуемся
+          сами. Читаются за несколько минут.
         </p>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -600,13 +600,9 @@ function Expert() {
               className="group text-left rounded-3xl border border-black/10 p-8 hover:border-black transition flex flex-col min-h-[300px]"
             >
               <a.icon className="w-6 h-6 mb-6" style={{ color: forest }} strokeWidth={1.5} />
-              <div className="text-xs tracking-[0.2em] uppercase text-neutral-500">
-                {a.tag}
-              </div>
+              <div className="text-xs tracking-[0.2em] uppercase text-neutral-500">{a.tag}</div>
               <h3 className="mt-3 text-xl leading-snug">{a.title}</h3>
-              <p className="mt-3 text-sm text-neutral-600 leading-relaxed">
-                {a.lead}
-              </p>
+              <p className="mt-3 text-sm text-neutral-600 leading-relaxed">{a.lead}</p>
               <div className="mt-auto pt-8 flex items-center justify-between text-sm text-neutral-500">
                 <span>{a.time} чтения</span>
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition" />
@@ -636,13 +632,8 @@ function Expert() {
             <div className="text-xs tracking-[0.2em] uppercase text-neutral-500">
               {post.tag} · {post.time} чтения
             </div>
-            <h3 className="mt-4 text-2xl sm:text-3xl leading-snug pr-10">
-              {post.title}
-            </h3>
-            <p
-              className="mt-4 text-lg italic font-serif"
-              style={{ color: forest }}
-            >
+            <h3 className="mt-4 text-2xl sm:text-3xl leading-snug pr-10">{post.title}</h3>
+            <p className="mt-4 text-lg italic font-serif" style={{ color: forest }}>
               {post.lead}
             </p>
             <div className="mt-6 space-y-4 text-neutral-700 leading-relaxed">
@@ -664,7 +655,6 @@ function Expert() {
     </section>
   );
 }
-
 
 /* ---------- Reviews ---------- */
 const reviews = [
@@ -688,9 +678,7 @@ const reviews = [
 function Reviews() {
   return (
     <section id="reviews" className="max-w-7xl mx-auto px-8 py-24">
-      <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
-        04 — Отзывы
-      </div>
+      <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">04 — Отзывы</div>
       <h2 className="text-4xl md:text-5xl font-normal leading-tight max-w-2xl mb-14">
         Люди, для которых мы делали дом.
       </h2>
@@ -721,9 +709,7 @@ function RequestForm() {
     <section id="request" className="text-white" style={{ backgroundColor: graphite }}>
       <div className="max-w-7xl mx-auto px-8 py-24 grid md:grid-cols-12 gap-12">
         <div className="md:col-span-5">
-          <div className="text-xs tracking-[0.25em] uppercase text-white/50 mb-4">
-            05 — Заявка
-          </div>
+          <div className="text-xs tracking-[0.25em] uppercase text-white/50 mb-4">05 — Заявка</div>
           <h2 className="text-4xl md:text-5xl font-normal leading-tight">
             Расскажите о проекте.
             <br />
@@ -734,8 +720,8 @@ function RequestForm() {
             .
           </h2>
           <p className="mt-8 text-white/60 leading-relaxed max-w-md">
-            После заявки — короткий звонок 15 минут. Дальше — бесплатный выезд
-            дизайнера, замеры и предварительный эскиз.
+            После заявки — короткий звонок 15 минут. Дальше — бесплатный выезд дизайнера, замеры и
+            предварительный эскиз.
           </p>
           <div className="mt-10 space-y-3 text-sm text-white/70">
             <div className="flex items-center gap-3">
@@ -787,8 +773,8 @@ function RequestForm() {
               <Check className="w-8 h-8 mb-6" style={{ color: "#A8C8A0" }} />
               <h3 className="text-3xl font-normal">Заявка принята.</h3>
               <p className="mt-4 text-white/60 max-w-md">
-                Дизайнер Крона позвонит вам в течение рабочего дня. Пока — можно
-                посмотреть наши последние проекты.
+                Дизайнер Крона позвонит вам в течение рабочего дня. Пока — можно посмотреть наши
+                последние проекты.
               </p>
             </div>
           )}
@@ -798,10 +784,21 @@ function RequestForm() {
   );
 }
 
-function Field({ label, type = "text", required = false }: { label: string; type?: string; required?: boolean }) {
+function Field({
+  label,
+  type = "text",
+  required = false,
+}: {
+  label: string;
+  type?: string;
+  required?: boolean;
+}) {
   return (
     <label className="block">
-      <span className="text-xs text-white/50">{label}{required && " *"}</span>
+      <span className="text-xs text-white/50">
+        {label}
+        {required && " *"}
+      </span>
       <input
         required={required}
         type={type}
@@ -819,9 +816,13 @@ function Select({ label, options }: { label: string; options: string[] }) {
         className="mt-2 w-full bg-transparent border-b border-white/20 focus:border-white outline-none py-3 text-white"
         defaultValue=""
       >
-        <option value="" disabled className="text-black">Выберите...</option>
+        <option value="" disabled className="text-black">
+          Выберите...
+        </option>
         {options.map((o) => (
-          <option key={o} className="text-black">{o}</option>
+          <option key={o} className="text-black">
+            {o}
+          </option>
         ))}
       </select>
     </label>
@@ -850,9 +851,15 @@ function Footer() {
       </div>
       <div>© {new Date().getFullYear()} Студия мебели на заказ. Санкт-Петербург.</div>
       <div className="flex gap-6">
-        <a href="#" className="hover:text-black">Instagram</a>
-        <a href="#" className="hover:text-black">Pinterest</a>
-        <a href="#" className="hover:text-black">Telegram</a>
+        <a href="#" className="hover:text-black">
+          Instagram
+        </a>
+        <a href="#" className="hover:text-black">
+          Pinterest
+        </a>
+        <a href="#" className="hover:text-black">
+          Telegram
+        </a>
       </div>
     </footer>
   );

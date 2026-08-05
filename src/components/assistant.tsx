@@ -1,10 +1,59 @@
 import { useMemo, useState } from "react";
-import { ArrowRight, Check, Sparkles, Upload, Image as ImageIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  Bath,
+  Baby,
+  BedDouble,
+  Blinds,
+  BookOpen,
+  Briefcase,
+  Building2,
+  Camera,
+  CalendarDays,
+  Check,
+  ChefHat,
+  Coffee,
+  Compass,
+  DoorOpen,
+  DoorClosed,
+  FileText,
+  Gem,
+  Images,
+  Layers,
+  Lightbulb,
+  Leaf,
+  Package,
+  Paintbrush,
+  Palette,
+  PanelsTopLeft,
+  Paperclip,
+  PenLine,
+  Ruler,
+  ShieldCheck,
+  Shirt,
+  Sofa,
+  Sparkles,
+  SprayCan,
+  Square,
+  RectangleHorizontal,
+  Star,
+  Timer,
+  TreePine,
+  Tv,
+  Upload,
+  Users,
+  Utensils,
+  Wallet,
+  WashingMachine,
+  Wine,
+  Home,
+} from "lucide-react";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
 
-type Opt = { label: string; swatch?: string; grad?: string; hint?: string };
+type Opt = { label: string; swatch?: string; grad?: string; hint?: string; icon?: LucideIcon };
 type Sub = {
   key: string;
   label: string;
@@ -36,25 +85,25 @@ const steps: Step[] = [
     question: "Для какого помещения создаём мебель?",
     note: "Можно выбрать несколько",
     mode: "multi",
-    options: o([
-      "🏠 Кухня",
-      "🛋️ Гостиная",
-      "🛏️ Спальня",
-      "👶 Детская",
-      "👔 Кабинет",
-      "👗 Гардеробная",
-      "🚪 Прихожая",
-      "🧺 Постирочная",
-      "🛁 Ванная",
-      "🍷 Домашний бар",
-      "📚 Библиотека",
-      "🏢 Офис",
-      "🍽️ Столовая",
-      "☕ Кофейная зона",
-      "📺 ТВ-зона",
-      "🪟 Лоджия / балкон",
-      "✨ Другое",
-    ]),
+    options: [
+      { label: "Кухня", icon: ChefHat },
+      { label: "Гостиная", icon: Sofa },
+      { label: "Спальня", icon: BedDouble },
+      { label: "Детская", icon: Baby },
+      { label: "Кабинет", icon: Briefcase },
+      { label: "Гардеробная", icon: Shirt },
+      { label: "Прихожая", icon: DoorOpen },
+      { label: "Постирочная", icon: WashingMachine },
+      { label: "Ванная", icon: Bath },
+      { label: "Домашний бар", icon: Wine },
+      { label: "Библиотека", icon: BookOpen },
+      { label: "Офис", icon: Building2 },
+      { label: "Столовая", icon: Utensils },
+      { label: "Кофейная зона", icon: Coffee },
+      { label: "ТВ-зона", icon: Tv },
+      { label: "Лоджия / балкон", icon: Blinds },
+      { label: "Другое", icon: Sparkles },
+    ],
   },
   {
     key: "furniture",
@@ -100,15 +149,15 @@ const steps: Step[] = [
         key: "shape",
         label: "Форма помещения",
         mode: "multi",
-        options: o([
-          "⬜ Прямоугольное",
-          "◻️ Квадратное",
-          "🔺 Сложная планировка",
-          "🧱 Есть ниши",
-          "🪟 Панорамные окна",
-          "🚪 Несколько дверей",
-          "📐 Не знаю",
-        ]),
+        options: [
+          { label: "Прямоугольное", icon: RectangleHorizontal },
+          { label: "Квадратное", icon: Square },
+          { label: "Сложная планировка", icon: Layers },
+          { label: "Есть ниши", icon: PanelsTopLeft },
+          { label: "Панорамные окна", icon: Blinds },
+          { label: "Несколько дверей", icon: DoorClosed },
+          { label: "Не знаю", icon: Compass },
+        ],
       },
       {
         key: "ceiling",
@@ -250,20 +299,20 @@ const steps: Step[] = [
     note: "Можно выбрать до трёх",
     mode: "multi",
     max: 3,
-    options: o([
-      "💰 Уложиться в бюджет",
-      "✨ Красивый внешний вид",
-      "🛠 Максимальная надёжность",
-      "👶 Безопасность для детей",
-      "🧹 Лёгкость ухода",
-      "📦 Вместительность",
-      "📐 Использовать каждый сантиметр",
-      "🚀 Быстрое изготовление",
-      "🌱 Экологичные материалы",
-      "🎯 Индивидуальный дизайн",
-      "💡 Современная фурнитура",
-      "🏡 Чтобы мебель идеально вписалась в интерьер",
-    ]),
+    options: [
+      { label: "Уложиться в бюджет", icon: Wallet },
+      { label: "Красивый внешний вид", icon: Gem },
+      { label: "Максимальная надёжность", icon: ShieldCheck },
+      { label: "Безопасность для детей", icon: Baby },
+      { label: "Лёгкость ухода", icon: SprayCan },
+      { label: "Вместительность", icon: Package },
+      { label: "Использовать каждый сантиметр", icon: Ruler },
+      { label: "Быстрое изготовление", icon: Timer },
+      { label: "Экологичные материалы", icon: Leaf },
+      { label: "Индивидуальный дизайн", icon: Paintbrush },
+      { label: "Современная фурнитура", icon: Lightbulb },
+      { label: "Чтобы мебель идеально вписалась в интерьер", icon: Home },
+    ],
   },
   {
     key: "budget",
@@ -320,13 +369,13 @@ const steps: Step[] = [
     mode: "multi",
     optional: true,
     upload: true,
-    options: o([
-      "📷 Фото помещения",
-      "📐 План или обмеры",
-      "🖼 Референсы из Pinterest",
-      "📄 Дизайн-проект",
-      "✨ Пока ничего нет",
-    ]),
+    options: [
+      { label: "Фото помещения", icon: Camera },
+      { label: "План или обмеры", icon: Ruler },
+      { label: "Референсы из Pinterest", icon: Images },
+      { label: "Дизайн-проект", icon: FileText },
+      { label: "Пока ничего нет", icon: Sparkles },
+    ],
     free: {
       key: "links",
       label: "Ссылка на доску вдохновения (Pinterest, соцсети)",
@@ -379,27 +428,33 @@ export default function Assistant() {
     return get(step.key).length > 0;
   }, [i, ans, done]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const summary = [
-    { label: "🏠 Помещение", value: get("rooms").join(" · ") },
-    { label: "🪑 Мебель", value: get("furniture").join(" · ") },
+  const summary: { icon: LucideIcon; label: string; value: string }[] = [
+    { icon: Home, label: "Помещение", value: get("rooms").join(" · ") },
+    { icon: Sofa, label: "Мебель", value: get("furniture").join(" · ") },
     {
-      label: "📐 Пространство",
+      icon: Ruler,
+      label: "Пространство",
       value: [get("area")[0], get("ceiling")[0], ...get("shape")].filter(Boolean).join(" · "),
     },
-    { label: "🎨 Стиль", value: get("style").join(" · ") },
-    { label: "🌈 Цвета", value: get("colors").join(" · ") },
-    { label: "🌳 Материалы", value: get("materials").join(" · ") },
-    { label: "⭐ Главное для вас", value: get("important").join(" · ") },
-    { label: "💰 Бюджет", value: get("budget")[0] ?? "" },
-    { label: "🗓 Сроки", value: get("timing")[0] ?? "" },
+    { icon: Paintbrush, label: "Стиль", value: get("style").join(" · ") },
+    { icon: Palette, label: "Цвета", value: get("colors").join(" · ") },
+    { icon: TreePine, label: "Материалы", value: get("materials").join(" · ") },
+    { icon: Star, label: "Главное для вас", value: get("important").join(" · ") },
+    { icon: Wallet, label: "Бюджет", value: get("budget")[0] ?? "" },
+    { icon: CalendarDays, label: "Сроки", value: get("timing")[0] ?? "" },
     {
-      label: "👨‍👩‍👧 Кто пользуется",
+      icon: Users,
+      label: "Кто пользуется",
       value: [get("users")[0], get("kids")[0] && `дети: ${get("kids")[0]}`, ...get("pets")]
         .filter(Boolean)
         .join(" · "),
     },
-    { label: "📎 Материалы от вас", value: [...get("inspiration"), ...files].join(" · ") },
-    { label: "✍️ Пожелания", value: texts["notes"] ?? "" },
+    {
+      icon: Paperclip,
+      label: "Материалы от вас",
+      value: [...get("inspiration"), ...files].join(" · "),
+    },
+    { icon: PenLine, label: "Пожелания", value: texts["notes"] ?? "" },
   ].filter((r) => r.value);
 
   const optionButton = (
@@ -408,19 +463,24 @@ export default function Assistant() {
     onClick: () => void,
     variant: Step["variant"],
     disabled?: boolean,
+    idx = 0,
   ) => {
+    const delay = { animationDelay: `${Math.min(idx, 16) * 35}ms` };
+    const Icon = opt.icon;
     if (variant === "card") {
       return (
         <button
           key={opt.label}
           type="button"
           onClick={onClick}
-          className={`group relative text-left rounded-2xl overflow-hidden border transition bg-white ${
-            active ? "border-transparent ring-2" : "border-black/10 hover:border-black/40"
+          style={{ ...delay, ...(active ? { boxShadow: `0 0 0 2px ${forest}` } : {}) }}
+          className={`group relative text-left rounded-2xl overflow-hidden border bg-white krona-rise krona-lift ${
+            active ? "border-transparent" : "border-black/10 hover:border-black/40"
           }`}
-          style={active ? { boxShadow: `0 0 0 2px ${forest}` } : {}}
         >
-          <div className="h-24 sm:h-28 w-full" style={{ background: opt.grad }} />
+          <div className="h-24 sm:h-28 w-full overflow-hidden">
+            <div className="h-full w-full krona-media" style={{ background: opt.grad }} />
+          </div>
           <div className="p-4">
             <div className="text-sm leading-snug">{opt.label}</div>
             {opt.hint && (
@@ -429,7 +489,7 @@ export default function Assistant() {
           </div>
           {active && (
             <span
-              className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center"
+              className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center krona-check"
               style={{ backgroundColor: forest }}
             >
               <Check className="w-3.5 h-3.5 text-white" />
@@ -444,17 +504,22 @@ export default function Assistant() {
           key={opt.label}
           type="button"
           onClick={onClick}
-          className={`flex items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-left transition ${
+          style={{ ...delay, ...(active ? { boxShadow: `0 0 0 2px ${forest}` } : {}) }}
+          className={`flex items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-left krona-rise krona-lift ${
             active ? "border-transparent" : "border-black/10 hover:border-black/40"
           }`}
-          style={active ? { boxShadow: `0 0 0 2px ${forest}` } : {}}
         >
           <span
-            className="w-8 h-8 rounded-full border border-black/10 shrink-0"
+            className="w-8 h-8 rounded-full border border-black/10 shrink-0 krona-media"
             style={{ background: opt.swatch }}
           />
           <span className="text-sm min-w-0">{opt.label}</span>
-          {active && <Check className="w-4 h-4 ml-auto shrink-0" style={{ color: forest }} />}
+          {active && (
+            <Check
+              className="w-4 h-4 ml-auto shrink-0 krona-check rounded-full"
+              style={{ color: forest }}
+            />
+          )}
         </button>
       );
     }
@@ -464,14 +529,21 @@ export default function Assistant() {
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`px-5 py-3 rounded-full border text-sm text-left sm:text-center transition disabled:opacity-35 ${
+        style={{ ...delay, ...(active ? { backgroundColor: forest } : {}) }}
+        className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-full border text-sm text-left krona-rise krona-lift disabled:opacity-35 ${
           active
             ? "text-white border-transparent"
             : "bg-white border-black/10 hover:border-black/50"
         }`}
-        style={active ? { backgroundColor: forest } : {}}
       >
-        {opt.label}
+        {Icon && (
+          <Icon
+            className="w-4 h-4 shrink-0 transition-transform duration-500 group-hover:scale-110"
+            strokeWidth={1.4}
+            style={{ color: active ? "#FFFFFF" : forest }}
+          />
+        )}
+        <span className="min-w-0">{opt.label}</span>
       </button>
     );
   };
@@ -530,7 +602,7 @@ export default function Assistant() {
             <div className="flex items-center gap-4">
               <div className="h-1 flex-1 rounded-full bg-black/10 overflow-hidden">
                 <div
-                  className="h-full rounded-full transition-all duration-500"
+                  className="h-full rounded-full transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] krona-sheen"
                   style={{ width: `${done ? 100 : progress}%`, backgroundColor: forest }}
                 />
               </div>
@@ -540,14 +612,24 @@ export default function Assistant() {
             </div>
 
             {!done ? (
-              <div key={step.key} className="flex flex-col flex-1 animate-fade-in">
-                <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500">
+              <div key={step.key} className="flex flex-col flex-1 krona-veil">
+                <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500 krona-rise">
                   {step.title}
                 </div>
-                <h3 className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight">
+                <h3
+                  className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight krona-rise"
+                  style={{ animationDelay: "70ms" }}
+                >
                   {step.question}
                 </h3>
-                {step.note && <p className="mt-3 text-sm text-neutral-500">{step.note}</p>}
+                {step.note && (
+                  <p
+                    className="mt-3 text-sm text-neutral-500 krona-rise"
+                    style={{ animationDelay: "120ms" }}
+                  >
+                    {step.note}
+                  </p>
+                )}
 
                 {/* Опции шага */}
                 {step.options && (
@@ -560,7 +642,7 @@ export default function Assistant() {
                           : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
                     }`}
                   >
-                    {step.options.map((opt) => {
+                    {step.options.map((opt, oi) => {
                       const active = get(step.key).includes(opt.label);
                       const blocked = !!step.max && !active && get(step.key).length >= step.max;
                       return optionButton(
@@ -569,6 +651,7 @@ export default function Assistant() {
                         () => toggle(step.key, opt.label, step.mode ?? "multi", step.max),
                         step.variant,
                         blocked,
+                        oi,
                       );
                     })}
                   </div>
@@ -581,20 +664,31 @@ export default function Assistant() {
                       <div key={sub.key}>
                         <div className="text-sm text-neutral-500 mb-3">{sub.label}</div>
                         <div className="flex flex-wrap gap-2.5">
-                          {sub.options.map((opt) => {
+                          {sub.options.map((opt, oi) => {
                             const active = get(sub.key).includes(opt.label);
+                            const SubIcon = opt.icon;
                             return (
                               <button
                                 key={opt.label}
                                 type="button"
                                 onClick={() => toggle(sub.key, opt.label, sub.mode)}
-                                className={`px-4 py-2.5 rounded-full border text-sm transition ${
+                                className={`group inline-flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm krona-rise krona-lift ${
                                   active
                                     ? "text-white border-transparent"
                                     : "bg-white border-black/10 hover:border-black/50"
                                 }`}
-                                style={active ? { backgroundColor: forest } : {}}
+                                style={{
+                                  animationDelay: `${Math.min(oi, 12) * 30}ms`,
+                                  ...(active ? { backgroundColor: forest } : {}),
+                                }}
                               >
+                                {SubIcon && (
+                                  <SubIcon
+                                    className="w-4 h-4 shrink-0 transition-transform duration-500 group-hover:scale-110"
+                                    strokeWidth={1.4}
+                                    style={{ color: active ? "#FFFFFF" : forest }}
+                                  />
+                                )}
                                 {opt.label}
                               </button>
                             );
@@ -673,14 +767,14 @@ export default function Assistant() {
               </div>
             ) : (
               /* Итоговое резюме */
-              <div className="flex-1 flex flex-col animate-fade-in">
+              <div className="flex-1 flex flex-col krona-veil">
                 <div className="mt-8 flex items-center gap-2">
-                  <Sparkles className="w-5 h-5" style={{ color: forest }} />
+                  <Sparkles className="w-5 h-5" strokeWidth={1.4} style={{ color: forest }} />
                   <span className="text-xs tracking-[0.25em] uppercase text-neutral-500">
                     Ваш профиль проекта
                   </span>
                 </div>
-                <h3 className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight">
+                <h3 className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight krona-rise">
                   Вот как мы вас{" "}
                   <span style={{ color: forest }} className="italic font-serif">
                     услышали.
@@ -688,9 +782,20 @@ export default function Assistant() {
                 </h3>
 
                 <div className="mt-8 grid sm:grid-cols-2 gap-3">
-                  {summary.map((r) => (
-                    <div key={r.label} className="bg-white rounded-2xl p-5">
-                      <div className="text-xs text-neutral-500">{r.label}</div>
+                  {summary.map((r, ri) => (
+                    <div
+                      key={r.label}
+                      className="bg-white rounded-2xl p-5 krona-rise krona-lift"
+                      style={{ animationDelay: `${Math.min(ri, 12) * 45}ms` }}
+                    >
+                      <div className="text-xs text-neutral-500 flex items-center gap-2">
+                        <r.icon
+                          className="w-3.5 h-3.5"
+                          strokeWidth={1.4}
+                          style={{ color: forest }}
+                        />
+                        {r.label}
+                      </div>
                       <div className="mt-1.5 text-sm leading-relaxed">{r.value}</div>
                     </div>
                   ))}
@@ -730,7 +835,7 @@ export default function Assistant() {
                     </a>
                   </div>
                   <div className="mt-3 text-xs text-neutral-500 flex items-center gap-2">
-                    <ImageIcon className="w-3.5 h-3.5" />
+                    <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.4} />
                     Ответ в течение рабочего дня. Никаких звонков «просто так».
                   </div>
                 </div>
