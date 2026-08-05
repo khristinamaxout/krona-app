@@ -515,7 +515,10 @@ export default function Assistant() {
           />
           <span className="text-sm min-w-0">{opt.label}</span>
           {active && (
-            <Check className="w-4 h-4 ml-auto shrink-0 krona-check rounded-full" style={{ color: forest }} />
+            <Check
+              className="w-4 h-4 ml-auto shrink-0 krona-check rounded-full"
+              style={{ color: forest }}
+            />
           )}
         </button>
       );
@@ -528,7 +531,9 @@ export default function Assistant() {
         disabled={disabled}
         style={{ ...delay, ...(active ? { backgroundColor: forest } : {}) }}
         className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-full border text-sm text-left krona-rise krona-lift disabled:opacity-35 ${
-          active ? "text-white border-transparent" : "bg-white border-black/10 hover:border-black/50"
+          active
+            ? "text-white border-transparent"
+            : "bg-white border-black/10 hover:border-black/50"
         }`}
       >
         {Icon && (
@@ -784,7 +789,11 @@ export default function Assistant() {
                       style={{ animationDelay: `${Math.min(ri, 12) * 45}ms` }}
                     >
                       <div className="text-xs text-neutral-500 flex items-center gap-2">
-                        <r.icon className="w-3.5 h-3.5" strokeWidth={1.4} style={{ color: forest }} />
+                        <r.icon
+                          className="w-3.5 h-3.5"
+                          strokeWidth={1.4}
+                          style={{ color: forest }}
+                        />
                         {r.label}
                       </div>
                       <div className="mt-1.5 text-sm leading-relaxed">{r.value}</div>
@@ -796,7 +805,6 @@ export default function Assistant() {
                     </div>
                   )}
                 </div>
-
 
                 <p className="mt-8 text-neutral-600 leading-relaxed max-w-2xl">
                   На основе ваших ответов мы подготовим несколько решений, которые максимально
