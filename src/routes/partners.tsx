@@ -180,19 +180,19 @@ function Hero() {
           <h1 className="text-[2rem] sm:text-[2.6rem] md:text-[2.6rem] lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight font-normal">
             Ваши клиенты получают мебель,
             <br />
-            которую{" "}
+            которой{" "}
             <span style={{ color: forest }} className="italic font-serif">
-              не стыдно
-            </span>{" "}
-            показать.
+              хочется гордиться
+            </span>
+            .
             <br />
             Вы — стабильный доход.
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-neutral-600 leading-relaxed">
             Мы работаем с дизайнерами, архитекторами и студиями, для которых
-            репутация — рабочий инструмент. Берём на себя производство, монтаж и
-            все неудобные разговоры. Оставляем вам — проект и благодарного
-            клиента.
+            репутация — рабочий инструмент. Берём на себя авторское производство
+            и монтаж. Оставляем вам — проект и благодарного клиента, который
+            показывает вашу работу близким.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <a
