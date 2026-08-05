@@ -463,19 +463,24 @@ export default function Assistant() {
     onClick: () => void,
     variant: Step["variant"],
     disabled?: boolean,
+    idx = 0,
   ) => {
+    const delay = { animationDelay: `${Math.min(idx, 16) * 35}ms` };
+    const Icon = opt.icon;
     if (variant === "card") {
       return (
         <button
           key={opt.label}
           type="button"
           onClick={onClick}
-          className={`group relative text-left rounded-2xl overflow-hidden border transition bg-white ${
-            active ? "border-transparent ring-2" : "border-black/10 hover:border-black/40"
+          style={{ ...delay, ...(active ? { boxShadow: `0 0 0 2px ${forest}` } : {}) }}
+          className={`group relative text-left rounded-2xl overflow-hidden border bg-white krona-rise krona-lift ${
+            active ? "border-transparent" : "border-black/10 hover:border-black/40"
           }`}
-          style={active ? { boxShadow: `0 0 0 2px ${forest}` } : {}}
         >
-          <div className="h-24 sm:h-28 w-full" style={{ background: opt.grad }} />
+          <div className="h-24 sm:h-28 w-full overflow-hidden">
+            <div className="h-full w-full krona-media" style={{ background: opt.grad }} />
+          </div>
           <div className="p-4">
             <div className="text-sm leading-snug">{opt.label}</div>
             {opt.hint && (
@@ -484,7 +489,7 @@ export default function Assistant() {
           </div>
           {active && (
             <span
-              className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center"
+              className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center krona-check"
               style={{ backgroundColor: forest }}
             >
               <Check className="w-3.5 h-3.5 text-white" />
@@ -499,17 +504,19 @@ export default function Assistant() {
           key={opt.label}
           type="button"
           onClick={onClick}
-          className={`flex items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-left transition ${
+          style={{ ...delay, ...(active ? { boxShadow: `0 0 0 2px ${forest}` } : {}) }}
+          className={`flex items-center gap-3 rounded-2xl border bg-white px-4 py-3 text-left krona-rise krona-lift ${
             active ? "border-transparent" : "border-black/10 hover:border-black/40"
           }`}
-          style={active ? { boxShadow: `0 0 0 2px ${forest}` } : {}}
         >
           <span
-            className="w-8 h-8 rounded-full border border-black/10 shrink-0"
+            className="w-8 h-8 rounded-full border border-black/10 shrink-0 krona-media"
             style={{ background: opt.swatch }}
           />
           <span className="text-sm min-w-0">{opt.label}</span>
-          {active && <Check className="w-4 h-4 ml-auto shrink-0" style={{ color: forest }} />}
+          {active && (
+            <Check className="w-4 h-4 ml-auto shrink-0 krona-check rounded-full" style={{ color: forest }} />
+          )}
         </button>
       );
     }
@@ -519,14 +526,19 @@ export default function Assistant() {
         type="button"
         onClick={onClick}
         disabled={disabled}
-        className={`px-5 py-3 rounded-full border text-sm text-left sm:text-center transition disabled:opacity-35 ${
-          active
-            ? "text-white border-transparent"
-            : "bg-white border-black/10 hover:border-black/50"
+        style={{ ...delay, ...(active ? { backgroundColor: forest } : {}) }}
+        className={`group inline-flex items-center gap-2.5 px-5 py-3 rounded-full border text-sm text-left krona-rise krona-lift disabled:opacity-35 ${
+          active ? "text-white border-transparent" : "bg-white border-black/10 hover:border-black/50"
         }`}
-        style={active ? { backgroundColor: forest } : {}}
       >
-        {opt.label}
+        {Icon && (
+          <Icon
+            className="w-4 h-4 shrink-0 transition-transform duration-500 group-hover:scale-110"
+            strokeWidth={1.4}
+            style={{ color: active ? "#FFFFFF" : forest }}
+          />
+        )}
+        <span className="min-w-0">{opt.label}</span>
       </button>
     );
   };
