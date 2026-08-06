@@ -188,7 +188,7 @@ const steps: Step[] = [
         hint: "Чистые линии и функциональность",
         grad: "linear-gradient(135deg,#D9D4CB,#8E8B84)",
         imgs: [
-          u("photo-1600585154340-be6161a56a0c"),
+          u("photo-1600210492486-724fe5c67fb0"),
           u("photo-1616486338812-3dadae4b4ace"),
           u("photo-1600607687939-ce8a6c25118c"),
         ],
