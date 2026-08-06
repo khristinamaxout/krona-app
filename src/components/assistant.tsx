@@ -53,7 +53,14 @@ import {
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
 
-type Opt = { label: string; swatch?: string; grad?: string; hint?: string; icon?: LucideIcon };
+type Opt = {
+  label: string;
+  swatch?: string;
+  grad?: string;
+  hint?: string;
+  icon?: LucideIcon;
+  imgs?: string[];
+};
 type Sub = {
   key: string;
   label: string;
