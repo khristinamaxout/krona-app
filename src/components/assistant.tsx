@@ -85,6 +85,9 @@ type Step = {
 
 const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 
+/** Временные качественные изображения-заполнители (Unsplash). */
+const u = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=640&q=80`;
+
 const steps: Step[] = [
   {
     key: "rooms",
