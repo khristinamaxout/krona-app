@@ -469,23 +469,53 @@ export default function Assistant() {
     const delay = { animationDelay: `${Math.min(idx, 16) * 35}ms` };
     const Icon = opt.icon;
     if (variant === "card") {
+      const captions = ["Кухня", "Спальня", "Гостиная"];
       return (
         <button
           key={opt.label}
           type="button"
           onClick={onClick}
-          style={{ ...delay, ...(active ? { boxShadow: `0 0 0 2px ${forest}` } : {}) }}
-          className={`group relative text-left rounded-2xl overflow-hidden border bg-white krona-rise krona-lift ${
-            active ? "border-transparent" : "border-black/10 hover:border-black/40"
+          style={{
+            ...delay,
+            borderRadius: 20,
+            boxShadow: active
+              ? `0 0 0 2px ${forest}, 0 22px 50px -30px rgba(26,26,26,0.55)`
+              : "0 14px 34px -26px rgba(26,26,26,0.45)",
+          }}
+          className={`group relative flex h-full flex-col text-left overflow-hidden border bg-white krona-rise krona-lift ${
+            active ? "border-transparent" : "border-black/10 hover:border-black/30"
           }`}
         >
-          <div className="h-24 sm:h-28 w-full overflow-hidden">
-            <div className="h-full w-full krona-media" style={{ background: opt.grad }} />
+          <div className="relative h-40 sm:h-44 w-full overflow-hidden bg-neutral-100">
+            {opt.imgs ? (
+              <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-[3px]">
+                {opt.imgs.map((src, i) => (
+                  <div
+                    key={src}
+                    className={`relative overflow-hidden ${i === 0 ? "col-span-2 row-span-2" : ""}`}
+                  >
+                    <img
+                      src={src}
+                      alt={`${opt.label} — ${captions[i] ?? ""}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover krona-media"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div
+                className="flex h-full w-full items-center justify-center krona-media"
+                style={{ background: opt.grad }}
+              >
+                {Icon && <Icon className="w-9 h-9 text-white" strokeWidth={1.2} />}
+              </div>
+            )}
           </div>
-          <div className="p-4">
-            <div className="text-sm leading-snug">{opt.label}</div>
+          <div className="p-5">
+            <div className="text-[15px] leading-snug">{opt.label}</div>
             {opt.hint && (
-              <div className="mt-1 text-xs text-neutral-500 leading-snug">{opt.hint}</div>
+              <div className="mt-1.5 text-xs text-neutral-500 leading-snug">{opt.hint}</div>
             )}
           </div>
           {active && (
