@@ -53,7 +53,14 @@ import {
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
 
-type Opt = { label: string; swatch?: string; grad?: string; hint?: string; icon?: LucideIcon };
+type Opt = {
+  label: string;
+  swatch?: string;
+  grad?: string;
+  hint?: string;
+  icon?: LucideIcon;
+  imgs?: string[];
+};
 type Sub = {
   key: string;
   label: string;
@@ -78,6 +85,9 @@ type Step = {
 
 const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 
+/** Временные качественные изображения-заполнители (Unsplash). */
+const u = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=640&q=80`;
+
 const steps: Step[] = [
   {
     key: "rooms",
@@ -90,18 +100,10 @@ const steps: Step[] = [
       { label: "Гостиная", icon: Sofa },
       { label: "Спальня", icon: BedDouble },
       { label: "Детская", icon: Baby },
-      { label: "Кабинет", icon: Briefcase },
-      { label: "Гардеробная", icon: Shirt },
       { label: "Прихожая", icon: DoorOpen },
-      { label: "Постирочная", icon: WashingMachine },
+      { label: "Гардеробная", icon: Shirt },
+      { label: "Кабинет", icon: Briefcase },
       { label: "Ванная", icon: Bath },
-      { label: "Домашний бар", icon: Wine },
-      { label: "Библиотека", icon: BookOpen },
-      { label: "Офис", icon: Building2 },
-      { label: "Столовая", icon: Utensils },
-      { label: "Кофейная зона", icon: Coffee },
-      { label: "ТВ-зона", icon: Tv },
-      { label: "Лоджия / балкон", icon: Blinds },
       { label: "Другое", icon: Sparkles },
     ],
   },
@@ -177,76 +179,75 @@ const steps: Step[] = [
     key: "style",
     title: "Стиль",
     question: "В каком стиле нравится мебель?",
-    note: "Можно выбрать несколько",
+    note: "Выберите один или несколько — или доверьте выбор нам",
     mode: "multi",
     variant: "card",
     options: [
       {
         label: "Современный",
+        hint: "Чистые линии и функциональность",
         grad: "linear-gradient(135deg,#D9D4CB,#8E8B84)",
-        hint: "Чистые линии, спокойный тон",
-      },
-      {
-        label: "Минимализм",
-        grad: "linear-gradient(135deg,#F2F0EB,#C9C5BC)",
-        hint: "Ничего лишнего",
+        imgs: [
+          u("photo-1600210492486-724fe5c67fb0"),
+          u("photo-1616486338812-3dadae4b4ace"),
+          u("photo-1600607687939-ce8a6c25118c"),
+        ],
       },
       {
         label: "Неоклассика",
+        hint: "Современная классика",
         grad: "linear-gradient(135deg,#EFE7DA,#B9A78C)",
-        hint: "Мягкая классика, филёнка",
+        imgs: [
+          u("photo-1556909212-d5b604d0c90d"),
+          u("photo-1600566753086-00f18fb6b3ea"),
+          u("photo-1583847268964-b28dc8f51f92"),
+        ],
+      },
+      {
+        label: "Минимализм",
+        hint: "Ничего лишнего",
+        grad: "linear-gradient(135deg,#F2F0EB,#C9C5BC)",
+        imgs: [
+          u("photo-1567767292278-a4f21aa2d36e"),
+          u("photo-1540518614846-7eded433c457"),
+          u("photo-1493809842364-78817add7ffb"),
+        ],
       },
       {
         label: "Лофт",
+        hint: "Бетон, металл, дерево",
         grad: "linear-gradient(135deg,#6E6862,#2E2B28)",
-        hint: "Металл, бетон, дерево",
+        imgs: [
+          u("photo-1524758631624-e2822e304c36"),
+          u("photo-1505693416388-ac5ce068fe85"),
+          u("photo-1595526114035-0d45ed16cfbf"),
+        ],
       },
       {
         label: "Скандинавский",
+        hint: "Свет, дерево, уют",
         grad: "linear-gradient(135deg,#FAF7F0,#D7C9AE)",
-        hint: "Свет и светлое дерево",
-      },
-      {
-        label: "Japandi",
-        grad: "linear-gradient(135deg,#E4DDD1,#7F7A6C)",
-        hint: "Японская сдержанность",
-      },
-      {
-        label: "Контемпорари",
-        grad: "linear-gradient(135deg,#DCD8D2,#6F7A72)",
-        hint: "Актуально и вне моды",
+        imgs: [
+          u("photo-1618221195710-dd6b41faaea6"),
+          u("photo-1586023492125-27b2c045efd7"),
+          u("photo-1522708323590-d24dbb6b0267"),
+        ],
       },
       {
         label: "Классика",
+        hint: "Традиции и элегантность",
         grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)",
-        hint: "Симметрия, массив",
+        imgs: [
+          u("photo-1560448204-e02f11c3d0e2"),
+          u("photo-1502005229762-cf1b2da7c5d6"),
+          u("photo-1484154218962-a197022b5858"),
+        ],
       },
       {
-        label: "Ар-деко",
-        grad: "linear-gradient(135deg,#2C2A28,#B79A5B)",
-        hint: "Графика и латунь",
-      },
-      { label: "Прованс", grad: "linear-gradient(135deg,#F5F1E6,#C4CDBD)", hint: "Тёплый винтаж" },
-      {
-        label: "Хай-тек",
-        grad: "linear-gradient(135deg,#C9CED2,#3A4046)",
-        hint: "Глянец, стекло, металл",
-      },
-      { label: "Эко", grad: "linear-gradient(135deg,#E7E3D5,#5C7355)", hint: "Дерево и растения" },
-      {
-        label: "Средиземноморский",
-        grad: "linear-gradient(135deg,#F3EFE4,#8FA9B4)",
-        hint: "Свет, камень, синева",
-      },
-      {
-        label: "Американская классика",
-        grad: "linear-gradient(135deg,#E6E0D4,#4C5A55)",
-        hint: "Крашеная филёнка",
-      },
-      {
-        label: "Не знаю — помогите подобрать",
+        label: "Помогите подобрать",
+        hint: "Не уверены? Поможем",
+        icon: Star,
         grad: "linear-gradient(135deg,#1F3A2E,#6C8A78)",
-        hint: "Подберём вместе",
       },
     ],
   },
@@ -468,23 +469,53 @@ export default function Assistant() {
     const delay = { animationDelay: `${Math.min(idx, 16) * 35}ms` };
     const Icon = opt.icon;
     if (variant === "card") {
+      const captions = ["Кухня", "Спальня", "Гостиная"];
       return (
         <button
           key={opt.label}
           type="button"
           onClick={onClick}
-          style={{ ...delay, ...(active ? { boxShadow: `0 0 0 2px ${forest}` } : {}) }}
-          className={`group relative text-left rounded-2xl overflow-hidden border bg-white krona-rise krona-lift ${
-            active ? "border-transparent" : "border-black/10 hover:border-black/40"
+          style={{
+            ...delay,
+            borderRadius: 20,
+            boxShadow: active
+              ? `0 0 0 2px ${forest}, 0 22px 50px -30px rgba(26,26,26,0.55)`
+              : "0 14px 34px -26px rgba(26,26,26,0.45)",
+          }}
+          className={`group relative flex h-full flex-col text-left overflow-hidden border bg-white krona-rise krona-lift ${
+            active ? "border-transparent" : "border-black/10 hover:border-black/30"
           }`}
         >
-          <div className="h-24 sm:h-28 w-full overflow-hidden">
-            <div className="h-full w-full krona-media" style={{ background: opt.grad }} />
+          <div className="relative h-40 sm:h-44 w-full overflow-hidden bg-neutral-100">
+            {opt.imgs ? (
+              <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-[3px]">
+                {opt.imgs.map((src, i) => (
+                  <div
+                    key={src}
+                    className={`relative overflow-hidden ${i === 0 ? "col-span-2 row-span-2" : ""}`}
+                  >
+                    <img
+                      src={src}
+                      alt={`${opt.label} — ${captions[i] ?? ""}`}
+                      loading="lazy"
+                      className="h-full w-full object-cover krona-media"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div
+                className="flex h-full w-full items-center justify-center krona-media"
+                style={{ background: opt.grad }}
+              >
+                {Icon && <Icon className="w-9 h-9 text-white" strokeWidth={1.2} />}
+              </div>
+            )}
           </div>
-          <div className="p-4">
-            <div className="text-sm leading-snug">{opt.label}</div>
+          <div className="p-5">
+            <div className="text-[15px] leading-snug">{opt.label}</div>
             {opt.hint && (
-              <div className="mt-1 text-xs text-neutral-500 leading-snug">{opt.hint}</div>
+              <div className="mt-1.5 text-xs text-neutral-500 leading-snug">{opt.hint}</div>
             )}
           </div>
           {active && (
@@ -636,7 +667,7 @@ export default function Assistant() {
                   <div
                     className={`mt-8 grid gap-3 ${
                       step.variant === "card"
-                        ? "grid-cols-2 sm:grid-cols-3 xl:grid-cols-4"
+                        ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-stretch"
                         : step.variant === "swatch"
                           ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
                           : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
