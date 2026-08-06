@@ -667,7 +667,7 @@ export default function Assistant() {
                   <div
                     className={`mt-8 grid gap-3 ${
                       step.variant === "card"
-                        ? "grid-cols-2 sm:grid-cols-3 xl:grid-cols-4"
+                        ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-stretch"
                         : step.variant === "swatch"
                           ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
                           : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
