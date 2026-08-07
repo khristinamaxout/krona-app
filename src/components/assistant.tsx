@@ -492,15 +492,29 @@ export default function Assistant() {
                 {opt.imgs.map((src, i) => (
                   <div
                     key={src}
-                    className={`relative overflow-hidden ${i === 0 ? "col-span-2 row-span-2" : ""}`}
+                    className={`relative overflow-hidden bg-neutral-200 ${i === 0 ? "col-span-2 row-span-2" : ""}`}
                   >
                     <img
                       src={src}
                       alt={`${opt.label} — ${captions[i] ?? ""}`}
-                      loading="lazy"
-                      className="h-full w-full object-cover krona-media"
+                      loading="eager"
+                      decoding="async"
+                      width={640}
+                      height={480}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => {
+                        const img = e.currentTarget;
+                        if (img.dataset["retried"]) {
+                          img.style.visibility = "hidden";
+                          return;
+                        }
+                        img.dataset["retried"] = "1";
+                        img.src = `${src.split("?")[0]}?auto=format&fit=crop&w=480&q=70`;
+                      }}
+                      className="absolute inset-0 h-full w-full object-cover krona-media"
                     />
                   </div>
+
                 ))}
               </div>
             ) : (
