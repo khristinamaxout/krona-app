@@ -23,6 +23,9 @@ import {
 import Assistant from "@/components/assistant";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
+import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
+import photoKitchen from "@/assets/kitchen-white.png.asset.json";
+import photoCabinet from "@/assets/cabinet-desk.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -245,8 +248,8 @@ function Hero() {
         <div className="md:col-span-5">
           <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-200">
             <img
-              src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80"
-              alt="Скандинавский интерьер"
+              src={photoWardrobe.url}
+              alt="Встроенный шкаф во всю стену с золотыми вставками"
               className="w-full h-full object-cover"
             />
           </div>
@@ -403,23 +406,22 @@ function Brands() {
 /* ---------- Portfolio ---------- */
 const projects = [
   {
-    title: "Кухня Хвоя",
-    story:
-      "Проект для семьи в загородном доме под Петербургом. Дубовый шпон, каменная столешница и скрытая вентиляция.",
-    materials: ["Массив дуба", "Кварцевый агломерат", "Латунная фурнитура"],
-    img: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80",
+    title: "Кухня",
+    story: "Описание проекта будет добавлено.",
+    materials: ["Фрезерованные фасады", "Камень", "Чёрная фурнитура"],
+    img: photoKitchen.url,
   },
   {
-    title: "Гардеробная Северный свет",
-    story: "Пространство 14 м² под потолок 3.2 м. Ясень, стеклянные фасады, мягкая LED-подсветка.",
-    materials: ["Ясень белёный", "Матовое стекло", "Тканевые вставки"],
-    img: "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=1200&q=80",
+    title: "Кабинет",
+    story: "Описание проекта будет добавлено.",
+    materials: ["Рифлёные фасады", "Стекло", "Латунь"],
+    img: photoCabinet.url,
   },
   {
-    title: "Гостиная Мох",
-    story: "Стеллаж и медиа-зона по индивидуальному чертежу. Тёплый графит с зелёными акцентами.",
-    materials: ["Шпон ореха", "Металл матовый", "Войлок"],
-    img: "https://images.unsplash.com/photo-1615529182904-14819c35db37?w=1200&q=80",
+    title: "Шкаф во всю стену",
+    story: "Описание проекта будет добавлено.",
+    materials: ["Крашеный МДФ", "Золотые вставки", "Ниша с подсветкой"],
+    img: photoWardrobe.url,
   },
 ];
 
