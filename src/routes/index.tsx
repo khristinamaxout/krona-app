@@ -248,8 +248,8 @@ function Hero() {
         <div className="md:col-span-5">
           <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-200">
             <img
-              src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80"
-              alt="Скандинавский интерьер"
+              src={photoWardrobe.url}
+              alt="Встроенный шкаф во всю стену с золотыми вставками"
               className="w-full h-full object-cover"
             />
           </div>
