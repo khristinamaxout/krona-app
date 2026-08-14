@@ -551,17 +551,20 @@ function Portfolio() {
                   <button
                     key={src}
                     onClick={() => setPhotoIdx(i + 1)}
-                    className="rounded-[20px] overflow-hidden bg-neutral-200 aspect-[4/5] group"
+                    onMouseEnter={() => preloadImage(src)}
+                    className="rounded-[20px] overflow-hidden bg-neutral-200 group"
                   >
-                    <img
-                      src={thumbOf(src)}
+                    <SmartImage
+                      thumb={thumbOf(src)}
+                      full={src}
                       alt={`${project.title} — фото ${i + 2}`}
-                      loading="lazy"
-                      decoding="async"
+                      ratio="4 / 5"
                       width={800}
                       height={1000}
+                      preloadFullOnHover
                       sizes="(min-width: 1024px) 20vw, 33vw"
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-700"
+                      className="w-full"
+                      imgClassName="group-hover:scale-[1.04]"
                     />
                   </button>
                 ))}
@@ -592,14 +595,25 @@ function Portfolio() {
           >
             <X className="w-7 h-7" />
           </button>
-          <img
-            src={project.photos[photoIdx]}
-            alt={project.title}
-            className="max-h-[88vh] max-w-full rounded-2xl object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <div className="relative max-h-[88vh] max-w-full" onClick={(e) => e.stopPropagation()}>
+            {/* мгновенное превью, пока грузится полноразмерное фото */}
+            <img
+              src={thumbOf(project.photos[photoIdx])}
+              alt=""
+              aria-hidden="true"
+              className="max-h-[88vh] max-w-full rounded-2xl object-contain blur-md"
+            />
+            <img
+              src={project.photos[photoIdx]}
+              alt={project.title}
+              decoding="async"
+              fetchPriority="high"
+              className="absolute inset-0 w-full h-full rounded-2xl object-contain"
+            />
+          </div>
         </div>
       )}
+
     </section>
   );
 }
