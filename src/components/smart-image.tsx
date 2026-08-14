@@ -95,7 +95,6 @@ export default function SmartImage({
         height={height}
         loading={priority ? "eager" : "lazy"}
         decoding="async"
-        fetchPriority={priority ? "high" : "auto"}
         onLoad={() => setLoaded(true)}
         onError={() => setLoaded(true)}
         className={`absolute inset-0 w-full h-full object-cover transition-[opacity,filter,transform] duration-700 ease-out ${

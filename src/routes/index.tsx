@@ -616,7 +616,6 @@ function Portfolio() {
               src={project.photos[photoIdx]}
               alt={project.title}
               decoding="async"
-              fetchPriority="high"
               className="absolute inset-0 w-full h-full rounded-2xl object-contain"
             />
           </div>
