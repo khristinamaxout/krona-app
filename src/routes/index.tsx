@@ -509,19 +509,23 @@ function Portfolio() {
             <div className="mt-8 grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
               <button
                 onClick={() => setPhotoIdx(0)}
+                onMouseEnter={() => preloadImage(project.photos[0])}
                 className="rounded-[20px] overflow-hidden bg-neutral-200 cursor-zoom-in w-full"
               >
-                <img
-                  src={thumbOf(project.photos[0])}
+                <SmartImage
+                  thumb={thumbOf(project.photos[0])}
+                  full={project.photos[0]}
                   alt={project.title}
-                  loading="eager"
-                  decoding="async"
+                  ratio="4 / 3"
                   width={800}
                   height={600}
+                  priority
+                  preloadFullOnHover
                   sizes="(min-width: 1024px) 55vw, 100vw"
-                  className="w-full h-full object-cover aspect-[4/3]"
+                  className="w-full"
                 />
               </button>
+
               <div>
                 {project.story.map((s) => (
                   <p key={s} className="mb-4 text-[15px] text-neutral-700 leading-relaxed">
