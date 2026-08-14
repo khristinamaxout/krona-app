@@ -437,18 +437,20 @@ function Portfolio() {
             onClick={() => setOpenIdx(i)}
             className="group text-left krona-lift rounded-[20px] border border-black/5 bg-white/60 p-3"
           >
-            <div className="aspect-[4/5] rounded-[16px] overflow-hidden bg-neutral-200 mb-4">
-              <img
-                src={thumbOf(p.photos[0])}
-                alt={`${p.title} — ${p.category}, ${p.style}`}
-                loading={i < 3 ? "eager" : "lazy"}
-                decoding="async"
-                width={800}
-                height={1000}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="w-full h-full object-cover krona-media"
-              />
-            </div>
+            <SmartImage
+              thumb={thumbOf(p.photos[0])}
+              full={p.photos[0]}
+              alt={`${p.title} — ${p.category}, ${p.style}`}
+              ratio="4 / 5"
+              width={800}
+              height={1000}
+              priority={i < 3}
+              preloadFullOnHover
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="rounded-[16px] bg-neutral-200 mb-4"
+              imgClassName="krona-media"
+            />
+
             <div className="px-2 pb-2">
               <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500">
                 Проект №{p.no} · {p.category}
