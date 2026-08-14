@@ -44,12 +44,34 @@ function isH3SwallowedErrorBody(body: string): boolean {
   }
 }
 
+/** Иммутабельное кэширование для статики с хэшированными/UUID-именами (CDN + браузер). */
+const IMMUTABLE_PATHS = /^\/(?:__l5e\/assets-v1|_build\/assets|assets)\//;
+
+function withCaching(request: Request, response: Response): Response {
+  if (response.status !== 200) return response;
+  const path = new URL(request.url).pathname;
+  const type = response.headers.get("content-type") ?? "";
+  const isStatic =
+    IMMUTABLE_PATHS.test(path) ||
+    /^(?:image|font|video|audio)\//.test(type) ||
+    /\.(?:png|jpe?g|webp|avif|gif|svg|ico|woff2?|mp4|webm)$/i.test(path);
+  if (!isStatic || response.headers.has("cache-control")) return response;
+
+  const headers = new Headers(response.headers);
+  headers.set("cache-control", "public, max-age=31536000, immutable");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      return withCaching(request, await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
       return new Response(renderErrorPage(), {
@@ -59,3 +81,4 @@ export default {
     }
   },
 };
+

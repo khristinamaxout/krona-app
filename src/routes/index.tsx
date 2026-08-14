@@ -21,6 +21,7 @@ import {
   LifeBuoy,
 } from "lucide-react";
 import Assistant from "@/components/assistant";
+import SmartImage, { preloadImage } from "@/components/smart-image";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
@@ -44,7 +45,16 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:type", content: "website" },
     ],
+    links: [
+      {
+        rel: "preload",
+        as: "image",
+        href: photoWardrobe.url,
+      },
+
+    ],
   }),
+
   component: Index,
 });
 
@@ -437,18 +447,20 @@ function Portfolio() {
             onClick={() => setOpenIdx(i)}
             className="group text-left krona-lift rounded-[20px] border border-black/5 bg-white/60 p-3"
           >
-            <div className="aspect-[4/5] rounded-[16px] overflow-hidden bg-neutral-200 mb-4">
-              <img
-                src={thumbOf(p.photos[0])}
-                alt={`${p.title} — ${p.category}, ${p.style}`}
-                loading={i < 3 ? "eager" : "lazy"}
-                decoding="async"
-                width={800}
-                height={1000}
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                className="w-full h-full object-cover krona-media"
-              />
-            </div>
+            <SmartImage
+              thumb={thumbOf(p.photos[0])}
+              full={p.photos[0]}
+              alt={`${p.title} — ${p.category}, ${p.style}`}
+              ratio="4 / 5"
+              width={800}
+              height={1000}
+              priority={i < 3}
+              preloadFullOnHover
+              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+              className="rounded-[16px] bg-neutral-200 mb-4"
+              imgClassName="krona-media"
+            />
+
             <div className="px-2 pb-2">
               <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500">
                 Проект №{p.no} · {p.category}
@@ -506,19 +518,23 @@ function Portfolio() {
             <div className="mt-8 grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
               <button
                 onClick={() => setPhotoIdx(0)}
+                onMouseEnter={() => preloadImage(project.photos[0])}
                 className="rounded-[20px] overflow-hidden bg-neutral-200 cursor-zoom-in w-full"
               >
-                <img
-                  src={thumbOf(project.photos[0])}
+                <SmartImage
+                  thumb={thumbOf(project.photos[0])}
+                  full={project.photos[0]}
                   alt={project.title}
-                  loading="eager"
-                  decoding="async"
+                  ratio="4 / 3"
                   width={800}
                   height={600}
+                  priority
+                  preloadFullOnHover
                   sizes="(min-width: 1024px) 55vw, 100vw"
-                  className="w-full h-full object-cover aspect-[4/3]"
+                  className="w-full"
                 />
               </button>
+
               <div>
                 {project.story.map((s) => (
                   <p key={s} className="mb-4 text-[15px] text-neutral-700 leading-relaxed">
@@ -544,17 +560,20 @@ function Portfolio() {
                   <button
                     key={src}
                     onClick={() => setPhotoIdx(i + 1)}
-                    className="rounded-[20px] overflow-hidden bg-neutral-200 aspect-[4/5] group"
+                    onMouseEnter={() => preloadImage(src)}
+                    className="rounded-[20px] overflow-hidden bg-neutral-200 group"
                   >
-                    <img
-                      src={thumbOf(src)}
+                    <SmartImage
+                      thumb={thumbOf(src)}
+                      full={src}
                       alt={`${project.title} — фото ${i + 2}`}
-                      loading="lazy"
-                      decoding="async"
+                      ratio="4 / 5"
                       width={800}
                       height={1000}
+                      preloadFullOnHover
                       sizes="(min-width: 1024px) 20vw, 33vw"
-                      className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-700"
+                      className="w-full"
+                      imgClassName="group-hover:scale-[1.04]"
                     />
                   </button>
                 ))}
@@ -585,14 +604,24 @@ function Portfolio() {
           >
             <X className="w-7 h-7" />
           </button>
-          <img
-            src={project.photos[photoIdx]}
-            alt={project.title}
-            className="max-h-[88vh] max-w-full rounded-2xl object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <div className="relative max-h-[88vh] max-w-full" onClick={(e) => e.stopPropagation()}>
+            {/* мгновенное превью, пока грузится полноразмерное фото */}
+            <img
+              src={thumbOf(project.photos[photoIdx])}
+              alt=""
+              aria-hidden="true"
+              className="max-h-[88vh] max-w-full rounded-2xl object-contain blur-md"
+            />
+            <img
+              src={project.photos[photoIdx]}
+              alt={project.title}
+              decoding="async"
+              className="absolute inset-0 w-full h-full rounded-2xl object-contain"
+            />
+          </div>
         </div>
       )}
+
     </section>
   );
 }
