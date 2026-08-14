@@ -24,8 +24,6 @@ import Assistant from "@/components/assistant";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
-import photoKitchen from "@/assets/kitchen-white.png.asset.json";
-import photoCabinet from "@/assets/cabinet-desk.png.asset.json";
 import { projects } from "@/data/projects";
 
 
