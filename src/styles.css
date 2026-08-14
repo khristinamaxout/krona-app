@@ -271,9 +271,11 @@
   .krona-rise,
   .krona-veil,
   .krona-check,
+  .krona-skeleton,
   .krona-sheen::after {
     animation: none;
   }
+
   .krona-lift:hover {
     transform: none;
   }
