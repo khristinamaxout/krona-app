@@ -26,17 +26,8 @@ import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
 import photoKitchen from "@/assets/kitchen-white.png.asset.json";
 import photoCabinet from "@/assets/cabinet-desk.png.asset.json";
-import p13_712 from "@/assets/p13-img-20250313-112700-712.jpg.asset.json";
-import p13_716 from "@/assets/p13-img-20250313-112700-716.jpg.asset.json";
-import p13_567 from "@/assets/p13-img-20250313-112700-567.jpg.asset.json";
-import p13_419 from "@/assets/p13-img-20250313-112700-419.jpg.asset.json";
-import p13_416 from "@/assets/p13-img-20250313-112700-416.jpg.asset.json";
-import p13_233 from "@/assets/p13-img-20250316-210514-233.jpg.asset.json";
-import p13_929 from "@/assets/p13-img-20250313-112700-929.jpg.asset.json";
-import p13_123 from "@/assets/p13-img-20250313-112701-123.jpg.asset.json";
-import p13_595792 from "@/assets/p13-2025031620595792.jpg.asset.json";
-import p13_351005 from "@/assets/p13-1741867351005.jpg.asset.json";
-import p13_364540 from "@/assets/p13-1741867364540.jpg.asset.json";
+import { projects } from "@/data/projects";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
