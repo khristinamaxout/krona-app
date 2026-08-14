@@ -24,7 +24,7 @@ import Assistant from "@/components/assistant";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
-import { projects } from "@/data/projects";
+import { projects, thumbOf } from "@/data/projects";
 
 
 export const Route = createFileRoute("/")({
@@ -439,9 +439,13 @@ function Portfolio() {
           >
             <div className="aspect-[4/5] rounded-[16px] overflow-hidden bg-neutral-200 mb-4">
               <img
-                src={p.photos[0]}
+                src={thumbOf(p.photos[0])}
                 alt={`${p.title} — ${p.category}, ${p.style}`}
-                loading="eager"
+                loading={i < 3 ? "eager" : "lazy"}
+                decoding="async"
+                width={800}
+                height={1000}
+                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                 className="w-full h-full object-cover krona-media"
               />
             </div>
@@ -505,9 +509,13 @@ function Portfolio() {
                 className="rounded-[20px] overflow-hidden bg-neutral-200 cursor-zoom-in w-full"
               >
                 <img
-                  src={project.photos[0]}
+                  src={thumbOf(project.photos[0])}
                   alt={project.title}
                   loading="eager"
+                  decoding="async"
+                  width={800}
+                  height={600}
+                  sizes="(min-width: 1024px) 55vw, 100vw"
                   className="w-full h-full object-cover aspect-[4/3]"
                 />
               </button>
@@ -539,9 +547,13 @@ function Portfolio() {
                     className="rounded-[20px] overflow-hidden bg-neutral-200 aspect-[4/5] group"
                   >
                     <img
-                      src={src}
+                      src={thumbOf(src)}
                       alt={`${project.title} — фото ${i + 2}`}
-                      loading="eager"
+                      loading="lazy"
+                      decoding="async"
+                      width={800}
+                      height={1000}
+                      sizes="(min-width: 1024px) 20vw, 33vw"
                       className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-700"
                     />
                   </button>
