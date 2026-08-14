@@ -24,19 +24,8 @@ import Assistant from "@/components/assistant";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
-import photoKitchen from "@/assets/kitchen-white.png.asset.json";
-import photoCabinet from "@/assets/cabinet-desk.png.asset.json";
-import p13_712 from "@/assets/p13-img-20250313-112700-712.jpg.asset.json";
-import p13_716 from "@/assets/p13-img-20250313-112700-716.jpg.asset.json";
-import p13_567 from "@/assets/p13-img-20250313-112700-567.jpg.asset.json";
-import p13_419 from "@/assets/p13-img-20250313-112700-419.jpg.asset.json";
-import p13_416 from "@/assets/p13-img-20250313-112700-416.jpg.asset.json";
-import p13_233 from "@/assets/p13-img-20250316-210514-233.jpg.asset.json";
-import p13_929 from "@/assets/p13-img-20250313-112700-929.jpg.asset.json";
-import p13_123 from "@/assets/p13-img-20250313-112701-123.jpg.asset.json";
-import p13_595792 from "@/assets/p13-2025031620595792.jpg.asset.json";
-import p13_351005 from "@/assets/p13-1741867351005.jpg.asset.json";
-import p13_364540 from "@/assets/p13-1741867364540.jpg.asset.json";
+import { projects } from "@/data/projects";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -415,31 +404,14 @@ function Brands() {
 /* ---------- Assistant (см. src/components/assistant.tsx) ---------- */
 
 /* ---------- Portfolio ---------- */
-const projects = [
-  {
-    title: "Кухня",
-    story: "Описание проекта будет добавлено.",
-    materials: ["Фрезерованные фасады", "Камень", "Чёрная фурнитура"],
-    img: photoKitchen.url,
-  },
-  {
-    title: "Кабинет",
-    story: "Описание проекта будет добавлено.",
-    materials: ["Рифлёные фасады", "Стекло", "Латунь"],
-    img: photoCabinet.url,
-  },
-  {
-    title: "Шкаф во всю стену",
-    story: "Описание проекта будет добавлено.",
-    materials: ["Крашеный МДФ", "Золотые вставки", "Ниша с подсветкой"],
-    img: photoWardrobe.url,
-  },
-];
-
 function Portfolio() {
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+  const [photoIdx, setPhotoIdx] = useState<number | null>(null);
+  const project = openIdx !== null ? projects[openIdx] : null;
+
   return (
-    <section id="portfolio" className="max-w-7xl mx-auto px-8 py-24">
-      <div className="flex items-end justify-between mb-14">
+    <section id="portfolio" className="max-w-7xl mx-auto px-6 md:px-8 py-24">
+      <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
         <div>
           <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
             02 — Проекты
@@ -452,159 +424,167 @@ function Portfolio() {
             .
           </h2>
         </div>
-        <a
-          href="#request"
-          className="hidden md:inline-flex items-center gap-2 text-sm text-neutral-600 hover:text-black"
-        >
-          Все проекты <ArrowRight className="w-4 h-4" />
-        </a>
+        <p className="text-sm text-neutral-600 max-w-xs">
+          {projects.length} реализованных проектов: кухни, прихожие, спальни, детские,
+          гардеробные. Нажмите на карточку, чтобы посмотреть галерею и характеристики.
+        </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-6">
-        {projects.map((p) => (
-          <article key={p.title} className="group">
-            <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-200 mb-5">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {projects.map((p, i) => (
+          <button
+            key={p.no}
+            onClick={() => setOpenIdx(i)}
+            className="group text-left krona-lift rounded-[20px] border border-black/5 bg-white/60 p-3"
+          >
+            <div className="aspect-[4/5] rounded-[16px] overflow-hidden bg-neutral-200 mb-4">
               <img
-                src={p.img}
-                alt={p.title}
-                className="w-full h-full object-cover group-hover:scale-[1.03] transition duration-700"
+                src={p.photos[0]}
+                alt={`${p.title} — ${p.category}, ${p.style}`}
+                loading="eager"
+                className="w-full h-full object-cover krona-media"
               />
             </div>
-            <h3 className="text-xl">{p.title}</h3>
-            <p className="mt-2 text-sm text-neutral-600 leading-relaxed">{p.story}</p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              {p.materials.map((m) => (
-                <span
-                  key={m}
-                  className="text-xs px-3 py-1 rounded-full border border-black/10 text-neutral-600"
-                >
-                  {m}
-                </span>
-              ))}
-            </div>
-          </article>
-        ))}
-      </div>
-
-      <FarandolaProject />
-    </section>
-  );
-}
-
-/* ---------- Проект №013 · Спальня «Фарандола» ---------- */
-const farandolaPhotos = [
-  { src: p13_712.url, alt: "Пятидверный шкаф с зеркальной секцией, спальня «Фарандола»" },
-  { src: p13_123.url, alt: "Общий вид спальни «Фарандола» с кроватью и комодом" },
-  { src: p13_364540.url, alt: "Кровать с мягким изголовьем и прикроватные тумбы" },
-  { src: p13_929.url, alt: "Комод с фрезеровкой и золотой фурнитурой" },
-  { src: p13_716.url, alt: "Комод и овальное зеркало в раме под цвет фасадов" },
-  { src: p13_351005.url, alt: "Зеркало в овальной раме над комодом" },
-  { src: p13_567.url, alt: "Прикроватная тумба, деталь фрезеровки" },
-  { src: p13_419.url, alt: "Фасад шкафа: фрезеровка и золотая ручка" },
-  { src: p13_416.url, alt: "Внутреннее наполнение шкафа" },
-  { src: p13_233.url, alt: "Кровать с подъёмным механизмом и местом хранения" },
-  { src: p13_595792.url, alt: "Спальня «Фарандола»: шкаф, кровать, тумбы" },
-];
-
-const farandolaSpecs = [
-  { k: "Категория", v: "Спальня, комплект" },
-  { k: "Стиль", v: "Неоклассика" },
-  { k: "Палитра", v: "Белый, бежевый, золото" },
-  { k: "Материалы", v: "МДФ, зеркало" },
-  { k: "Покрытие", v: "Глянцевая плёнка ПВХ" },
-  { k: "Фурнитура", v: "Boyard: ручки, петли с доводчиком" },
-];
-
-function FarandolaProject() {
-  const [active, setActive] = useState<number | null>(null);
-
-  return (
-    <div className="mt-24">
-      <div className="grid lg:grid-cols-[1.1fr_1fr] gap-10 lg:gap-16 items-start">
-        <div
-          className="rounded-[20px] overflow-hidden bg-neutral-200 cursor-zoom-in"
-          onClick={() => setActive(0)}
-        >
-          <img
-            src={farandolaPhotos[0].src}
-            alt={farandolaPhotos[0].alt}
-            className="w-full h-full object-cover aspect-[4/3] hover:scale-[1.02] transition duration-700"
-          />
-        </div>
-
-        <div>
-          <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
-            Проект №013 · реализован
-          </div>
-          <h3 className="text-3xl md:text-4xl font-normal leading-tight">
-            Спальня{" "}
-            <span style={{ color: forest }} className="italic font-serif">
-              «Фарандола»
-            </span>
-          </h3>
-          <p className="mt-5 text-[15px] text-neutral-700 leading-relaxed">
-            Большой пятидверный шкаф с зеркалом стал главной точкой интерьера. К нему мы
-            подобрали кровать с двумя тумбами, комод и зеркало. Зеркало оформили в такую же
-            раму, как основные фасады, — вместо резного багета, который планировался
-            изначально. В жизни всё получилось гармонично и очень нежно.
-          </p>
-          <p className="mt-4 text-[15px] text-neutral-700 leading-relaxed">
-            Спокойные глянцевые оттенки, единая фрезеровка на всех предметах комплекта и
-            золотая фурнитура — авторский набор решений для этой квартиры. Кровать сделана с
-            подъёмным механизмом: дополнительное место хранения без лишних корпусов в комнате.
-          </p>
-
-          <dl className="mt-8 grid sm:grid-cols-2 gap-x-8 gap-y-3">
-            {farandolaSpecs.map((s) => (
-              <div key={s.k} className="border-t border-black/10 pt-3">
-                <dt className="text-xs uppercase tracking-[0.15em] text-neutral-500">{s.k}</dt>
-                <dd className="text-sm text-neutral-800 mt-1">{s.v}</dd>
+            <div className="px-2 pb-2">
+              <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500">
+                Проект №{p.no} · {p.category}
               </div>
-            ))}
-          </dl>
-        </div>
-      </div>
-
-      <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-        {farandolaPhotos.slice(1).map((p, i) => (
-          <button
-            key={p.src}
-            onClick={() => setActive(i + 1)}
-            className="rounded-[20px] overflow-hidden bg-neutral-200 aspect-[4/5] group"
-          >
-            <img
-              src={p.src}
-              alt={p.alt}
-              loading="eager"
-              className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-700"
-            />
+              <h3 className="text-xl mt-2">{p.title}</h3>
+              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">{p.lead}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {p.tags.map((t) => (
+                  <span
+                    key={t}
+                    className="text-xs px-3 py-1 rounded-full border border-black/10 text-neutral-600"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <span
+                className="mt-5 inline-flex items-center gap-2 text-sm"
+                style={{ color: forest }}
+              >
+                Смотреть проект <ArrowRight className="w-4 h-4" />
+              </span>
+            </div>
           </button>
         ))}
       </div>
 
-      {active !== null && (
+      {project && (
         <div
-          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-4"
-          onClick={() => setActive(null)}
+          className="fixed inset-0 z-50 bg-black/60 overflow-y-auto p-4 md:p-8"
+          onClick={() => setOpenIdx(null)}
+        >
+          <div
+            className="krona-veil max-w-5xl mx-auto rounded-[20px] bg-[#FAFAF7] p-6 md:p-10"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-3">
+                  Проект №{project.no} · реализован · {project.style}
+                </div>
+                <h3 className="text-3xl md:text-4xl font-normal leading-tight">
+                  {project.title}
+                </h3>
+              </div>
+              <button
+                aria-label="Закрыть"
+                onClick={() => setOpenIdx(null)}
+                className="text-neutral-500 hover:text-black shrink-0"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            <div className="mt-8 grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
+              <button
+                onClick={() => setPhotoIdx(0)}
+                className="rounded-[20px] overflow-hidden bg-neutral-200 cursor-zoom-in w-full"
+              >
+                <img
+                  src={project.photos[0]}
+                  alt={project.title}
+                  loading="eager"
+                  className="w-full h-full object-cover aspect-[4/3]"
+                />
+              </button>
+              <div>
+                {project.story.map((s) => (
+                  <p key={s} className="mb-4 text-[15px] text-neutral-700 leading-relaxed">
+                    {s}
+                  </p>
+                ))}
+                <dl className="mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-3">
+                  {project.specs.map((s) => (
+                    <div key={s.k} className="border-t border-black/10 pt-3">
+                      <dt className="text-xs uppercase tracking-[0.15em] text-neutral-500">
+                        {s.k}
+                      </dt>
+                      <dd className="text-sm text-neutral-800 mt-1">{s.v}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+
+            {project.photos.length > 1 && (
+              <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                {project.photos.slice(1).map((src, i) => (
+                  <button
+                    key={src}
+                    onClick={() => setPhotoIdx(i + 1)}
+                    className="rounded-[20px] overflow-hidden bg-neutral-200 aspect-[4/5] group"
+                  >
+                    <img
+                      src={src}
+                      alt={`${project.title} — фото ${i + 2}`}
+                      loading="eager"
+                      className="w-full h-full object-cover group-hover:scale-[1.04] transition duration-700"
+                    />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <a
+              href="#request"
+              onClick={() => setOpenIdx(null)}
+              className="mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm text-white"
+              style={{ backgroundColor: forest }}
+            >
+              Хочу похожий проект <ArrowRight className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
+      )}
+
+      {project && photoIdx !== null && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4"
+          onClick={() => setPhotoIdx(null)}
         >
           <button
             className="absolute top-5 right-5 text-white/80 hover:text-white"
             aria-label="Закрыть"
-            onClick={() => setActive(null)}
+            onClick={() => setPhotoIdx(null)}
           >
             <X className="w-7 h-7" />
           </button>
           <img
-            src={farandolaPhotos[active].src}
-            alt={farandolaPhotos[active].alt}
+            src={project.photos[photoIdx]}
+            alt={project.title}
             className="max-h-[88vh] max-w-full rounded-2xl object-contain"
             onClick={(e) => e.stopPropagation()}
           />
         </div>
       )}
-    </div>
+    </section>
   );
 }
+
 
 
 /* ---------- Expert ---------- */
