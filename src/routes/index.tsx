@@ -30,7 +30,7 @@ import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
 import logoEgger from "@/assets/brands/egger.svg.asset.json";
 import logoKronospan from "@/assets/brands/kronospan.svg.asset.json";
 import logoGrass from "@/assets/brands/grass.svg.asset.json";
-import { projects, thumbOf } from "@/data/projects";
+import { projects, thumbOf, type Project } from "@/data/projects";
 
 
 export const Route = createFileRoute("/")({
