@@ -462,8 +462,50 @@ function Portfolio() {
         </p>
       </div>
 
+      {/* Избранные проекты */}
+      <div className="mb-16">
+        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-6">
+          Избранное студии
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {projects
+            .map((p, i) => ({ p, i }))
+            .filter(({ p }) => p.featured)
+            .map(({ p, i }, k) => (
+              <button
+                key={p.no}
+                onClick={() => setOpenIdx(i)}
+                style={{ animationDelay: `${k * 90}ms` }}
+                className="krona-rise group text-left krona-lift rounded-[24px] overflow-hidden border border-black/5 bg-white relative"
+              >
+                <SmartImage
+                  thumb={thumbOf(p.photos[0])}
+                  full={p.photos[0]}
+                  alt={`${p.title} — ${p.category}, ${p.style}`}
+                  ratio="3 / 4"
+                  width={800}
+                  height={1066}
+                  priority
+                  preloadFullOnHover
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="bg-neutral-200"
+                  imgClassName="krona-media"
+                />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white bg-gradient-to-t from-black/75 via-black/25 to-transparent">
+                  <div className="text-[11px] tracking-[0.2em] uppercase opacity-80">
+                    {p.category} · {p.style}
+                  </div>
+                  <h3 className="text-2xl mt-1">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed opacity-90 line-clamp-2">{p.lead}</p>
+                </div>
+              </button>
+            ))}
+        </div>
+      </div>
+
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {projects.map((p, i) => (
+
           <button
             key={p.no}
             onClick={() => setOpenIdx(i)}
