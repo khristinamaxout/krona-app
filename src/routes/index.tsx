@@ -996,23 +996,38 @@ function Textarea({ label }: { label: string }) {
 /* ---------- Footer ---------- */
 function Footer() {
   return (
-    <footer className="max-w-7xl mx-auto px-8 py-14 flex flex-wrap items-center justify-between gap-6 text-sm text-neutral-500">
-      <div className="flex items-center gap-2">
-        <Leaf className="w-4 h-4" style={{ color: forest }} strokeWidth={1.5} />
-        <span className="tracking-[0.3em]">КРОНА</span>
-      </div>
-      <div>© {new Date().getFullYear()} Студия мебели на заказ. Санкт-Петербург.</div>
-      <div className="flex gap-6">
-        <a href="#" className="hover:text-black">
-          Instagram
-        </a>
-        <a href="#" className="hover:text-black">
-          Pinterest
-        </a>
-        <a href="#" className="hover:text-black">
-          Telegram
-        </a>
+    <footer style={{ backgroundColor: forest }} className="text-[#EDE6D3]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-12 flex flex-wrap items-center justify-between gap-8 text-sm">
+        <div className="flex flex-col items-center gap-0.5 shrink-0">
+          <img
+            src={kronaWordmark.url}
+            alt="Крона — мебельная студия Елены Трифан"
+            className="h-7 w-auto"
+          />
+          <div
+            className="text-center leading-[1.05] text-[8px] tracking-[0.16em] whitespace-nowrap"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            <div className="font-light uppercase">Мебельная студия</div>
+            <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">
+              Елены Трифан
+            </div>
+          </div>
+        </div>
+
+        <div className="text-[#EDE6D3]/70">
+          © {new Date().getFullYear()} Студия мебели на заказ. Саратов.
+        </div>
+
+        <div className="flex flex-wrap gap-6">
+          {["Instagram", "MAX", "WhatsApp", "Telegram"].map((s) => (
+            <a key={s} href="#" className="text-[#EDE6D3]/80 hover:text-[#EDE6D3] transition">
+              {s}
+            </a>
+          ))}
+        </div>
       </div>
     </footer>
   );
 }
+
