@@ -25,6 +25,11 @@ import SmartImage, { preloadImage } from "@/components/smart-image";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
+import logoBlum from "@/assets/brands/blum.svg.asset.json";
+import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
+import logoEgger from "@/assets/brands/egger.svg.asset.json";
+import logoKronospan from "@/assets/brands/kronospan.svg.asset.json";
+import logoGrass from "@/assets/brands/grass.svg.asset.json";
 import { projects, thumbOf } from "@/data/projects";
 
 
@@ -378,6 +383,17 @@ const brandPlaceholders = [
   "Cleaf",
 ];
 
+const brandLogos: { name: string; src?: string }[] = [
+  { name: "Blum", src: logoBlum.url },
+  { name: "Boyard", src: logoBoyard.url },
+  { name: "Egger", src: logoEgger.url },
+  { name: "Kronospan", src: logoKronospan.url },
+  { name: "Grass", src: logoGrass.url },
+  { name: "Hettich" },
+  { name: "Rehau" },
+  { name: "Cleaf" },
+];
+
 function Brands() {
   return (
     <section id="brands" className="bg-white border-y border-black/5">
@@ -392,24 +408,30 @@ function Brands() {
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-          {brandPlaceholders.map((b) => (
+          {brandLogos.map((b) => (
             <div
-              key={b}
-              className="h-24 sm:h-28 rounded-2xl border border-black/10 bg-[#F5F3EE] flex items-center justify-center px-4 hover:border-black/30 transition"
+              key={b.name}
+              className="krona-lift h-24 sm:h-28 rounded-2xl border border-black/10 bg-[#F5F3EE] flex items-center justify-center px-6 hover:border-black/30 transition"
             >
-              <span className="text-xs sm:text-sm tracking-[0.22em] uppercase text-neutral-500 text-center break-words">
-                {b}
-              </span>
+              {b.src ? (
+                <img
+                  src={b.src}
+                  alt={`${b.name} — логотип производителя`}
+                  loading="lazy"
+                  decoding="async"
+                  className="max-h-9 sm:max-h-10 w-auto max-w-[70%] object-contain opacity-80 hover:opacity-100 transition"
+                />
+              ) : (
+                <span className="sr-only">{b.name}</span>
+              )}
             </div>
           ))}
         </div>
-        <p className="mt-8 text-sm text-neutral-500 max-w-xl">
-          Место под логотипы брендов — заглушки заменяются на официальные изображения партнёров.
-        </p>
       </div>
     </section>
   );
 }
+
 
 /* ---------- Assistant (см. src/components/assistant.tsx) ---------- */
 
@@ -440,8 +462,51 @@ function Portfolio() {
         </p>
       </div>
 
+      {/* Избранные проекты */}
+      <div className="mb-16">
+        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-6">
+          Избранное студии
+        </div>
+        <div className="grid md:grid-cols-3 gap-6">
+          {projects
+            .map((p, i) => ({ p, i }))
+            .filter(({ p }) => p.featured)
+            .map(({ p, i }, k) => (
+              <button
+                key={p.no}
+                onClick={() => setOpenIdx(i)}
+                style={{ animationDelay: `${k * 90}ms` }}
+                className="krona-rise group text-left krona-lift rounded-[24px] overflow-hidden border border-black/5 bg-white relative"
+              >
+                <SmartImage
+                  thumb={thumbOf(p.photos[0])}
+                  full={p.photos[0]}
+                  alt={`${p.title} — ${p.category}, ${p.style}`}
+                  ratio="3 / 4"
+                  width={800}
+                  height={1066}
+                  priority
+                  preloadFullOnHover
+                  sizes="(min-width: 768px) 33vw, 100vw"
+                  className="bg-neutral-200"
+                  imgClassName="krona-media"
+                />
+                <div className="absolute inset-x-0 bottom-0 p-6 text-white bg-gradient-to-t from-black/75 via-black/25 to-transparent">
+                  <div className="text-[11px] tracking-[0.2em] uppercase opacity-80">
+                    {p.category} · {p.style}
+                  </div>
+                  <h3 className="text-2xl mt-1">{p.title}</h3>
+                  <p className="mt-2 text-sm leading-relaxed opacity-90 line-clamp-2">{p.lead}</p>
+                </div>
+              </button>
+            ))}
+        </div>
+      </div>
+
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((p, i) => (
+        {projects.map((p, i) => p.featured ? null : (
+
+
           <button
             key={p.no}
             onClick={() => setOpenIdx(i)}
@@ -996,23 +1061,38 @@ function Textarea({ label }: { label: string }) {
 /* ---------- Footer ---------- */
 function Footer() {
   return (
-    <footer className="max-w-7xl mx-auto px-8 py-14 flex flex-wrap items-center justify-between gap-6 text-sm text-neutral-500">
-      <div className="flex items-center gap-2">
-        <Leaf className="w-4 h-4" style={{ color: forest }} strokeWidth={1.5} />
-        <span className="tracking-[0.3em]">КРОНА</span>
-      </div>
-      <div>© {new Date().getFullYear()} Студия мебели на заказ. Санкт-Петербург.</div>
-      <div className="flex gap-6">
-        <a href="#" className="hover:text-black">
-          Instagram
-        </a>
-        <a href="#" className="hover:text-black">
-          Pinterest
-        </a>
-        <a href="#" className="hover:text-black">
-          Telegram
-        </a>
+    <footer style={{ backgroundColor: forest }} className="text-[#EDE6D3]">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-12 flex flex-wrap items-center justify-between gap-8 text-sm">
+        <div className="flex flex-col items-center gap-0.5 shrink-0">
+          <img
+            src={kronaWordmark.url}
+            alt="Крона — мебельная студия Елены Трифан"
+            className="h-7 w-auto"
+          />
+          <div
+            className="text-center leading-[1.05] text-[8px] tracking-[0.16em] whitespace-nowrap"
+            style={{ fontFamily: "Inter, sans-serif" }}
+          >
+            <div className="font-light uppercase">Мебельная студия</div>
+            <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">
+              Елены Трифан
+            </div>
+          </div>
+        </div>
+
+        <div className="text-[#EDE6D3]/70">
+          © {new Date().getFullYear()} Студия мебели на заказ. Саратов.
+        </div>
+
+        <div className="flex flex-wrap gap-6">
+          {["Instagram", "MAX", "WhatsApp", "Telegram"].map((s) => (
+            <a key={s} href="#" className="text-[#EDE6D3]/80 hover:text-[#EDE6D3] transition">
+              {s}
+            </a>
+          ))}
+        </div>
       </div>
     </footer>
   );
 }
+
