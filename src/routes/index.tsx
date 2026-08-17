@@ -30,7 +30,7 @@ import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
 import logoEgger from "@/assets/brands/egger.svg.asset.json";
 import logoKronospan from "@/assets/brands/kronospan.svg.asset.json";
 import logoGrass from "@/assets/brands/grass.svg.asset.json";
-import { projects, thumbOf } from "@/data/projects";
+import { projects, thumbOf, type Project } from "@/data/projects";
 
 
 export const Route = createFileRoute("/")({
@@ -436,10 +436,104 @@ function Brands() {
 /* ---------- Assistant (см. src/components/assistant.tsx) ---------- */
 
 /* ---------- Portfolio ---------- */
+const FEATURED_ORDER = ["007", "005", "008"];
+
+function ProjectArchive({
+  items,
+  onOpen,
+}: {
+  items: Project[];
+  onOpen: (no: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div>
+      <div className="flex justify-center">
+        <button
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="krona-lift group relative overflow-hidden rounded-full px-8 py-4 text-sm tracking-[0.18em] uppercase text-white"
+          style={{ backgroundColor: forest }}
+        >
+          <span className="relative z-10 inline-flex items-center gap-3">
+            {open ? "Свернуть архив" : `Открыть архив проектов · ${items.length}`}
+            <ChevronRight
+              className={`w-4 h-4 transition-transform duration-500 ${open ? "rotate-90" : ""}`}
+            />
+          </span>
+          <span
+            aria-hidden
+            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style={{
+              background:
+                "linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent)",
+            }}
+          />
+        </button>
+      </div>
+
+      <div className="krona-archive mt-10" data-open={open}>
+        <div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-2">
+            {open &&
+              items.map((p, k) => (
+                <button
+                  key={p.no}
+                  onClick={() => onOpen(p.no)}
+                  style={{ animationDelay: `${Math.min(k, 8) * 70}ms` }}
+                  className="krona-unfold group text-left krona-lift rounded-[20px] border border-black/5 bg-white/60 p-3"
+                >
+                  <SmartImage
+                    thumb={thumbOf(p.photos[0])}
+                    full={p.photos[0]}
+                    alt={`${p.title} — ${p.category}, ${p.style}`}
+                    ratio="4 / 5"
+                    width={800}
+                    height={1000}
+                    preloadFullOnHover
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                    className="rounded-[16px] bg-neutral-200 mb-4"
+                    imgClassName="krona-media"
+                  />
+                  <div className="px-2 pb-2">
+                    <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500">
+                      Проект №{p.no} · {p.category}
+                    </div>
+                    <h3 className="text-xl mt-2">{p.title}</h3>
+                    <p className="mt-2 text-sm text-neutral-600 leading-relaxed">{p.lead}</p>
+                    <div className="mt-4 flex flex-wrap gap-2">
+                      {p.tags.map((t) => (
+                        <span
+                          key={t}
+                          className="text-xs px-3 py-1 rounded-full border border-black/10 text-neutral-600"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                    <span
+                      className="mt-5 inline-flex items-center gap-2 text-sm"
+                      style={{ color: forest }}
+                    >
+                      Смотреть проект <ArrowRight className="w-4 h-4" />
+                    </span>
+                  </div>
+                </button>
+              ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Portfolio() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [photoIdx, setPhotoIdx] = useState<number | null>(null);
   const project = openIdx !== null ? projects[openIdx] : null;
+  const rest = projects.filter((p) => !FEATURED_ORDER.includes(p.no));
+
 
   return (
     <section id="portfolio" className="max-w-7xl mx-auto px-6 md:px-8 py-24">
@@ -468,10 +562,11 @@ function Portfolio() {
           Избранное студии
         </div>
         <div className="grid md:grid-cols-3 gap-6">
-          {projects
-            .map((p, i) => ({ p, i }))
-            .filter(({ p }) => p.featured)
-            .map(({ p, i }, k) => (
+          {FEATURED_ORDER.map((no, k) => {
+            const i = projects.findIndex((x) => x.no === no);
+            const p = projects[i];
+            if (!p) return null;
+            return (
               <button
                 key={p.no}
                 onClick={() => setOpenIdx(i)}
@@ -499,59 +594,17 @@ function Portfolio() {
                   <p className="mt-2 text-sm leading-relaxed opacity-90 line-clamp-2">{p.lead}</p>
                 </div>
               </button>
-            ))}
+            );
+          })}
         </div>
       </div>
 
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((p, i) => p.featured ? null : (
+      {/* Архив проектов — «распаковка» */}
+      <ProjectArchive
+        items={rest}
+        onOpen={(no) => setOpenIdx(projects.findIndex((x) => x.no === no))}
+      />
 
-
-          <button
-            key={p.no}
-            onClick={() => setOpenIdx(i)}
-            className="group text-left krona-lift rounded-[20px] border border-black/5 bg-white/60 p-3"
-          >
-            <SmartImage
-              thumb={thumbOf(p.photos[0])}
-              full={p.photos[0]}
-              alt={`${p.title} — ${p.category}, ${p.style}`}
-              ratio="4 / 5"
-              width={800}
-              height={1000}
-              priority={i < 3}
-              preloadFullOnHover
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="rounded-[16px] bg-neutral-200 mb-4"
-              imgClassName="krona-media"
-            />
-
-            <div className="px-2 pb-2">
-              <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500">
-                Проект №{p.no} · {p.category}
-              </div>
-              <h3 className="text-xl mt-2">{p.title}</h3>
-              <p className="mt-2 text-sm text-neutral-600 leading-relaxed">{p.lead}</p>
-              <div className="mt-4 flex flex-wrap gap-2">
-                {p.tags.map((t) => (
-                  <span
-                    key={t}
-                    className="text-xs px-3 py-1 rounded-full border border-black/10 text-neutral-600"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-              <span
-                className="mt-5 inline-flex items-center gap-2 text-sm"
-                style={{ color: forest }}
-              >
-                Смотреть проект <ArrowRight className="w-4 h-4" />
-              </span>
-            </div>
-          </button>
-        ))}
-      </div>
 
       {project && (
         <div
