@@ -378,6 +378,17 @@ const brandPlaceholders = [
   "Cleaf",
 ];
 
+const brandLogos: { name: string; src?: string }[] = [
+  { name: "Blum", src: logoBlum.url },
+  { name: "Boyard", src: logoBoyard.url },
+  { name: "Egger", src: logoEgger.url },
+  { name: "Kronospan", src: logoKronospan.url },
+  { name: "Grass", src: logoGrass.url },
+  { name: "Hettich" },
+  { name: "Rehau" },
+  { name: "Cleaf" },
+];
+
 function Brands() {
   return (
     <section id="brands" className="bg-white border-y border-black/5">
@@ -392,24 +403,30 @@ function Brands() {
         </h2>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
-          {brandPlaceholders.map((b) => (
+          {brandLogos.map((b) => (
             <div
-              key={b}
-              className="h-24 sm:h-28 rounded-2xl border border-black/10 bg-[#F5F3EE] flex items-center justify-center px-4 hover:border-black/30 transition"
+              key={b.name}
+              className="krona-lift h-24 sm:h-28 rounded-2xl border border-black/10 bg-[#F5F3EE] flex items-center justify-center px-6 hover:border-black/30 transition"
             >
-              <span className="text-xs sm:text-sm tracking-[0.22em] uppercase text-neutral-500 text-center break-words">
-                {b}
-              </span>
+              {b.src ? (
+                <img
+                  src={b.src}
+                  alt={`${b.name} — логотип производителя`}
+                  loading="lazy"
+                  decoding="async"
+                  className="max-h-9 sm:max-h-10 w-auto max-w-[70%] object-contain opacity-80 hover:opacity-100 transition"
+                />
+              ) : (
+                <span className="sr-only">{b.name}</span>
+              )}
             </div>
           ))}
         </div>
-        <p className="mt-8 text-sm text-neutral-500 max-w-xl">
-          Место под логотипы брендов — заглушки заменяются на официальные изображения партнёров.
-        </p>
       </div>
     </section>
   );
 }
+
 
 /* ---------- Assistant (см. src/components/assistant.tsx) ---------- */
 
