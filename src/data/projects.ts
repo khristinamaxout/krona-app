@@ -55,6 +55,25 @@ import a34_3 from "@/assets/proj/34_photo_003.jpg.asset.json";
 import a35_0 from "@/assets/proj/35_photo_000.jpg.asset.json";
 import a35_1 from "@/assets/proj/35_photo_001.jpg.asset.json";
 import a35_2 from "@/assets/proj/35_photo_002.jpg.asset.json";
+import n10_2 from "@/assets/proj/10_photo_002.jpg.asset.json";
+import n10_3 from "@/assets/proj/10_photo_003.jpg.asset.json";
+import n10_4 from "@/assets/proj/10_photo_004.jpg.asset.json";
+import n10_5 from "@/assets/proj/10_photo_005.jpg.asset.json";
+import n16_0 from "@/assets/proj/16_photo_000.jpg.asset.json";
+import n16_1 from "@/assets/proj/16_photo_001.jpg.asset.json";
+import n16_2 from "@/assets/proj/16_photo_002.jpg.asset.json";
+import n16_5 from "@/assets/proj/16_photo_005.jpg.asset.json";
+import n16_6 from "@/assets/proj/16_photo_006.jpg.asset.json";
+import n16_9 from "@/assets/proj/16_photo_009.jpg.asset.json";
+import n18_2 from "@/assets/proj/18_photo_002.jpg.asset.json";
+import n18_4 from "@/assets/proj/18_photo_004.jpg.asset.json";
+import n18_1 from "@/assets/proj/18_photo_001.jpg.asset.json";
+import n18_0 from "@/assets/proj/18_photo_000.jpg.asset.json";
+import n37_1 from "@/assets/proj/37_photo_001.jpg.asset.json";
+import n37_2 from "@/assets/proj/37_photo_002.jpg.asset.json";
+import n37_0 from "@/assets/proj/37_photo_000.jpg.asset.json";
+import n39_1 from "@/assets/proj/39_photo_001.jpg.asset.json";
+import n39_0 from "@/assets/proj/39_photo_000.jpg.asset.json";
 
 import p13_712 from "@/assets/p13-img-20250313-112700-712.jpg.asset.json";
 import p13_716 from "@/assets/p13-img-20250313-112700-716.jpg.asset.json";
@@ -254,6 +273,29 @@ export const projects: Project[] = [
     photos: [a8_1.url, a8_3.url, a8_2.url, a8_0.url],
   },
   {
+    no: "010",
+    title: "Детская «Олива», пос. Юбилейный",
+    category: "Детские",
+    style: "Современный",
+    lead: "Солнечная комната для двух сестёр: два места за столом, две кровати и комод, в который вошло всё.",
+    story: [
+      "Хозяйками комнаты стали две девочки-школьницы, и главным было простое детское желание — сидеть за уроками рядом, не мешая друг другу. Мы бережно «обыграли» окно с батареей: вдоль него легла длинная столешница, а по бокам встали стеллаж и шкаф для учебников.",
+      "Две односпальные кровати — с ортопедическим основанием и выкатными ящиками для игрушек и постельного. Комод встроили в нишу, но глубину чуть увеличили: в него поместилась часть гардероба девочек и большой телевизор.",
+      "Цвета выбирали онлайн — семья жила тогда в другом городе. Хотелось стильно и не как у всех: тёплая олива с мягкой прохладой оттенков. Девочкам их солнечная комната нравится до сих пор, и она точно не надоест им через несколько лет.",
+    ],
+    specs: [
+      { k: "Категория", v: "Детская, комплект" },
+      { k: "Стиль", v: "Современный" },
+      { k: "Палитра", v: "Олива, светлое дерево" },
+      { k: "Материалы", v: "ЛДСП" },
+      { k: "Покрытие", v: "Плёнка ПВХ" },
+      { k: "Фурнитура", v: "Направляющие, петли с доводчиком" },
+    ],
+    tags: ["Две рабочие зоны", "Выкатные ящики", "Обход батареи"],
+    photos: [n10_2.url, n10_3.url, n10_4.url, n10_5.url],
+  },
+
+  {
     no: "011",
     title: "Консоль «Белый глянец»",
     category: "Тумбы",
@@ -329,6 +371,49 @@ export const projects: Project[] = [
       p13_595792.url,
     ],
   },
+  {
+    no: "016",
+    title: "Молодёжная «Лофт»",
+    category: "Детские",
+    style: "Лофт",
+    lead: "Комната подростка, где поместилось всё: кровать, шкаф, стол, стеллаж и макияжный столик.",
+    story: [
+      "Комната небольшая, а список желаний — длинный: спать, учиться, краситься, хранить вещи и оставить место для себя. Мы подготовили три планировки с разной стоимостью, чтобы семья спокойно выбрала свою.",
+      "Выбрали самую практичную. Угловой шкаф сделали с дверями-гармошкой — обе створки уходят в одну сторону и не мешают проходу. Стеллаж подвесили к стене, чтобы освободить пол, а в полку над рабочей зоной завели встроенную подсветку.",
+      "Цвета выбирала сама хозяйка комнаты: светлое дерево и цемент — неприхотливые и очень «лофтовые». Открытые полки стали как холст: книги, фигурки и мелочи превратились в яркие акценты. А поворотное зеркало-трюмо — отдельная радость: причёску видно со всех сторон.",
+    ],
+    specs: [
+      { k: "Категория", v: "Молодёжная комната, комплект" },
+      { k: "Стиль", v: "Лофт" },
+      { k: "Материалы", v: "ЛДСП" },
+      { k: "Покрытие", v: "Плёнка ПВХ" },
+      { k: "Фурнитура", v: "Двери-гармошка, направляющие, доводчики" },
+    ],
+    tags: ["Двери-гармошка", "Подвесной стеллаж", "Встроенная подсветка"],
+    photos: [n16_0.url, n16_1.url, n16_6.url, n16_2.url, n16_5.url, n16_9.url],
+  },
+  {
+    no: "018",
+    title: "Гостиная с подсветкой",
+    category: "Гостиные",
+    style: "Современный",
+    lead: "Шкаф, витрина и парящая тумба в одной линии — и мягкий свет, который включают по вечерам.",
+    story: [
+      "Гостиную придумала для себя молодая хозяйка: тёмные глубокие тона с тёплым деревом, строго и со вкусом. Мы не стали спорить с её концепцией — мы её собрали.",
+      "Задача была объединить платяной шкаф, витрину и ТВ-тумбу в одну композицию. Под тумбой завели подсветку: днём это эффект парящего объёма, вечером — мягкий свет для просмотра кино без люстры.",
+      "Подсветку добавили и в витрину: посуда и декор стали центром внимания гостей. Фурнитуру взяли с плавным закрыванием — чтобы пользоваться было комфортно и через десять лет.",
+    ],
+    specs: [
+      { k: "Категория", v: "Гостиная, стенка" },
+      { k: "Стиль", v: "Современный" },
+      { k: "Материалы", v: "МДФ, стекло" },
+      { k: "Покрытие", v: "Плёнка ПВХ" },
+      { k: "Фурнитура", v: "Петли с доводчиком, направляющие" },
+    ],
+    tags: ["Парящая тумба", "Подсветка витрины", "Тёмная палитра"],
+    photos: [n18_2.url, n18_4.url, n18_1.url, n18_0.url],
+  },
+
   {
     no: "020",
     title: "Молодёжная комната «Бархат»",
@@ -455,7 +540,50 @@ export const projects: Project[] = [
     tags: ["Двери купе", "Зеркальные фасады", "Чёрный металл"],
     photos: [a35_2.url, a35_0.url, a35_1.url],
   },
+  {
+    no: "037",
+    title: "Спальня на переделку, г. Энгельс",
+    category: "Спальни",
+    style: "Современный",
+    lead: "Обновили то, что уже было, и добавили кровать 1800 × 2000 мм с хранением в изголовье.",
+    story: [
+      "Не всегда нужно выбрасывать всё и начинать заново. Дмитрий пришёл с готовой спальней, которая перестала нравиться: тёмно-зелёные фасады тянули комнату вниз и делали её теснее.",
+      "Мы заменили фасады шкафов на светлые — комната сразу стала выше и спокойнее — и изготовили большую кровать со спальным местом 1800 × 2000 мм. В изголовье спрятали систему хранения, а под матрасом — вместительный короб на подъёмном механизме.",
+      "Цвет мы согласовывали три недели: заказчик хотел быть уверенным на сто процентов. Мы дождались импортного механизма и собрали всё точно так, как договаривались. Если вам жаль расставаться со старой мебелью — приходите, мы посчитаем обновление.",
+    ],
+    specs: [
+      { k: "Категория", v: "Спальня, обновление + кровать" },
+      { k: "Стиль", v: "Современный" },
+      { k: "Материалы", v: "МДФ" },
+      { k: "Покрытие", v: "Плёнка ПВХ" },
+      { k: "Фурнитура", v: "Подъёмный механизм, петли с доводчиком" },
+    ],
+    tags: ["Замена фасадов", "Кровать 1800 × 2000", "Хранение в изголовье"],
+    photos: [n37_1.url, n37_2.url, n37_0.url],
+  },
+  {
+    no: "039",
+    title: "Зал для Константина",
+    category: "Гостиные",
+    style: "Современный",
+    lead: "Тёплое дерево, графит и зеркальное купе во всю стену — гостиная, которая не устарела за годы.",
+    story: [
+      "Константин — друг нашей семьи, и его квартиру мы обставляли целиком: от кухни до санузла. В зале хотелось тепла, но без тяжести.",
+      "Мы соединили тёплую древесную текстуру с холодным графитом и белым, добавили вставки из стекла и зеркала. Шкаф-купе с зеркальными дверями во всю стену удвоил свет, а ТВ-зона с витринами стала спокойным центром комнаты.",
+      "Наполнение каждого предмета обсуждали отдельно и подолгу — зато сегодня, спустя годы, интерьер по-прежнему выглядит актуальным и очень уютным. Именно так работает мебель, сделанная под человека.",
+    ],
+    specs: [
+      { k: "Категория", v: "Гостиная, комплект" },
+      { k: "Стиль", v: "Современный" },
+      { k: "Материалы", v: "ЛДСП, стекло, зеркало" },
+      { k: "Покрытие", v: "Плёнка ПВХ" },
+      { k: "Фурнитура", v: "Система купе, доводчики" },
+    ],
+    tags: ["Зеркальное купе", "ТВ-зона", "Витрины"],
+    photos: [n39_1.url, n39_0.url],
+  },
 ];
+
 
 
 // --- Лёгкие WebP-превью для быстрой загрузки сетки проектов ---
@@ -522,8 +650,46 @@ import th60 from "@/assets/p13-img-20250313-112700-716_thumb.webp.asset.json";
 import th61 from "@/assets/p13-img-20250313-112700-929_thumb.webp.asset.json";
 import th62 from "@/assets/p13-img-20250313-112701-123_thumb.webp.asset.json";
 import th63 from "@/assets/p13-img-20250316-210514-233_thumb.webp.asset.json";
+import tn10_2 from "@/assets/proj/10_photo_002_thumb.webp.asset.json";
+import tn10_3 from "@/assets/proj/10_photo_003_thumb.webp.asset.json";
+import tn10_4 from "@/assets/proj/10_photo_004_thumb.webp.asset.json";
+import tn10_5 from "@/assets/proj/10_photo_005_thumb.webp.asset.json";
+import tn16_0 from "@/assets/proj/16_photo_000_thumb.webp.asset.json";
+import tn16_1 from "@/assets/proj/16_photo_001_thumb.webp.asset.json";
+import tn16_2 from "@/assets/proj/16_photo_002_thumb.webp.asset.json";
+import tn16_5 from "@/assets/proj/16_photo_005_thumb.webp.asset.json";
+import tn16_6 from "@/assets/proj/16_photo_006_thumb.webp.asset.json";
+import tn16_9 from "@/assets/proj/16_photo_009_thumb.webp.asset.json";
+import tn18_2 from "@/assets/proj/18_photo_002_thumb.webp.asset.json";
+import tn18_4 from "@/assets/proj/18_photo_004_thumb.webp.asset.json";
+import tn18_1 from "@/assets/proj/18_photo_001_thumb.webp.asset.json";
+import tn18_0 from "@/assets/proj/18_photo_000_thumb.webp.asset.json";
+import tn37_1 from "@/assets/proj/37_photo_001_thumb.webp.asset.json";
+import tn37_2 from "@/assets/proj/37_photo_002_thumb.webp.asset.json";
+import tn37_0 from "@/assets/proj/37_photo_000_thumb.webp.asset.json";
+import tn39_1 from "@/assets/proj/39_photo_001_thumb.webp.asset.json";
+import tn39_0 from "@/assets/proj/39_photo_000_thumb.webp.asset.json";
 
 const thumbMap: Record<string, string> = {
+  "/__l5e/assets-v1/7beb2aa2-38ec-41ed-b83a-036967a69f32/krona-10_photo_002.jpg": tn10_2.url,
+  "/__l5e/assets-v1/a4915387-45f1-434d-930f-ef51034080cc/krona-10_photo_003.jpg": tn10_3.url,
+  "/__l5e/assets-v1/c671fc0e-8482-4179-9979-15c529638299/krona-10_photo_004.jpg": tn10_4.url,
+  "/__l5e/assets-v1/dbff510b-86e5-48c7-8f22-5944196cb947/krona-10_photo_005.jpg": tn10_5.url,
+  "/__l5e/assets-v1/61d9893c-a2da-4acb-9ca7-8d7dc65170e5/krona-16_photo_000.jpg": tn16_0.url,
+  "/__l5e/assets-v1/16b41dea-b61e-4312-b23a-60b61938502e/krona-16_photo_001.jpg": tn16_1.url,
+  "/__l5e/assets-v1/efb58599-670b-4a2a-8893-e9f0046aa1a7/krona-16_photo_002.jpg": tn16_2.url,
+  "/__l5e/assets-v1/9e9d9974-ec2d-4f1f-bb82-efa84df0bc28/krona-16_photo_005.jpg": tn16_5.url,
+  "/__l5e/assets-v1/6801c711-e609-456c-ad22-32b9c5e384fb/krona-16_photo_006.jpg": tn16_6.url,
+  "/__l5e/assets-v1/64e0e006-2285-4c79-a8ce-347611979f7e/krona-16_photo_009.jpg": tn16_9.url,
+  "/__l5e/assets-v1/77fb5647-96f9-4cd1-bd2b-643e800b15f6/krona-18_photo_002.jpg": tn18_2.url,
+  "/__l5e/assets-v1/6dd51d83-f469-4334-a71c-47ff5988ba7d/krona-18_photo_004.jpg": tn18_4.url,
+  "/__l5e/assets-v1/7721ab4e-57f8-4e4c-a511-e05b470a9100/krona-18_photo_001.jpg": tn18_1.url,
+  "/__l5e/assets-v1/a37ed67a-e1da-4eec-8a3f-4b2746c1c29a/krona-18_photo_000.jpg": tn18_0.url,
+  "/__l5e/assets-v1/c85c94a5-9575-485f-af8e-4375dd58be9f/krona-37_photo_001.jpg": tn37_1.url,
+  "/__l5e/assets-v1/5db7dcac-3891-4516-a8b0-1a72d1b240b1/krona-37_photo_002.jpg": tn37_2.url,
+  "/__l5e/assets-v1/59237a19-aa99-4424-8f58-8dc33481c40a/krona-37_photo_000.jpg": tn37_0.url,
+  "/__l5e/assets-v1/7473e8ed-d85a-4a3e-9783-f2573be95ec1/krona-39_photo_001.jpg": tn39_1.url,
+  "/__l5e/assets-v1/ab33f56b-425b-4711-9fb0-2f618bd2339d/krona-39_photo_000.jpg": tn39_0.url,
   "/__l5e/assets-v1/6b08d37e-ece1-4fa6-9424-26fbb1551c40/krona-11_photo_000.jpg": th1.url,
   "/__l5e/assets-v1/adb1a275-08ef-42fd-8cb2-6e45691f646d/krona-11_photo_001.jpg": th2.url,
   "/__l5e/assets-v1/a84d0376-5c57-4849-9193-9c851377c0d4/krona-12_photo_000.jpg": th3.url,
