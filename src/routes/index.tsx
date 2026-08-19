@@ -426,7 +426,7 @@ function Brands() {
                 alt={`${b.name} — логотип производителя`}
                 loading="lazy"
                 decoding="async"
-                className="max-h-9 sm:max-h-10 w-auto max-w-[75%] object-contain opacity-80 hover:opacity-100 transition"
+                className={`w-auto max-w-[75%] object-contain opacity-80 hover:opacity-100 transition ${b.tall ? "max-h-16 sm:max-h-20" : "max-h-9 sm:max-h-10"}`}
               />
             </a>
           ))}
