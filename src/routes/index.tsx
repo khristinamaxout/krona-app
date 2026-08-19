@@ -30,6 +30,12 @@ import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
 import logoEgger from "@/assets/brands/egger.svg.asset.json";
 import logoKronospan from "@/assets/brands/kronospan.svg.asset.json";
 import logoGrass from "@/assets/brands/grass.svg.asset.json";
+import logoHettich from "@/assets/brands/hettich.svg.asset.json";
+import logoAristo from "@/assets/brands/aristo.png.asset.json";
+import logoAq from "@/assets/brands/aq.png.asset.json";
+import logoKastamonu from "@/assets/brands/kastamonu.png.asset.json";
+import logoAgt from "@/assets/brands/agt.svg.asset.json";
+import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
 import { projects, thumbOf, type Project } from "@/data/projects";
 
 
