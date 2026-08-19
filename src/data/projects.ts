@@ -55,7 +55,7 @@ import a34_3 from "@/assets/proj/34_photo_003.jpg.asset.json";
 import a35_0 from "@/assets/proj/35_photo_000.jpg.asset.json";
 import a35_1 from "@/assets/proj/35_photo_001.jpg.asset.json";
 import a35_2 from "@/assets/proj/35_photo_002.jpg.asset.json";
-import n10_2 from "@/assets/proj/10_photo_002.jpg.asset.json";
+import n10_2pro from "@/assets/proj/10_photo_002_pro.jpg";
 import n10_3 from "@/assets/proj/10_photo_003.jpg.asset.json";
 import n10_4 from "@/assets/proj/10_photo_004.jpg.asset.json";
 import n10_5 from "@/assets/proj/10_photo_005.jpg.asset.json";
@@ -120,7 +120,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Boyard: ручки, петли с доводчиком, push-to-open" },
     ],
     tags: ["Рабочая зона", "Стеллажи", "Вентиляция за фасадом"],
-    photos: [a1_2.url, a1_3.url, a1_0.url, a1_1.url],
+    photos: [a1_3.url, a1_2.url, a1_0.url, a1_1.url],
   },
   {
     no: "002",
@@ -292,7 +292,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Направляющие, петли с доводчиком" },
     ],
     tags: ["Две рабочие зоны", "Выкатные ящики", "Обход батареи"],
-    photos: [n10_2.url, n10_3.url, n10_4.url, n10_5.url],
+    photos: [n10_2pro, n10_3.url, n10_4.url, n10_5.url],
   },
 
   {
@@ -390,7 +390,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Двери-гармошка, направляющие, доводчики" },
     ],
     tags: ["Двери-гармошка", "Подвесной стеллаж", "Встроенная подсветка"],
-    photos: [n16_0.url, n16_1.url, n16_6.url, n16_2.url, n16_5.url, n16_9.url],
+    photos: [n16_1.url, n16_0.url, n16_6.url, n16_2.url, n16_5.url, n16_9.url],
   },
   {
     no: "018",
@@ -517,7 +517,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Hettich: ручки, доводчики, направляющие" },
     ],
     tags: ["Реечная вешалка", "Мягкое сиденье", "Натуральные текстуры"],
-    photos: [a34_2.url, a34_0.url, a34_1.url, a34_3.url],
+    photos: [a34_0.url, a34_2.url, a34_1.url, a34_3.url],
   },
   {
     no: "035",
@@ -651,6 +651,7 @@ import th61 from "@/assets/p13-img-20250313-112700-929_thumb.webp.asset.json";
 import th62 from "@/assets/p13-img-20250313-112701-123_thumb.webp.asset.json";
 import th63 from "@/assets/p13-img-20250316-210514-233_thumb.webp.asset.json";
 import tn10_2 from "@/assets/proj/10_photo_002_thumb.webp.asset.json";
+import tn10_2pro from "@/assets/proj/10_photo_002_pro_thumb.webp";
 import tn10_3 from "@/assets/proj/10_photo_003_thumb.webp.asset.json";
 import tn10_4 from "@/assets/proj/10_photo_004_thumb.webp.asset.json";
 import tn10_5 from "@/assets/proj/10_photo_005_thumb.webp.asset.json";
@@ -671,6 +672,7 @@ import tn39_1 from "@/assets/proj/39_photo_001_thumb.webp.asset.json";
 import tn39_0 from "@/assets/proj/39_photo_000_thumb.webp.asset.json";
 
 const thumbMap: Record<string, string> = {
+  [n10_2pro]: tn10_2pro,
   "/__l5e/assets-v1/7beb2aa2-38ec-41ed-b83a-036967a69f32/krona-10_photo_002.jpg": tn10_2.url,
   "/__l5e/assets-v1/a4915387-45f1-434d-930f-ef51034080cc/krona-10_photo_003.jpg": tn10_3.url,
   "/__l5e/assets-v1/c671fc0e-8482-4179-9979-15c529638299/krona-10_photo_004.jpg": tn10_4.url,
