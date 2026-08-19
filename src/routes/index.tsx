@@ -982,6 +982,44 @@ const reviews = [
   },
 ];
 
+/* Реальная переписка с заказчицей проекта «Бархат» (детская), декабрь 2025 */
+const chatThread = [
+  { side: "in", text: "Добрый вечер, Елена! Спасибо за мебель! Все получилось, как мы и хотели 👍" },
+  { side: "out", text: "Ой, как я рада 🤍" },
+  { side: "in", text: "Она такая воздушная получилось 😍" },
+  { side: "out", text: "Ребёнок доволен?" },
+  { side: "in", text: "Да, ооооочень. Всё, как она хотела" },
+];
+
+function ChatProof() {
+  return (
+    <div className="rounded-3xl p-8 flex flex-col text-white" style={{ backgroundColor: forest }}>
+      <div className="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">
+        Живая переписка · проект «Бархат»
+      </div>
+      <div className="flex flex-col gap-2.5">
+        {chatThread.map((m, i) => (
+          <div key={i} className={m.side === "in" ? "flex" : "flex justify-end"}>
+            <p
+              className={
+                "max-w-[85%] text-[15px] leading-snug px-4 py-2.5 " +
+                (m.side === "in"
+                  ? "bg-white/10 rounded-2xl rounded-bl-md"
+                  : "bg-white/90 text-neutral-900 rounded-2xl rounded-br-md")
+              }
+            >
+              {m.text}
+            </p>
+          </div>
+        ))}
+      </div>
+      <div className="mt-8 pt-6 border-t border-white/15 text-xs text-white/60">
+        Мариам · детская комната, Саратов, 2025
+      </div>
+    </div>
+  );
+}
+
 function Reviews() {
   return (
     <section id="reviews" className="max-w-7xl mx-auto px-8 py-24">
@@ -1004,10 +1042,14 @@ function Reviews() {
             </div>
           </div>
         ))}
+        <div className="md:col-span-3 lg:col-span-1 md:max-w-md">
+          <ChatProof />
+        </div>
       </div>
     </section>
   );
 }
+
 
 /* ---------- Request Form ---------- */
 function RequestForm() {
