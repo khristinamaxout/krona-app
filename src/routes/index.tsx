@@ -412,24 +412,25 @@ function Brands() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
           {brandLogos.map((b) => (
-            <div
+            <a
               key={b.name}
+              href={b.site}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              title={b.name}
               className="krona-lift h-24 sm:h-28 rounded-2xl border border-black/10 bg-[#F5F3EE] flex items-center justify-center px-6 hover:border-black/30 transition"
             >
-              {b.src ? (
-                <img
-                  src={b.src}
-                  alt={`${b.name} — логотип производителя`}
-                  loading="lazy"
-                  decoding="async"
-                  className="max-h-9 sm:max-h-10 w-auto max-w-[70%] object-contain opacity-80 hover:opacity-100 transition"
-                />
-              ) : (
-                <span className="sr-only">{b.name}</span>
-              )}
-            </div>
+              <img
+                src={b.src}
+                alt={`${b.name} — логотип производителя`}
+                loading="lazy"
+                decoding="async"
+                className="max-h-9 sm:max-h-10 w-auto max-w-[75%] object-contain opacity-80 hover:opacity-100 transition"
+              />
+            </a>
           ))}
         </div>
+
       </div>
     </section>
   );
