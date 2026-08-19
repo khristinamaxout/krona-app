@@ -33,6 +33,18 @@ import a11_0 from "@/assets/proj/11_photo_000.jpg.asset.json";
 import a11_1 from "@/assets/proj/11_photo_001.jpg.asset.json";
 import a12_0 from "@/assets/proj/12_photo_000.jpg.asset.json";
 import a12_1 from "@/assets/proj/12_photo_001.jpg.asset.json";
+import n20_0 from "@/assets/proj/20_photo_100.jpg.asset.json";
+import n20_1 from "@/assets/proj/20_photo_101.jpg.asset.json";
+import n20_2 from "@/assets/proj/20_photo_102.jpg.asset.json";
+import n20_3 from "@/assets/proj/20_photo_103.jpg.asset.json";
+import n20_4 from "@/assets/proj/20_photo_104.jpg.asset.json";
+import n20_5 from "@/assets/proj/20_photo_105.jpg.asset.json";
+import tn20_0 from "@/assets/proj/20_photo_100_thumb.webp.asset.json";
+import tn20_1 from "@/assets/proj/20_photo_101_thumb.webp.asset.json";
+import tn20_2 from "@/assets/proj/20_photo_102_thumb.webp.asset.json";
+import tn20_3 from "@/assets/proj/20_photo_103_thumb.webp.asset.json";
+import tn20_4 from "@/assets/proj/20_photo_104_thumb.webp.asset.json";
+import tn20_5 from "@/assets/proj/20_photo_105_thumb.webp.asset.json";
 import a20_0 from "@/assets/proj/20_photo_000.jpg.asset.json";
 import a20_1 from "@/assets/proj/20_photo_001.jpg.asset.json";
 import a20_2 from "@/assets/proj/20_photo_002.jpg.asset.json";
@@ -433,7 +445,9 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Boyard, GTV: ручки, доводчики, push-to-open" },
     ],
     tags: ["Рабочее место", "Макияжный столик", "Единая фрезеровка"],
-    photos: [a20_4.url, a20_1.url, a20_0.url, a20_2.url],
+    photos: [
+      n20_0.url, n20_1.url, n20_2.url, n20_3.url, n20_4.url, n20_5.url, a20_4.url, a20_1.url, a20_0.url, a20_2.url,
+    ],
   },
   {
     no: "021",
@@ -700,6 +714,12 @@ const thumbMap: Record<string, string> = {
   "/__l5e/assets-v1/506449a6-4ff7-46ad-a4fd-389c30402ccc/krona-1_photo_001.jpg": th6.url,
   "/__l5e/assets-v1/20ebe921-8044-497b-9e0b-9175dcba85fb/krona-1_photo_002.jpg": th7.url,
   "/__l5e/assets-v1/c99fe50a-c250-49a1-a30d-dd1e431c8ca8/krona-1_photo_003.jpg": th8.url,
+  "/__l5e/assets-v1/4b7ac77c-8220-4656-8346-e34f59b08da0/krona-20_photo_100.jpg": tn20_0.url,
+  "/__l5e/assets-v1/e938b13a-aaf4-4939-ad10-061fe6acfb4f/krona-20_photo_101.jpg": tn20_1.url,
+  "/__l5e/assets-v1/d15780bd-52be-4ec1-83a2-42104f9c1c05/krona-20_photo_102.jpg": tn20_2.url,
+  "/__l5e/assets-v1/c1b95907-baed-4183-a995-6cc4a19154ef/krona-20_photo_103.jpg": tn20_3.url,
+  "/__l5e/assets-v1/9e015232-3e30-4be1-a3d2-620ccbc83eb2/krona-20_photo_104.jpg": tn20_4.url,
+  "/__l5e/assets-v1/76f4ba77-4ad6-4c01-a528-cd42c0db96b1/krona-20_photo_105.jpg": tn20_5.url,
   "/__l5e/assets-v1/8cd5931e-8416-49fa-9d90-454fc22b9c79/krona-20_photo_000.jpg": th9.url,
   "/__l5e/assets-v1/8fbc4f9a-4b18-43e5-b48e-62b968c757ca/krona-20_photo_001.jpg": th10.url,
   "/__l5e/assets-v1/da8fdda9-46a7-4b54-a4db-927207a65de3/krona-20_photo_002.jpg": th11.url,
