@@ -19,6 +19,8 @@ import {
   Factory,
   Wrench,
   LifeBuoy,
+  Layers,
+  TreePine,
 } from "lucide-react";
 import Assistant from "@/components/assistant";
 import SmartImage, { preloadImage } from "@/components/smart-image";
