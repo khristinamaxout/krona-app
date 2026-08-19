@@ -120,7 +120,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Boyard: ручки, петли с доводчиком, push-to-open" },
     ],
     tags: ["Рабочая зона", "Стеллажи", "Вентиляция за фасадом"],
-    photos: [a1_2.url, a1_3.url, a1_0.url, a1_1.url],
+    photos: [a1_3.url, a1_2.url, a1_0.url, a1_1.url],
   },
   {
     no: "002",
@@ -390,7 +390,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Двери-гармошка, направляющие, доводчики" },
     ],
     tags: ["Двери-гармошка", "Подвесной стеллаж", "Встроенная подсветка"],
-    photos: [n16_0.url, n16_1.url, n16_6.url, n16_2.url, n16_5.url, n16_9.url],
+    photos: [n16_1.url, n16_0.url, n16_6.url, n16_2.url, n16_5.url, n16_9.url],
   },
   {
     no: "018",
@@ -517,7 +517,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Hettich: ручки, доводчики, направляющие" },
     ],
     tags: ["Реечная вешалка", "Мягкое сиденье", "Натуральные текстуры"],
-    photos: [a34_2.url, a34_0.url, a34_1.url, a34_3.url],
+    photos: [a34_0.url, a34_2.url, a34_1.url, a34_3.url],
   },
   {
     no: "035",
