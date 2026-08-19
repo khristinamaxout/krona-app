@@ -378,12 +378,13 @@ function WhyUs() {
 }
 
 /* ---------- Партнёры / бренды ---------- */
-const brandLogos: { name: string; src?: string; site: string }[] = [
+const brandLogos: { name: string; src?: string; site: string; tall?: boolean }[] = [
   { name: "Blum", src: logoBlum.url, site: "https://blum-pro.ru/" },
   { name: "Hettich", src: logoHettich.url, site: "https://hettich.ru/" },
   { name: "Boyard", src: logoBoyard.url, site: "https://boyard.biz/" },
   { name: "Aristo", src: logoAristo.url, site: "https://aristo.expert/" },
-  { name: "AQ by Westline", src: logoAq.url, site: "https://aq-solution.com/" },
+  { name: "AQ by Westline", src: logoAq.url, site: "https://aq-solution.com/", tall: true },
+
   { name: "Grass", src: logoGrass.url, site: "https://grass.ru/" },
   { name: "Egger", src: logoEgger.url, site: "https://www.egger.com/" },
   { name: "Kronospan", src: logoKronospan.url, site: "https://kronospan.ru/" },
