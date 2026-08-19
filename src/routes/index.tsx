@@ -372,27 +372,24 @@ function WhyUs() {
 }
 
 /* ---------- Партнёры / бренды ---------- */
-const brandPlaceholders = [
-  "Blum",
-  "Hettich",
-  "Boyard",
-  "Egger",
-  "Kronospan",
-  "Grass",
-  "Rehau",
-  "Cleaf",
+const brandLogos: { name: string; src?: string; site: string }[] = [
+  { name: "Blum", src: logoBlum.url, site: "https://blum-pro.ru/" },
+  { name: "Hettich", src: logoHettich.url, site: "https://hettich.ru/" },
+  { name: "Boyard", src: logoBoyard.url, site: "https://boyard.biz/" },
+  { name: "Aristo", src: logoAristo.url, site: "https://aristo.expert/" },
+  { name: "AQ by Westline", src: logoAq.url, site: "https://aq-solution.com/" },
+  { name: "Grass", src: logoGrass.url, site: "https://grass.ru/" },
+  { name: "Egger", src: logoEgger.url, site: "https://www.egger.com/" },
+  { name: "Kronospan", src: logoKronospan.url, site: "https://kronospan.ru/" },
+  {
+    name: "Kastamonu Entegre",
+    src: logoKastamonu.url,
+    site: "https://www.kastamonuentegre.com/ru_ru",
+  },
+  { name: "AGT", src: logoAgt.url, site: "https://www.agtwood.ru/" },
+  { name: "Lamarty", src: logoLamarty.url, site: "https://www.lamarty.ru/lamarty/" },
 ];
 
-const brandLogos: { name: string; src?: string }[] = [
-  { name: "Blum", src: logoBlum.url },
-  { name: "Boyard", src: logoBoyard.url },
-  { name: "Egger", src: logoEgger.url },
-  { name: "Kronospan", src: logoKronospan.url },
-  { name: "Grass", src: logoGrass.url },
-  { name: "Hettich" },
-  { name: "Rehau" },
-  { name: "Cleaf" },
-];
 
 function Brands() {
   return (
