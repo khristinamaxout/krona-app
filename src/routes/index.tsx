@@ -30,6 +30,12 @@ import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
 import logoEgger from "@/assets/brands/egger.svg.asset.json";
 import logoKronospan from "@/assets/brands/kronospan.svg.asset.json";
 import logoGrass from "@/assets/brands/grass.svg.asset.json";
+import logoHettich from "@/assets/brands/hettich.svg.asset.json";
+import logoAristo from "@/assets/brands/aristo.png.asset.json";
+import logoAq from "@/assets/brands/aq.png.asset.json";
+import logoKastamonu from "@/assets/brands/kastamonu.png.asset.json";
+import logoAgt from "@/assets/brands/agt.svg.asset.json";
+import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
 import { projects, thumbOf, type Project } from "@/data/projects";
 
 
@@ -372,27 +378,25 @@ function WhyUs() {
 }
 
 /* ---------- Партнёры / бренды ---------- */
-const brandPlaceholders = [
-  "Blum",
-  "Hettich",
-  "Boyard",
-  "Egger",
-  "Kronospan",
-  "Grass",
-  "Rehau",
-  "Cleaf",
+const brandLogos: { name: string; src?: string; site: string; tall?: boolean }[] = [
+  { name: "Blum", src: logoBlum.url, site: "https://blum-pro.ru/" },
+  { name: "Hettich", src: logoHettich.url, site: "https://hettich.ru/" },
+  { name: "Boyard", src: logoBoyard.url, site: "https://boyard.biz/" },
+  { name: "Aristo", src: logoAristo.url, site: "https://aristo.expert/" },
+  { name: "AQ by Westline", src: logoAq.url, site: "https://aq-solution.com/", tall: true },
+
+  { name: "Grass", src: logoGrass.url, site: "https://grass.ru/" },
+  { name: "Egger", src: logoEgger.url, site: "https://www.egger.com/" },
+  { name: "Kronospan", src: logoKronospan.url, site: "https://kronospan.ru/" },
+  {
+    name: "Kastamonu Entegre",
+    src: logoKastamonu.url,
+    site: "https://www.kastamonuentegre.com/ru_ru",
+  },
+  { name: "AGT", src: logoAgt.url, site: "https://www.agtwood.ru/" },
+  { name: "Lamarty", src: logoLamarty.url, site: "https://www.lamarty.ru/lamarty/" },
 ];
 
-const brandLogos: { name: string; src?: string }[] = [
-  { name: "Blum", src: logoBlum.url },
-  { name: "Boyard", src: logoBoyard.url },
-  { name: "Egger", src: logoEgger.url },
-  { name: "Kronospan", src: logoKronospan.url },
-  { name: "Grass", src: logoGrass.url },
-  { name: "Hettich" },
-  { name: "Rehau" },
-  { name: "Cleaf" },
-];
 
 function Brands() {
   return (
@@ -409,24 +413,25 @@ function Brands() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5">
           {brandLogos.map((b) => (
-            <div
+            <a
               key={b.name}
+              href={b.site}
+              target="_blank"
+              rel="noopener noreferrer nofollow"
+              title={b.name}
               className="krona-lift h-24 sm:h-28 rounded-2xl border border-black/10 bg-[#F5F3EE] flex items-center justify-center px-6 hover:border-black/30 transition"
             >
-              {b.src ? (
-                <img
-                  src={b.src}
-                  alt={`${b.name} — логотип производителя`}
-                  loading="lazy"
-                  decoding="async"
-                  className="max-h-9 sm:max-h-10 w-auto max-w-[70%] object-contain opacity-80 hover:opacity-100 transition"
-                />
-              ) : (
-                <span className="sr-only">{b.name}</span>
-              )}
-            </div>
+              <img
+                src={b.src}
+                alt={`${b.name} — логотип производителя`}
+                loading="lazy"
+                decoding="async"
+                className={`w-auto max-w-[75%] object-contain opacity-80 hover:opacity-100 transition ${b.tall ? "max-h-16 sm:max-h-20" : "max-h-9 sm:max-h-10"}`}
+              />
+            </a>
           ))}
         </div>
+
       </div>
     </section>
   );
