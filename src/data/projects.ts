@@ -55,7 +55,6 @@ import a34_3 from "@/assets/proj/34_photo_003.jpg.asset.json";
 import a35_0 from "@/assets/proj/35_photo_000.jpg.asset.json";
 import a35_1 from "@/assets/proj/35_photo_001.jpg.asset.json";
 import a35_2 from "@/assets/proj/35_photo_002.jpg.asset.json";
-import n10_2 from "@/assets/proj/10_photo_002.jpg.asset.json";
 import n10_2pro from "@/assets/proj/10_photo_002_pro.jpg";
 import n10_3 from "@/assets/proj/10_photo_003.jpg.asset.json";
 import n10_4 from "@/assets/proj/10_photo_004.jpg.asset.json";
