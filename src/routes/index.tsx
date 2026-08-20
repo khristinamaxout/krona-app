@@ -358,50 +358,64 @@ const advantages = [
 function WhyUs() {
   return (
     <section id="why" className="bg-white border-y border-black/5">
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 py-20 sm:py-24">
-        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
+      <div className="max-w-[1280px] mx-auto px-6 sm:px-8 py-24 sm:py-32">
+        <Reveal className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
           Почему выбирают нас
-        </div>
-        <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal leading-tight max-w-2xl mb-12 sm:mb-14">
+        </Reveal>
+        <Reveal
+          as="h2"
+          variant="curtain"
+          delay={80}
+          className="text-3xl sm:text-4xl md:text-5xl font-normal leading-tight max-w-2xl mb-16 sm:mb-20"
+        >
           Авторская студия и мебель{" "}
           <span style={{ color: forest }} className="italic font-serif">
             по индивидуальному проекту
           </span>
           .
-        </h2>
+        </Reveal>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {advantages.map((a) => (
-            <div
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 lg:gap-x-12 gap-y-12 sm:gap-y-14">
+          {advantages.map((a, i) => (
+            <Reveal
               key={a.title}
-              className="rounded-3xl border border-black/10 p-7 sm:p-8 flex flex-col hover:border-black/40 transition bg-[#FAFAF7]"
+              delay={(i % 3) * 110}
+              className="group border-t border-black/15 pt-6 transition-colors duration-500 hover:border-black/60"
             >
-              <a.icon
-                className="w-6 h-6 mb-6 shrink-0"
-                style={{ color: forest }}
-                strokeWidth={1.5}
-              />
-              <h3 className="text-lg sm:text-xl leading-snug break-words">{a.title}</h3>
-              <p className="mt-3 text-sm text-neutral-600 leading-relaxed break-words">{a.text}</p>
+              <div className="flex items-baseline gap-4">
+                <span
+                  className="text-sm tracking-[0.2em] tabular-nums"
+                  style={{ color: forest }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <a.icon
+                  className="w-5 h-5 shrink-0 self-center transition-transform duration-500 group-hover:-translate-y-0.5"
+                  style={{ color: forest }}
+                  strokeWidth={1.5}
+                />
+              </div>
+              <h3 className="mt-5 text-xl sm:text-2xl leading-snug break-words transition-transform duration-500 group-hover:-translate-y-0.5">
+                {a.title}
+              </h3>
+              <p className="mt-4 text-sm text-neutral-600 leading-relaxed break-words max-w-md">
+                {a.text}
+              </p>
               {a.brands && (
-                <div className="mt-6 pt-5 border-t border-black/10 flex flex-wrap gap-2">
+                <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-[11px] tracking-[0.2em] uppercase text-neutral-500">
                   {a.brands.map((b) => (
-                    <span
-                      key={b}
-                      className="text-[11px] tracking-[0.18em] uppercase px-3 py-1.5 rounded-full border border-black/10 text-neutral-500"
-                    >
-                      {b}
-                    </span>
+                    <span key={b}>{b}</span>
                   ))}
                 </div>
               )}
-            </div>
+            </Reveal>
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 
 /* ---------- Партнёры / бренды ---------- */
 const brandLogos: { name: string; src?: string; site: string; tall?: boolean }[] = [
