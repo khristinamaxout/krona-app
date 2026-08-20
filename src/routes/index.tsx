@@ -79,6 +79,7 @@ const graphite = "#1A1A1A";
 function Index() {
   return (
     <div className="min-h-screen bg-[#FAFAF7] text-[#1A1A1A] font-light">
+      <BrandIntro />
       <Nav />
       <Hero />
       <WhyUs />
