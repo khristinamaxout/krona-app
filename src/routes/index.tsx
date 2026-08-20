@@ -9,6 +9,7 @@ import {
   Sparkles,
   Star,
   ChevronRight,
+  ChevronLeft,
   Mail,
   Phone,
   Menu,
@@ -603,6 +604,38 @@ function ProjectArchive({
   );
 }
 
+/** Ритм галереи кейса: крупное · два средних · деталь */
+const GALLERY_RHYTHM: { span: string; ratio: string; w: number; h: number; sizes: string }[] = [
+  {
+    span: "sm:col-span-2 lg:col-span-12",
+    ratio: "16 / 10",
+    w: 1600,
+    h: 1000,
+    sizes: "(min-width: 1024px) 1200px, 100vw",
+  },
+  {
+    span: "sm:col-span-1 lg:col-span-6",
+    ratio: "4 / 3",
+    w: 1200,
+    h: 900,
+    sizes: "(min-width: 1024px) 600px, 100vw",
+  },
+  {
+    span: "sm:col-span-1 lg:col-span-6",
+    ratio: "4 / 3",
+    w: 1200,
+    h: 900,
+    sizes: "(min-width: 1024px) 600px, 100vw",
+  },
+  {
+    span: "sm:col-span-1 lg:col-span-5 lg:col-start-2",
+    ratio: "4 / 5",
+    w: 800,
+    h: 1000,
+    sizes: "(min-width: 1024px) 460px, 100vw",
+  },
+];
+
 function Portfolio() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [photoIdx, setPhotoIdx] = useState<number | null>(null);
@@ -615,6 +648,33 @@ function Portfolio() {
       document.body.style.overflow = "";
     };
   }, [project]);
+
+  // Клавиатура: Esc закрывает, стрелки листают полноэкранный просмотр
+  useEffect(() => {
+    if (!project) return;
+    const total = project.photos.length;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (photoIdx !== null) setPhotoIdx(null);
+        else setOpenIdx(null);
+        return;
+      }
+      if (photoIdx === null) return;
+      if (e.key === "ArrowRight") setPhotoIdx((photoIdx + 1) % total);
+      if (e.key === "ArrowLeft") setPhotoIdx((photoIdx - 1 + total) % total);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [project, photoIdx]);
+
+  // Предзагрузка соседних фото в полноэкранном просмотре
+  useEffect(() => {
+    if (!project || photoIdx === null) return;
+    const total = project.photos.length;
+    preloadImage(project.photos[(photoIdx + 1) % total]);
+    preloadImage(project.photos[(photoIdx - 1 + total) % total]);
+  }, [project, photoIdx]);
+
 
   return (
     <section id="portfolio" className="max-w-[1280px] mx-auto px-6 md:px-8 py-24 md:py-32">
@@ -746,41 +806,49 @@ function Portfolio() {
                 </div>
               </div>
 
-              {/* Редакционная галерея со смешанными размерами */}
+              {/* Редакционная галерея: крупное · два средних · деталь */}
               {project.photos.length > 1 && (
-                <div className="mt-20 md:mt-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-12 lg:gap-y-20">
+                <div className="mt-20 md:mt-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-10 lg:gap-y-16">
                   {project.photos.slice(1).map((src, i) => {
-                    const r = RHYTHM[i % RHYTHM.length];
+                    const r = GALLERY_RHYTHM[i % GALLERY_RHYTHM.length];
+                    const isDetail = i % GALLERY_RHYTHM.length === 3;
                     return (
                       <Reveal
                         key={src}
                         variant="curtain"
-                        delay={(i % 2) * 90}
-                        className={`col-span-1 sm:col-span-1 ${r.span}`}
+                        delay={(i % 2) * 80}
+                        className={`col-span-1 ${r.span}`}
                       >
                         <button
                           onClick={() => setPhotoIdx(i + 1)}
                           onMouseEnter={() => preloadImage(src)}
                           className="group block w-full cursor-zoom-in overflow-hidden bg-neutral-200"
+                          aria-label={`Открыть фото ${i + 2} во весь экран`}
                         >
                           <SmartImage
                             thumb={thumbOf(src)}
                             full={src}
                             alt={`${project.title} — фото ${i + 2}`}
                             ratio={r.ratio}
-                            width={r.big ? 1200 : 800}
-                            height={r.big ? 900 : 1000}
+                            width={r.w}
+                            height={r.h}
                             preloadFullOnHover
-                            sizes={r.big ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 40vw, 100vw"}
+                            sizes={r.sizes}
                             className="w-full"
                             imgClassName="transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
                           />
                         </button>
+                        {isDetail && (
+                          <div className="mt-3 text-[11px] tracking-[0.22em] uppercase text-neutral-500">
+                            Деталь
+                          </div>
+                        )}
                       </Reveal>
                     );
                   })}
                 </div>
               )}
+
 
               <a
                 href="#request"
@@ -797,33 +865,72 @@ function Portfolio() {
 
       {project && photoIdx !== null && (
         <div
-          className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${project.title} — просмотр фото`}
+          className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 sm:p-8"
           onClick={() => setPhotoIdx(null)}
         >
           <button
-            className="absolute top-5 right-5 text-white/80 hover:text-white"
-            aria-label="Закрыть"
+            className="absolute top-5 right-5 z-10 text-white/80 hover:text-white"
+            aria-label="Закрыть просмотр"
             onClick={() => setPhotoIdx(null)}
           >
-            <X className="w-7 h-7" />
+            <X className="w-7 h-7" strokeWidth={1.5} />
           </button>
-          <div className="relative max-h-[88vh] max-w-full" onClick={(e) => e.stopPropagation()}>
+
+          {project.photos.length > 1 && (
+            <>
+              <button
+                aria-label="Предыдущее фото"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPhotoIdx((photoIdx - 1 + project.photos.length) % project.photos.length);
+                }}
+                className="absolute left-2 sm:left-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors"
+              >
+                <ChevronLeft className="w-6 h-6" strokeWidth={1.5} />
+              </button>
+              <button
+                aria-label="Следующее фото"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setPhotoIdx((photoIdx + 1) % project.photos.length);
+                }}
+                className="absolute right-2 sm:right-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors"
+              >
+                <ChevronRight className="w-6 h-6" strokeWidth={1.5} />
+              </button>
+            </>
+          )}
+
+          <div
+            className="relative max-h-[84vh] max-w-full overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* мгновенное превью, пока грузится полноразмерное фото */}
             <img
+              key={`t-${photoIdx}`}
               src={thumbOf(project.photos[photoIdx])}
               alt=""
               aria-hidden="true"
-              className="max-h-[88vh] max-w-full object-contain blur-md"
+              className="max-h-[84vh] max-w-full object-contain blur-md"
             />
             <img
+              key={`f-${photoIdx}`}
               src={project.photos[photoIdx]}
-              alt={project.title}
+              alt={`${project.title} — фото ${photoIdx + 1}`}
               decoding="async"
               className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
+
+          <div className="absolute bottom-6 left-0 right-0 text-center text-[11px] tracking-[0.25em] uppercase text-white/60 tabular-nums">
+            {photoIdx + 1} / {project.photos.length}
+          </div>
         </div>
       )}
+
 
     </section>
   );
