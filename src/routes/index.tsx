@@ -234,28 +234,40 @@ function Nav() {
 
 /* ---------- Hero ---------- */
 function Hero() {
+  const base = 500; // ждём завершения брендовой заставки
   return (
-    <section className="max-w-7xl mx-auto px-8 pt-24 pb-32">
+    <section className="max-w-[1280px] mx-auto px-6 sm:px-8 pt-24 pb-32">
       <div className="grid md:grid-cols-12 gap-12 items-end">
         <div className="md:col-span-7">
-          <div className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase mb-8 text-neutral-500">
+          <Reveal
+            delay={base}
+            className="inline-flex items-center gap-2 text-xs tracking-[0.25em] uppercase mb-8 text-neutral-500"
+          >
             <span className="w-8 h-px bg-neutral-400" />
             Студия мебели на заказ
-          </div>
+          </Reveal>
           <h1 className="text-[2rem] sm:text-[2.6rem] md:text-[2.6rem] lg:text-6xl xl:text-7xl leading-[1.08] tracking-tight font-normal">
-            Дом начинается с{" "}
-            <span style={{ color: forest }} className="italic font-serif">
-              характера
-            </span>
-            .
+            <Reveal as="span" variant="curtain" delay={base + 120} className="block">
+              Дом начинается с
+            </Reveal>
+            <Reveal as="span" variant="curtain" delay={base + 420} className="block">
+              <span style={{ color: forest }} className="italic font-serif">
+                характера
+              </span>
+              .
+            </Reveal>
           </h1>
-          <p className="mt-8 max-w-lg text-base sm:text-lg text-neutral-600 leading-relaxed">
+          <Reveal
+            as="p"
+            delay={base + 640}
+            className="mt-8 max-w-lg text-base sm:text-lg text-neutral-600 leading-relaxed"
+          >
             Как хороший костюм шьётся под конкретного человека, так и наша мебель проектируется под
             ваш интерьер, привычки и образ жизни. Именно поэтому за двадцать лет мы не повторили ни
             одного проекта.
-          </p>
+          </Reveal>
 
-          <div className="mt-10 flex flex-wrap gap-4">
+          <Reveal delay={base + 820} className="mt-10 flex flex-wrap gap-4">
             <a
               href="#assistant"
               className="inline-flex items-center gap-2 px-7 py-4 rounded-full text-white text-sm tracking-wide"
@@ -269,20 +281,28 @@ function Hero() {
             >
               Смотреть проекты
             </a>
-          </div>
+          </Reveal>
         </div>
         <div className="md:col-span-5">
-          <div className="aspect-[4/5] rounded-3xl overflow-hidden bg-neutral-200">
-            <img
-              src={photoWardrobe.url}
-              alt="Встроенный шкаф во всю стену с золотыми вставками"
-              className="w-full h-full object-cover"
-            />
-          </div>
+          <Reveal variant="curtain" delay={base + 200}>
+            <div className="krona-hero-zoom aspect-[4/5] overflow-hidden bg-neutral-200">
+              <img
+                src={photoWardrobe.url}
+                alt="Встроенный шкаф во всю стену с золотыми вставками"
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </Reveal>
           <div className="mt-6 grid grid-cols-3 gap-3 text-xs text-neutral-500">
-            <Metric num="20" label="лет практики" />
-            <Metric num="340+" label="проектов" />
-            <Metric num="98%" label="возвращаются" />
+            {[
+              { num: "20", label: "лет практики" },
+              { num: "340+", label: "проектов" },
+              { num: "98%", label: "возвращаются" },
+            ].map((m, i) => (
+              <Reveal key={m.label} delay={base + 900 + i * 140}>
+                <Metric num={m.num} label={m.label} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </div>
@@ -298,6 +318,7 @@ function Metric({ num, label }: { num: string; label: string }) {
     </div>
   );
 }
+
 
 /* ---------- Почему выбирают нас ---------- */
 const advantages = [
