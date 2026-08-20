@@ -445,6 +445,76 @@ function Brands() {
 /* ---------- Portfolio ---------- */
 const FEATURED_ORDER = ["007", "005", "008"];
 
+/** Ритм редакционной сетки: чередование крупных и малых блоков (12 колонок) */
+const RHYTHM: { span: string; ratio: string; big: boolean }[] = [
+  { span: "lg:col-span-7", ratio: "4 / 3", big: true },
+  { span: "lg:col-span-5", ratio: "4 / 5", big: false },
+  { span: "lg:col-span-5", ratio: "4 / 5", big: false },
+  { span: "lg:col-span-7", ratio: "4 / 3", big: true },
+  { span: "lg:col-span-12", ratio: "3 / 2", big: true },
+];
+
+function ProjectTile({
+  p,
+  onOpen,
+  span,
+  ratio,
+  big,
+  index,
+}: {
+  p: Project;
+  onOpen: () => void;
+  span: string;
+  ratio: string;
+  big: boolean;
+  index: number;
+}) {
+  return (
+    <Reveal
+      variant="curtain"
+      delay={(index % 2) * 90}
+      className={`sm:col-span-1 ${span} col-span-1`}
+    >
+      <button onClick={onOpen} className="group block w-full text-left">
+        <div className="overflow-hidden bg-neutral-200">
+          <SmartImage
+            thumb={thumbOf(p.photos[0])}
+            full={p.photos[0]}
+            alt={`${p.title} — ${p.category}, ${p.style}`}
+            ratio={ratio}
+            width={big ? 1200 : 800}
+            height={big ? 900 : 1000}
+            preloadFullOnHover
+            sizes={
+              big
+                ? "(min-width: 1024px) 60vw, (min-width: 640px) 50vw, 100vw"
+                : "(min-width: 1024px) 40vw, (min-width: 640px) 50vw, 100vw"
+            }
+            className="w-full"
+            imgClassName="transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+          />
+        </div>
+        <div className="pt-5 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-y-0.5">
+          <div className="text-[11px] tracking-[0.22em] uppercase text-neutral-500">
+            №{p.no} · {p.category} · {p.style}
+          </div>
+          <h3 className={`mt-2 leading-snug ${big ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"}`}>
+            {p.title}
+          </h3>
+          <p className="mt-2 max-w-xl text-sm text-neutral-600 leading-relaxed">{p.lead}</p>
+          <span
+            className="mt-4 inline-flex items-center gap-2 text-sm"
+            style={{ color: forest }}
+          >
+            Смотреть проект
+            <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
+          </span>
+        </div>
+      </button>
+    </Reveal>
+  );
+}
+
 function ProjectArchive({
   items,
   onOpen,
@@ -460,74 +530,34 @@ function ProjectArchive({
         <button
           onClick={() => setOpen((v) => !v)}
           aria-expanded={open}
-          className="krona-lift group relative overflow-hidden rounded-full px-8 py-4 text-sm tracking-[0.18em] uppercase text-white"
-          style={{ backgroundColor: forest }}
+          className="group inline-flex items-center gap-3 border-b pb-2 text-sm tracking-[0.22em] uppercase transition-colors"
+          style={{ color: forest, borderColor: forest }}
         >
-          <span className="relative z-10 inline-flex items-center gap-3">
-            {open ? "Свернуть архив" : `Открыть архив проектов · ${items.length}`}
-            <ChevronRight
-              className={`w-4 h-4 transition-transform duration-500 ${open ? "rotate-90" : ""}`}
-            />
-          </span>
-          <span
-            aria-hidden
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent)",
-            }}
+          {open ? "Свернуть архив" : `Открыть архив проектов · ${items.length}`}
+          <ChevronRight
+            className={`w-4 h-4 transition-transform duration-500 ${open ? "rotate-90" : "group-hover:translate-x-1"}`}
           />
         </button>
       </div>
 
-      <div className="krona-archive mt-10" data-open={open}>
+      <div className="krona-archive mt-14" data-open={open}>
         <div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 pb-2">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-16 lg:gap-y-24 pb-2">
             {open &&
-              items.map((p, k) => (
-                <button
-                  key={p.no}
-                  onClick={() => onOpen(p.no)}
-                  style={{ animationDelay: `${Math.min(k, 8) * 70}ms` }}
-                  className="krona-unfold group text-left krona-lift rounded-[20px] border border-black/5 bg-white/60 p-3"
-                >
-                  <SmartImage
-                    thumb={thumbOf(p.photos[0])}
-                    full={p.photos[0]}
-                    alt={`${p.title} — ${p.category}, ${p.style}`}
-                    ratio="4 / 5"
-                    width={800}
-                    height={1000}
-                    preloadFullOnHover
-                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                    className="rounded-[16px] bg-neutral-200 mb-4"
-                    imgClassName="krona-media"
+              items.map((p, k) => {
+                const r = RHYTHM[k % RHYTHM.length];
+                return (
+                  <ProjectTile
+                    key={p.no}
+                    p={p}
+                    index={k}
+                    span={r.span}
+                    ratio={r.ratio}
+                    big={r.big}
+                    onOpen={() => onOpen(p.no)}
                   />
-                  <div className="px-2 pb-2">
-                    <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500">
-                      Проект №{p.no} · {p.category}
-                    </div>
-                    <h3 className="text-xl mt-2">{p.title}</h3>
-                    <p className="mt-2 text-sm text-neutral-600 leading-relaxed">{p.lead}</p>
-                    <div className="mt-4 flex flex-wrap gap-2">
-                      {p.tags.map((t) => (
-                        <span
-                          key={t}
-                          className="text-xs px-3 py-1 rounded-full border border-black/10 text-neutral-600"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                    <span
-                      className="mt-5 inline-flex items-center gap-2 text-sm"
-                      style={{ color: forest }}
-                    >
-                      Смотреть проект <ArrowRight className="w-4 h-4" />
-                    </span>
-                  </div>
-                </button>
-              ))}
+                );
+              })}
           </div>
         </div>
       </div>
@@ -541,10 +571,16 @@ function Portfolio() {
   const project = openIdx !== null ? projects[openIdx] : null;
   const rest = projects.filter((p) => !FEATURED_ORDER.includes(p.no));
 
+  useEffect(() => {
+    document.body.style.overflow = project ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [project]);
 
   return (
-    <section id="portfolio" className="max-w-7xl mx-auto px-6 md:px-8 py-24">
-      <div className="flex flex-wrap items-end justify-between gap-6 mb-14">
+    <section id="portfolio" className="max-w-[1280px] mx-auto px-6 md:px-8 py-24 md:py-32">
+      <Reveal className="flex flex-wrap items-end justify-between gap-6 mb-16 md:mb-20">
         <div>
           <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">
             02 — Проекты
@@ -561,165 +597,169 @@ function Portfolio() {
           {projects.length} реализованных проектов: кухни, прихожие, спальни, детские,
           гардеробные. Нажмите на карточку, чтобы посмотреть галерею и характеристики.
         </p>
-      </div>
+      </Reveal>
 
-      {/* Избранные проекты */}
-      <div className="mb-16">
-        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-6">
+      {/* Избранные проекты — асимметричная редакционная сетка */}
+      <div className="mb-24 md:mb-32">
+        <Reveal className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-8">
           Избранное студии
-        </div>
-        <div className="grid md:grid-cols-3 gap-6">
+        </Reveal>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-16 lg:gap-y-24">
           {FEATURED_ORDER.map((no, k) => {
             const i = projects.findIndex((x) => x.no === no);
             const p = projects[i];
             if (!p) return null;
+            const layout =
+              k === 0
+                ? { span: "lg:col-span-8", ratio: "4 / 3", big: true }
+                : k === 1
+                  ? { span: "lg:col-span-4", ratio: "4 / 5", big: false }
+                  : { span: "lg:col-span-12 sm:col-span-2", ratio: "3 / 2", big: true };
             return (
-              <button
+              <ProjectTile
                 key={p.no}
-                onClick={() => setOpenIdx(i)}
-                style={{ animationDelay: `${k * 90}ms` }}
-                className="krona-rise group text-left krona-lift rounded-[24px] overflow-hidden border border-black/5 bg-white relative"
-              >
-                <SmartImage
-                  thumb={thumbOf(p.photos[0])}
-                  full={p.photos[0]}
-                  alt={`${p.title} — ${p.category}, ${p.style}`}
-                  ratio="3 / 4"
-                  width={800}
-                  height={1066}
-                  priority
-                  preloadFullOnHover
-                  sizes="(min-width: 768px) 33vw, 100vw"
-                  className="bg-neutral-200"
-                  imgClassName="krona-media"
-                />
-                <div className="absolute inset-x-0 bottom-0 p-6 text-white bg-gradient-to-t from-black/75 via-black/25 to-transparent">
-                  <div className="text-[11px] tracking-[0.2em] uppercase opacity-80">
-                    {p.category} · {p.style}
-                  </div>
-                  <h3 className="text-2xl mt-1">{p.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed opacity-90 line-clamp-2">{p.lead}</p>
-                </div>
-              </button>
+                p={p}
+                index={k}
+                span={layout.span}
+                ratio={layout.ratio}
+                big={layout.big}
+                onOpen={() => setOpenIdx(i)}
+              />
             );
           })}
         </div>
       </div>
 
-      {/* Архив проектов — «распаковка» */}
+      {/* Архив проектов */}
       <ProjectArchive
         items={rest}
         onOpen={(no) => setOpenIdx(projects.findIndex((x) => x.no === no))}
       />
 
-
       {project && (
         <div
-          className="fixed inset-0 z-50 bg-black/60 overflow-y-auto p-4 md:p-8"
+          className="fixed inset-0 z-50 bg-[#FAFAF7] overflow-y-auto krona-veil"
           onClick={() => setOpenIdx(null)}
         >
-          <div
-            className="krona-veil max-w-5xl mx-auto rounded-[20px] bg-[#FAFAF7] p-6 md:p-10"
-            onClick={(e) => e.stopPropagation()}
+          <button
+            aria-label="Закрыть"
+            onClick={() => setOpenIdx(null)}
+            className="fixed top-5 right-5 z-[55] w-11 h-11 flex items-center justify-center bg-[#FAFAF7]/85 backdrop-blur text-neutral-700 hover:text-black border border-black/10"
           >
-            <div className="flex items-start justify-between gap-6">
-              <div>
-                <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-3">
-                  Проект №{project.no} · реализован · {project.style}
-                </div>
-                <h3 className="text-3xl md:text-4xl font-normal leading-tight">
-                  {project.title}
-                </h3>
-              </div>
-              <button
-                aria-label="Закрыть"
-                onClick={() => setOpenIdx(null)}
-                className="text-neutral-500 hover:text-black shrink-0"
-              >
-                <X className="w-6 h-6" />
-              </button>
-            </div>
+            <X className="w-5 h-5" strokeWidth={1.5} />
+          </button>
 
-            <div className="mt-8 grid lg:grid-cols-[1.1fr_1fr] gap-8 items-start">
-              <button
-                onClick={() => setPhotoIdx(0)}
-                onMouseEnter={() => preloadImage(project.photos[0])}
-                className="rounded-[20px] overflow-hidden bg-neutral-200 cursor-zoom-in w-full"
-              >
-                <SmartImage
-                  thumb={thumbOf(project.photos[0])}
-                  full={project.photos[0]}
-                  alt={project.title}
-                  ratio="4 / 3"
-                  width={800}
-                  height={600}
-                  priority
-                  preloadFullOnHover
-                  sizes="(min-width: 1024px) 55vw, 100vw"
-                  className="w-full"
-                />
-              </button>
-
-              <div>
-                {project.story.map((s) => (
-                  <p key={s} className="mb-4 text-[15px] text-neutral-700 leading-relaxed">
-                    {s}
-                  </p>
-                ))}
-                <dl className="mt-6 grid sm:grid-cols-2 gap-x-8 gap-y-3">
-                  {project.specs.map((s) => (
-                    <div key={s.k} className="border-t border-black/10 pt-3">
-                      <dt className="text-xs uppercase tracking-[0.15em] text-neutral-500">
-                        {s.k}
-                      </dt>
-                      <dd className="text-sm text-neutral-800 mt-1">{s.v}</dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            </div>
-
-            {project.photos.length > 1 && (
-              <div className="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                {project.photos.slice(1).map((src, i) => (
-                  <button
-                    key={src}
-                    onClick={() => setPhotoIdx(i + 1)}
-                    onMouseEnter={() => preloadImage(src)}
-                    className="rounded-[20px] overflow-hidden bg-neutral-200 group"
-                  >
-                    <SmartImage
-                      thumb={thumbOf(src)}
-                      full={src}
-                      alt={`${project.title} — фото ${i + 2}`}
-                      ratio="4 / 5"
-                      width={800}
-                      height={1000}
-                      preloadFullOnHover
-                      sizes="(min-width: 1024px) 20vw, 33vw"
-                      className="w-full"
-                      imgClassName="group-hover:scale-[1.04]"
-                    />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            <a
-              href="#request"
-              onClick={() => setOpenIdx(null)}
-              className="mt-10 inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm text-white"
-              style={{ backgroundColor: forest }}
+          <div onClick={(e) => e.stopPropagation()}>
+            {/* Доминирующее главное фото */}
+            <button
+              onClick={() => setPhotoIdx(0)}
+              onMouseEnter={() => preloadImage(project.photos[0])}
+              className="block w-full cursor-zoom-in bg-neutral-200"
             >
-              Хочу похожий проект <ArrowRight className="w-4 h-4" />
-            </a>
+              <SmartImage
+                thumb={thumbOf(project.photos[0])}
+                full={project.photos[0]}
+                alt={project.title}
+                ratio="16 / 10"
+                width={1600}
+                height={1000}
+                priority
+                preloadFullOnHover
+                sizes="100vw"
+                className="w-full max-h-[86vh]"
+              />
+            </button>
+
+            <div className="max-w-[1280px] mx-auto px-6 md:px-8 py-16 md:py-24">
+              <div className="grid lg:grid-cols-12 gap-x-8 gap-y-12">
+                <div className="lg:col-span-5">
+                  <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-5">
+                    Проект №{project.no} · реализован · {project.category} · {project.style}
+                  </div>
+                  <h3 className="text-4xl md:text-5xl font-normal leading-[1.1]">
+                    {project.title}
+                  </h3>
+                  <p className="mt-6 text-lg italic font-serif" style={{ color: forest }}>
+                    {project.lead}
+                  </p>
+                  <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-xs tracking-[0.18em] uppercase text-neutral-500">
+                    {project.tags.map((t) => (
+                      <span key={t}>{t}</span>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="lg:col-span-6 lg:col-start-7">
+                  {project.story.map((s) => (
+                    <p key={s} className="mb-5 text-[15px] md:text-base text-neutral-700 leading-relaxed">
+                      {s}
+                    </p>
+                  ))}
+                  <dl className="mt-10 grid sm:grid-cols-2 gap-x-10 gap-y-5">
+                    {project.specs.map((s) => (
+                      <div key={s.k} className="border-t border-black/10 pt-3">
+                        <dt className="text-xs uppercase tracking-[0.18em] text-neutral-500">
+                          {s.k}
+                        </dt>
+                        <dd className="text-sm text-neutral-800 mt-1.5">{s.v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                </div>
+              </div>
+
+              {/* Редакционная галерея со смешанными размерами */}
+              {project.photos.length > 1 && (
+                <div className="mt-20 md:mt-28 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-x-6 gap-y-12 lg:gap-y-20">
+                  {project.photos.slice(1).map((src, i) => {
+                    const r = RHYTHM[i % RHYTHM.length];
+                    return (
+                      <Reveal
+                        key={src}
+                        variant="curtain"
+                        delay={(i % 2) * 90}
+                        className={`col-span-1 sm:col-span-1 ${r.span}`}
+                      >
+                        <button
+                          onClick={() => setPhotoIdx(i + 1)}
+                          onMouseEnter={() => preloadImage(src)}
+                          className="group block w-full cursor-zoom-in overflow-hidden bg-neutral-200"
+                        >
+                          <SmartImage
+                            thumb={thumbOf(src)}
+                            full={src}
+                            alt={`${project.title} — фото ${i + 2}`}
+                            ratio={r.ratio}
+                            width={r.big ? 1200 : 800}
+                            height={r.big ? 900 : 1000}
+                            preloadFullOnHover
+                            sizes={r.big ? "(min-width: 1024px) 60vw, 100vw" : "(min-width: 1024px) 40vw, 100vw"}
+                            className="w-full"
+                            imgClassName="transition-transform duration-[900ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-[1.03]"
+                          />
+                        </button>
+                      </Reveal>
+                    );
+                  })}
+                </div>
+              )}
+
+              <a
+                href="#request"
+                onClick={() => setOpenIdx(null)}
+                className="mt-20 inline-flex items-center gap-3 border-b pb-2 text-sm tracking-[0.22em] uppercase"
+                style={{ color: forest, borderColor: forest }}
+              >
+                Хочу похожий проект <ArrowRight className="w-4 h-4" />
+              </a>
+            </div>
           </div>
         </div>
       )}
 
       {project && photoIdx !== null && (
         <div
-          className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4"
           onClick={() => setPhotoIdx(null)}
         >
           <button
@@ -735,13 +775,13 @@ function Portfolio() {
               src={thumbOf(project.photos[photoIdx])}
               alt=""
               aria-hidden="true"
-              className="max-h-[88vh] max-w-full rounded-2xl object-contain blur-md"
+              className="max-h-[88vh] max-w-full object-contain blur-md"
             />
             <img
               src={project.photos[photoIdx]}
               alt={project.title}
               decoding="async"
-              className="absolute inset-0 w-full h-full rounded-2xl object-contain"
+              className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
         </div>
@@ -750,6 +790,7 @@ function Portfolio() {
     </section>
   );
 }
+
 
 
 
