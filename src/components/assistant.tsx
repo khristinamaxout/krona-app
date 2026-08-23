@@ -49,6 +49,7 @@ import {
   Wine,
   Home,
 } from "lucide-react";
+import { projects, thumbOf } from "@/data/projects";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
