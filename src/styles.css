@@ -396,16 +396,16 @@
   0% {
     opacity: 0;
     transform: translateY(10px) scale(0.97);
-    filter: blur(2px) contrast(1) saturate(1);
+    filter: blur(2px) contrast(1) saturate(1) brightness(1);
   }
   55% {
     opacity: 0.88;
-    filter: blur(0.4px) contrast(1.04) saturate(1.03);
+    filter: blur(0.4px) contrast(1.08) saturate(1.07) brightness(0.99);
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0) contrast(1.07) saturate(1.05);
+    filter: blur(0) contrast(1.14) saturate(1.12) brightness(0.97);
   }
 }
 
