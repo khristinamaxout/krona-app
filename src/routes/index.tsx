@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   Check,
@@ -514,7 +515,11 @@ function ProjectTile({
       delay={(index % 2) * 90}
       className={`sm:col-span-1 ${span} col-span-1`}
     >
-      <button onClick={onOpen} className="group block w-full text-left">
+      <button
+        onClick={onOpen}
+        aria-label={`Открыть проект: ${p.title}`}
+        className="group block w-full text-left"
+      >
         <div className="overflow-hidden bg-neutral-200">
           <SmartImage
             thumb={thumbOf(p.photos[0])}
@@ -649,10 +654,22 @@ function Portfolio() {
     };
   }, [project]);
 
+  const lightboxCloseRef = useRef<HTMLButtonElement | null>(null);
+  const lastFocusRef = useRef<HTMLElement | null>(null);
+  const touchRef = useRef<{ x: number; y: number; t: number } | null>(null);
+
+  const goPhoto = useCallback(
+    (dir: number) => {
+      if (!project) return;
+      const total = project.photos.length;
+      setPhotoIdx((i) => (i === null ? i : (i + dir + total) % total));
+    },
+    [project],
+  );
+
   // Клавиатура: Esc закрывает, стрелки листают полноэкранный просмотр
   useEffect(() => {
     if (!project) return;
-    const total = project.photos.length;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (photoIdx !== null) setPhotoIdx(null);
@@ -660,20 +677,85 @@ function Portfolio() {
         return;
       }
       if (photoIdx === null) return;
-      if (e.key === "ArrowRight") setPhotoIdx((photoIdx + 1) % total);
-      if (e.key === "ArrowLeft") setPhotoIdx((photoIdx - 1 + total) % total);
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goPhoto(1);
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goPhoto(-1);
+      }
+      if (e.key === "Home") setPhotoIdx(0);
+      if (e.key === "End") setPhotoIdx(project.photos.length - 1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [project, photoIdx]);
+  }, [project, photoIdx, goPhoto]);
 
-  // Предзагрузка соседних фото в полноэкранном просмотре
+  // Фокус переходит в полноэкранный просмотр и возвращается назад при закрытии
+  const lightboxOpen = photoIdx !== null;
+  const openedFromRef = useRef<number | null>(null);
+  useEffect(() => {
+    if (!lightboxOpen) {
+      const back = lastFocusRef.current;
+      const idx = openedFromRef.current;
+      lastFocusRef.current = null;
+      openedFromRef.current = null;
+      if (back?.isConnected) {
+        back.focus();
+      } else if (idx !== null) {
+        const el = document.querySelector<HTMLElement>(`[data-photo-trigger="${idx}"]`);
+        el?.focus();
+      }
+      return;
+    }
+    lastFocusRef.current = (document.activeElement as HTMLElement) ?? null;
+    openedFromRef.current = photoIdx;
+    lightboxCloseRef.current?.focus();
+  }, [lightboxOpen, photoIdx]);
+
+  // Агрессивная предзагрузка ближайших кадров (±2) — после первого рендера
   useEffect(() => {
     if (!project || photoIdx === null) return;
     const total = project.photos.length;
-    preloadImage(project.photos[(photoIdx + 1) % total]);
-    preloadImage(project.photos[(photoIdx - 1 + total) % total]);
+    const id = window.requestAnimationFrame(() => {
+      for (const d of [1, -1, 2, -2]) {
+        preloadImage(project.photos[(photoIdx + d + total * 2) % total]);
+      }
+    });
+    return () => window.cancelAnimationFrame(id);
   }, [project, photoIdx]);
+
+  // Предзагрузка первых кадров кейса сразу после открытия проекта
+  useEffect(() => {
+    if (!project) return;
+    const id = window.setTimeout(() => {
+      project.photos.slice(0, 3).forEach((p) => preloadImage(p));
+    }, 600);
+    return () => window.clearTimeout(id);
+  }, [project]);
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    const t = e.touches[0];
+    if (t) touchRef.current = { x: t.clientX, y: t.clientY, t: Date.now() };
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const start = touchRef.current;
+      touchRef.current = null;
+      const t = e.changedTouches[0];
+      if (!start || !t) return;
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+      if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+      if (Date.now() - start.t > 800) return;
+      goPhoto(dx < 0 ? 1 : -1);
+    },
+    [goPhoto],
+  );
+
+
 
 
   return (
@@ -752,6 +834,8 @@ function Portfolio() {
             <button
               onClick={() => setPhotoIdx(0)}
               onMouseEnter={() => preloadImage(project.photos[0])}
+              data-photo-trigger={0}
+              aria-label={`Открыть фото 1 во весь экран`}
               className="block w-full cursor-zoom-in bg-neutral-200"
             >
               <SmartImage
@@ -822,6 +906,7 @@ function Portfolio() {
                         <button
                           onClick={() => setPhotoIdx(i + 1)}
                           onMouseEnter={() => preloadImage(src)}
+                          data-photo-trigger={i + 1}
                           className="group block w-full cursor-zoom-in overflow-hidden bg-neutral-200"
                           aria-label={`Открыть фото ${i + 2} во весь экран`}
                         >
@@ -868,13 +953,19 @@ function Portfolio() {
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} — просмотр фото`}
-          className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 sm:p-8"
+          className="krona-dark-scope fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 sm:p-8"
           onClick={() => setPhotoIdx(null)}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
         >
           <button
-            className="absolute top-5 right-5 z-10 text-white/80 hover:text-white"
+            ref={lightboxCloseRef}
+            className="absolute top-5 right-5 z-10 w-11 h-11 flex items-center justify-center text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             aria-label="Закрыть просмотр"
-            onClick={() => setPhotoIdx(null)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setPhotoIdx(null);
+            }}
           >
             <X className="w-7 h-7" strokeWidth={1.5} />
           </button>
@@ -883,21 +974,23 @@ function Portfolio() {
             <>
               <button
                 aria-label="Предыдущее фото"
+                aria-controls="krona-lightbox-image"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setPhotoIdx((photoIdx - 1 + project.photos.length) % project.photos.length);
+                  goPhoto(-1);
                 }}
-                className="absolute left-2 sm:left-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors"
+                className="absolute left-2 sm:left-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <ChevronLeft className="w-6 h-6" strokeWidth={1.5} />
               </button>
               <button
                 aria-label="Следующее фото"
+                aria-controls="krona-lightbox-image"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setPhotoIdx((photoIdx + 1) % project.photos.length);
+                  goPhoto(1);
                 }}
-                className="absolute right-2 sm:right-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors"
+                className="absolute right-2 sm:right-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <ChevronRight className="w-6 h-6" strokeWidth={1.5} />
               </button>
@@ -905,7 +998,8 @@ function Portfolio() {
           )}
 
           <div
-            className="relative max-h-[84vh] max-w-full overflow-hidden"
+            id="krona-lightbox-image"
+            className="relative max-h-[84vh] max-w-full overflow-hidden select-none"
             onClick={(e) => e.stopPropagation()}
           >
             {/* мгновенное превью, пока грузится полноразмерное фото */}
@@ -914,22 +1008,30 @@ function Portfolio() {
               src={thumbOf(project.photos[photoIdx])}
               alt=""
               aria-hidden="true"
+              draggable={false}
               className="max-h-[84vh] max-w-full object-contain blur-md"
             />
             <img
               key={`f-${photoIdx}`}
               src={project.photos[photoIdx]}
-              alt={`${project.title} — фото ${photoIdx + 1}`}
+              alt={`${project.title} — фото ${photoIdx + 1} из ${project.photos.length}`}
               decoding="async"
+              draggable={false}
               className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
 
-          <div className="absolute bottom-6 left-0 right-0 text-center text-[11px] tracking-[0.25em] uppercase text-white/60 tabular-nums">
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            className="absolute bottom-6 left-0 right-0 text-center text-[11px] tracking-[0.25em] uppercase text-white/60 tabular-nums"
+          >
             {photoIdx + 1} / {project.photos.length}
+            <span className="sr-only"> — листайте стрелками или свайпом, Esc — закрыть</span>
           </div>
         </div>
       )}
+
 
 
     </section>

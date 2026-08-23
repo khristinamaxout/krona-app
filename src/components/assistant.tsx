@@ -49,6 +49,7 @@ import {
   Wine,
   Home,
 } from "lucide-react";
+import { projects, thumbOf } from "@/data/projects";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
@@ -85,8 +86,23 @@ type Step = {
 
 const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 
-/** Временные качественные изображения-заполнители (Unsplash). */
-const u = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=640&q=80`;
+/**
+ * Изображения стилей — собственные фото реализованных проектов студии
+ * (локальные превью, доступны без внешних сервисов).
+ */
+const styleShots = (style: string, fallback?: string): string[] => {
+  const pool = projects
+    .filter((p) => p.style === style)
+    .flatMap((p) => p.photos)
+    .map((src) => thumbOf(src));
+  const extra = fallback
+    ? projects
+        .filter((p) => p.style === fallback)
+        .flatMap((p) => p.photos)
+        .map((src) => thumbOf(src))
+    : [];
+  return [...pool, ...extra].slice(0, 3);
+};
 
 const steps: Step[] = [
   {
@@ -187,62 +203,39 @@ const steps: Step[] = [
         label: "Современный",
         hint: "Чистые линии и функциональность",
         grad: "linear-gradient(135deg,#D9D4CB,#8E8B84)",
-        imgs: [
-          u("photo-1600210492486-724fe5c67fb0"),
-          u("photo-1616486338812-3dadae4b4ace"),
-          u("photo-1600607687939-ce8a6c25118c"),
-        ],
+        imgs: styleShots("Современный"),
       },
       {
         label: "Неоклассика",
         hint: "Современная классика",
         grad: "linear-gradient(135deg,#EFE7DA,#B9A78C)",
-        imgs: [
-          u("photo-1556909212-d5b604d0c90d"),
-          u("photo-1600566753086-00f18fb6b3ea"),
-          u("photo-1583847268964-b28dc8f51f92"),
-        ],
+        imgs: styleShots("Неоклассика"),
       },
       {
         label: "Минимализм",
         hint: "Ничего лишнего",
         grad: "linear-gradient(135deg,#F2F0EB,#C9C5BC)",
-        imgs: [
-          u("photo-1567767292278-a4f21aa2d36e"),
-          u("photo-1540518614846-7eded433c457"),
-          u("photo-1493809842364-78817add7ffb"),
-        ],
+        imgs: styleShots("Минимализм"),
       },
       {
         label: "Лофт",
         hint: "Бетон, металл, дерево",
         grad: "linear-gradient(135deg,#6E6862,#2E2B28)",
-        imgs: [
-          u("photo-1524758631624-e2822e304c36"),
-          u("photo-1505693416388-ac5ce068fe85"),
-          u("photo-1595526114035-0d45ed16cfbf"),
-        ],
+        imgs: styleShots("Лофт"),
       },
       {
         label: "Скандинавский",
         hint: "Свет, дерево, уют",
         grad: "linear-gradient(135deg,#FAF7F0,#D7C9AE)",
-        imgs: [
-          u("photo-1618221195710-dd6b41faaea6"),
-          u("photo-1586023492125-27b2c045efd7"),
-          u("photo-1522708323590-d24dbb6b0267"),
-        ],
+        imgs: styleShots("Скандинавский"),
       },
       {
         label: "Классика",
         hint: "Традиции и элегантность",
         grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)",
-        imgs: [
-          u("photo-1560448204-e02f11c3d0e2"),
-          u("photo-1502005229762-cf1b2da7c5d6"),
-          u("photo-1484154218962-a197022b5858"),
-        ],
+        imgs: styleShots("Неоклассика", "Современный").slice().reverse(),
       },
+
       {
         label: "Помогите подобрать",
         hint: "Не уверены? Поможем",
@@ -487,37 +480,28 @@ export default function Assistant() {
           }`}
         >
           <div className="relative h-40 sm:h-44 w-full overflow-hidden bg-neutral-100">
-            {opt.imgs ? (
+            {opt.imgs && opt.imgs.length > 0 ? (
               <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-[3px]">
                 {opt.imgs.map((src, i) => (
                   <div
                     key={src}
                     className={`relative overflow-hidden bg-neutral-200 ${i === 0 ? "col-span-2 row-span-2" : ""}`}
                   >
+                    <span className="absolute inset-0 krona-skeleton" aria-hidden="true" />
                     <img
                       src={src}
-                      alt={`${opt.label} — ${captions[i] ?? ""}`}
-                      loading="eager"
+                      alt={`${opt.label} — ${captions[i] ?? "пример работы"}`}
+                      loading="lazy"
                       decoding="async"
                       width={640}
                       height={480}
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        const img = e.currentTarget;
-                        if (img.dataset["retried"]) {
-                          img.style.visibility = "hidden";
-                          return;
-                        }
-                        img.dataset["retried"] = "1";
-                        img.src = `${src.split("?")[0]}?auto=format&fit=crop&w=480&q=70`;
-                      }}
                       className="absolute inset-0 h-full w-full object-cover krona-media"
                     />
                   </div>
-
                 ))}
               </div>
             ) : (
+
               <div
                 className="flex h-full w-full items-center justify-center krona-media"
                 style={{ background: opt.grad }}
