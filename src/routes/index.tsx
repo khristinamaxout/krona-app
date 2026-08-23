@@ -515,7 +515,11 @@ function ProjectTile({
       delay={(index % 2) * 90}
       className={`sm:col-span-1 ${span} col-span-1`}
     >
-      <button onClick={onOpen} className="group block w-full text-left">
+      <button
+        onClick={onOpen}
+        aria-label={`Открыть проект: ${p.title}`}
+        className="group block w-full text-left"
+      >
         <div className="overflow-hidden bg-neutral-200">
           <SmartImage
             thumb={thumbOf(p.photos[0])}
