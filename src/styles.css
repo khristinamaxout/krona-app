@@ -378,12 +378,16 @@
 @keyframes krona-intro-mark {
   0% {
     opacity: 0;
-    transform: translateY(16px);
-    filter: blur(4px);
+    transform: translateY(10px) scale(0.97);
+    filter: blur(2px);
+  }
+  55% {
+    opacity: 0.85;
+    filter: blur(0.4px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     filter: blur(0);
   }
 }
@@ -397,16 +401,19 @@
   }
 }
 
+/* появление ~1.7s → пауза ~0.4s → мягкий уход 0.75s */
 .krona-intro {
-  animation: krona-intro-out 0.7s cubic-bezier(0.16, 1, 0.3, 1) 1.15s both;
+  animation: krona-intro-out 0.75s cubic-bezier(0.16, 1, 0.3, 1) 2.1s both;
 }
 
 .krona-intro-mark {
-  animation: krona-intro-mark 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: krona-intro-mark 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
+  /* чуть более плотная подача знака в момент проявления */
+  filter: contrast(1.06) saturate(1.04);
 }
 
 .krona-intro-sub {
-  animation: krona-intro-mark 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.28s both;
+  animation: krona-intro-mark 1.4s cubic-bezier(0.22, 0.61, 0.36, 1) 0.45s both;
 }
 
 /* ---------- Hero ---------- */
