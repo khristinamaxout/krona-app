@@ -694,16 +694,25 @@ function Portfolio() {
 
   // Фокус переходит в полноэкранный просмотр и возвращается назад при закрытии
   const lightboxOpen = photoIdx !== null;
+  const openedFromRef = useRef<number | null>(null);
   useEffect(() => {
     if (!lightboxOpen) {
       const back = lastFocusRef.current;
+      const idx = openedFromRef.current;
       lastFocusRef.current = null;
-      if (back?.isConnected) back.focus();
+      openedFromRef.current = null;
+      if (back?.isConnected) {
+        back.focus();
+      } else if (idx !== null) {
+        const el = document.querySelector<HTMLElement>(`[data-photo-trigger="${idx}"]`);
+        el?.focus();
+      }
       return;
     }
     lastFocusRef.current = (document.activeElement as HTMLElement) ?? null;
+    openedFromRef.current = photoIdx;
     lightboxCloseRef.current?.focus();
-  }, [lightboxOpen]);
+  }, [lightboxOpen, photoIdx]);
 
   // Агрессивная предзагрузка ближайших кадров (±2) — после первого рендера
   useEffect(() => {
