@@ -895,6 +895,7 @@ function Portfolio() {
                         <button
                           onClick={() => setPhotoIdx(i + 1)}
                           onMouseEnter={() => preloadImage(src)}
+                          data-photo-trigger={i + 1}
                           className="group block w-full cursor-zoom-in overflow-hidden bg-neutral-200"
                           aria-label={`Открыть фото ${i + 2} во весь экран`}
                         >
