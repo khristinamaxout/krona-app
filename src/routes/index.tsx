@@ -649,10 +649,22 @@ function Portfolio() {
     };
   }, [project]);
 
+  const lightboxCloseRef = useRef<HTMLButtonElement | null>(null);
+  const lastFocusRef = useRef<HTMLElement | null>(null);
+  const touchRef = useRef<{ x: number; y: number; t: number } | null>(null);
+
+  const goPhoto = useCallback(
+    (dir: number) => {
+      if (!project) return;
+      const total = project.photos.length;
+      setPhotoIdx((i) => (i === null ? i : (i + dir + total) % total));
+    },
+    [project],
+  );
+
   // Клавиатура: Esc закрывает, стрелки листают полноэкранный просмотр
   useEffect(() => {
     if (!project) return;
-    const total = project.photos.length;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (photoIdx !== null) setPhotoIdx(null);
@@ -660,20 +672,74 @@ function Portfolio() {
         return;
       }
       if (photoIdx === null) return;
-      if (e.key === "ArrowRight") setPhotoIdx((photoIdx + 1) % total);
-      if (e.key === "ArrowLeft") setPhotoIdx((photoIdx - 1 + total) % total);
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        goPhoto(1);
+      }
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        goPhoto(-1);
+      }
+      if (e.key === "Home") setPhotoIdx(0);
+      if (e.key === "End") setPhotoIdx(project.photos.length - 1);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [project, photoIdx]);
+  }, [project, photoIdx, goPhoto]);
 
-  // Предзагрузка соседних фото в полноэкранном просмотре
+  // Фокус переходит в полноэкранный просмотр и возвращается назад при закрытии
+  useEffect(() => {
+    if (photoIdx === null) {
+      lastFocusRef.current?.focus?.();
+      lastFocusRef.current = null;
+      return;
+    }
+    lastFocusRef.current = (document.activeElement as HTMLElement) ?? null;
+    lightboxCloseRef.current?.focus();
+  }, [photoIdx]);
+
+  // Агрессивная предзагрузка ближайших кадров (±2) — после первого рендера
   useEffect(() => {
     if (!project || photoIdx === null) return;
     const total = project.photos.length;
-    preloadImage(project.photos[(photoIdx + 1) % total]);
-    preloadImage(project.photos[(photoIdx - 1 + total) % total]);
+    const id = window.requestAnimationFrame(() => {
+      for (const d of [1, -1, 2, -2]) {
+        preloadImage(project.photos[(photoIdx + d + total * 2) % total]);
+      }
+    });
+    return () => window.cancelAnimationFrame(id);
   }, [project, photoIdx]);
+
+  // Предзагрузка первых кадров кейса сразу после открытия проекта
+  useEffect(() => {
+    if (!project) return;
+    const id = window.setTimeout(() => {
+      project.photos.slice(0, 3).forEach((p) => preloadImage(p));
+    }, 600);
+    return () => window.clearTimeout(id);
+  }, [project]);
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    const t = e.touches[0];
+    if (t) touchRef.current = { x: t.clientX, y: t.clientY, t: Date.now() };
+  }, []);
+
+  const onTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      const start = touchRef.current;
+      touchRef.current = null;
+      const t = e.changedTouches[0];
+      if (!start || !t) return;
+      const dx = t.clientX - start.x;
+      const dy = t.clientY - start.y;
+      if (Math.abs(dx) < 45 || Math.abs(dx) < Math.abs(dy) * 1.4) return;
+      if (Date.now() - start.t > 800) return;
+      goPhoto(dx < 0 ? 1 : -1);
+    },
+    [goPhoto],
+  );
+
+
 
 
   return (
