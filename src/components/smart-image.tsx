@@ -43,8 +43,18 @@ export default function SmartImage({
   preloadFullOnHover = false,
 }: Props) {
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const ref = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
+
+  const bust = (src: string) => (attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}r=${attempt}`);
+
+  const retry = useCallback(() => {
+    setFailed(false);
+    setLoaded(false);
+    setAttempt((a) => a + 1);
+  }, []);
 
   // если картинка уже в кэше — не показываем скелетон
   useEffect(() => {
