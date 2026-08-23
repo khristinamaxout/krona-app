@@ -834,6 +834,8 @@ function Portfolio() {
             <button
               onClick={() => setPhotoIdx(0)}
               onMouseEnter={() => preloadImage(project.photos[0])}
+              data-photo-trigger={0}
+              aria-label={`Открыть фото 1 во весь экран`}
               className="block w-full cursor-zoom-in bg-neutral-200"
             >
               <SmartImage
