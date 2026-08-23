@@ -644,6 +644,8 @@ const GALLERY_RHYTHM: { span: string; ratio: string; w: number; h: number; sizes
 function Portfolio() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [photoIdx, setPhotoIdx] = useState<number | null>(null);
+  const [photoFailed, setPhotoFailed] = useState(false);
+  const [photoAttempt, setPhotoAttempt] = useState(0);
   const project = openIdx !== null ? projects[openIdx] : null;
   const rest = projects.filter((p) => !FEATURED_ORDER.includes(p.no));
 
