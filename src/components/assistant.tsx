@@ -85,8 +85,23 @@ type Step = {
 
 const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 
-/** Временные качественные изображения-заполнители (Unsplash). */
-const u = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=640&q=80`;
+/**
+ * Изображения стилей — собственные фото реализованных проектов студии
+ * (локальные превью, доступны без внешних сервисов).
+ */
+const styleShots = (style: string, fallback?: string): string[] => {
+  const pool = projects
+    .filter((p) => p.style === style)
+    .flatMap((p) => p.photos)
+    .map((src) => thumbOf(src));
+  const extra = fallback
+    ? projects
+        .filter((p) => p.style === fallback)
+        .flatMap((p) => p.photos)
+        .map((src) => thumbOf(src))
+    : [];
+  return [...pool, ...extra].slice(0, 3);
+};
 
 const steps: Step[] = [
   {
