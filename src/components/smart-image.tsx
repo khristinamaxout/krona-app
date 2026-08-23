@@ -43,8 +43,18 @@ export default function SmartImage({
   preloadFullOnHover = false,
 }: Props) {
   const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const [attempt, setAttempt] = useState(0);
   const ref = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
+
+  const bust = (src: string) => (attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}r=${attempt}`);
+
+  const retry = useCallback(() => {
+    setFailed(false);
+    setLoaded(false);
+    setAttempt((a) => a + 1);
+  }, []);
 
   // если картинка уже в кэше — не показываем скелетон
   useEffect(() => {
@@ -74,7 +84,8 @@ export default function SmartImage({
     if (preloadFullOnHover) preloadImage(full);
   }, [full, preloadFullOnHover]);
 
-  const srcSet = full && full !== thumb ? `${thumb} 800w, ${full} 1600w` : undefined;
+  const srcSet =
+    full && full !== thumb ? `${bust(thumb)} 800w, ${bust(full)} 1600w` : undefined;
 
   return (
     <div
@@ -84,23 +95,53 @@ export default function SmartImage({
       className={`relative overflow-hidden ${className}`}
       style={{ aspectRatio: ratio }}
     >
-      {!loaded && <div className="absolute inset-0 krona-skeleton" aria-hidden="true" />}
-      <img
-        ref={imgRef}
-        src={thumb}
-        srcSet={srcSet}
-        sizes={sizes}
-        alt={alt}
-        width={width}
-        height={height}
-        loading={priority ? "eager" : "lazy"}
-        decoding="async"
-        onLoad={() => setLoaded(true)}
-        onError={() => setLoaded(true)}
-        className={`absolute inset-0 w-full h-full object-cover transition-[opacity,filter,transform] duration-700 ease-out ${
-          loaded ? "opacity-100 blur-0" : "opacity-0 blur-md scale-[1.02]"
-        } ${imgClassName}`}
-      />
+      {!loaded && !failed && (
+        <div className="absolute inset-0 krona-skeleton" aria-hidden="true" />
+      )}
+      {!failed && (
+        <img
+          key={attempt}
+          ref={imgRef}
+          src={bust(thumb)}
+          srcSet={srcSet}
+          sizes={sizes}
+          alt={alt}
+          width={width}
+          height={height}
+          loading={priority ? "eager" : "lazy"}
+          decoding="async"
+          onLoad={() => setLoaded(true)}
+          onError={() => {
+            setLoaded(false);
+            setFailed(true);
+          }}
+          className={`absolute inset-0 w-full h-full object-cover transition-[opacity,filter,transform] duration-700 ease-out ${
+            loaded ? "opacity-100 blur-0" : "opacity-0 blur-md scale-[1.02]"
+          } ${imgClassName}`}
+        />
+      )}
+      {failed && (
+        <div
+          role="alert"
+          className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-[#F2EFE8] px-4 text-center"
+        >
+          <p className="text-[11px] uppercase tracking-[0.22em] text-neutral-500">
+            Фото не загрузилось
+          </p>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              retry();
+            }}
+            className="border border-neutral-400 px-4 py-2 text-[11px] uppercase tracking-[0.22em] text-neutral-700 transition-colors hover:border-neutral-800 hover:text-neutral-900"
+          >
+            Повторить загрузку
+          </button>
+          <span className="sr-only">{alt} — изображение недоступно, нажмите «Повторить загрузку»</span>
+        </div>
+      )}
     </div>
   );
 }

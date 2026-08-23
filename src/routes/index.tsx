@@ -644,6 +644,8 @@ const GALLERY_RHYTHM: { span: string; ratio: string; w: number; h: number; sizes
 function Portfolio() {
   const [openIdx, setOpenIdx] = useState<number | null>(null);
   const [photoIdx, setPhotoIdx] = useState<number | null>(null);
+  const [photoFailed, setPhotoFailed] = useState(false);
+  const [photoAttempt, setPhotoAttempt] = useState(0);
   const project = openIdx !== null ? projects[openIdx] : null;
   const rest = projects.filter((p) => !FEATURED_ORDER.includes(p.no));
 
@@ -691,6 +693,12 @@ function Portfolio() {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [project, photoIdx, goPhoto]);
+
+  // Сброс состояния ошибки при смене кадра
+  useEffect(() => {
+    setPhotoFailed(false);
+    setPhotoAttempt(0);
+  }, [photoIdx, project]);
 
   // Фокус переходит в полноэкранный просмотр и возвращается назад при закрытии
   const lightboxOpen = photoIdx !== null;
@@ -1002,23 +1010,56 @@ function Portfolio() {
             className="relative max-h-[84vh] max-w-full overflow-hidden select-none"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* мгновенное превью, пока грузится полноразмерное фото */}
-            <img
-              key={`t-${photoIdx}`}
-              src={thumbOf(project.photos[photoIdx])}
-              alt=""
-              aria-hidden="true"
-              draggable={false}
-              className="max-h-[84vh] max-w-full object-contain blur-md"
-            />
-            <img
-              key={`f-${photoIdx}`}
-              src={project.photos[photoIdx]}
-              alt={`${project.title} — фото ${photoIdx + 1} из ${project.photos.length}`}
-              decoding="async"
-              draggable={false}
-              className="absolute inset-0 w-full h-full object-contain"
-            />
+            {photoFailed ? (
+              <div
+                role="alert"
+                className="flex w-[80vw] max-w-md flex-col items-center justify-center gap-4 border border-white/20 px-6 py-16 text-center"
+              >
+                <p className="text-[11px] uppercase tracking-[0.25em] text-white/70">
+                  Фото не загрузилось
+                </p>
+                <button
+                  type="button"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setPhotoFailed(false);
+                    setPhotoAttempt((a) => a + 1);
+                  }}
+                  className="border border-white/30 px-5 py-2 text-[11px] uppercase tracking-[0.25em] text-white/80 transition-colors hover:border-white hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                >
+                  Повторить загрузку
+                </button>
+                <span className="sr-only">
+                  {project.title} — фото {photoIdx + 1} из {project.photos.length} недоступно.
+                  Нажмите «Повторить загрузку» или закройте просмотр клавишей Esc.
+                </span>
+              </div>
+            ) : (
+              <>
+                {/* мгновенное превью, пока грузится полноразмерное фото */}
+                <img
+                  key={`t-${photoIdx}`}
+                  src={thumbOf(project.photos[photoIdx])}
+                  alt=""
+                  aria-hidden="true"
+                  draggable={false}
+                  className="max-h-[84vh] max-w-full object-contain blur-md"
+                />
+                <img
+                  key={`f-${photoIdx}-${photoAttempt}`}
+                  src={
+                    photoAttempt === 0
+                      ? project.photos[photoIdx]
+                      : `${project.photos[photoIdx]}${project.photos[photoIdx].includes("?") ? "&" : "?"}r=${photoAttempt}`
+                  }
+                  alt={`${project.title} — фото ${photoIdx + 1} из ${project.photos.length}`}
+                  decoding="async"
+                  draggable={false}
+                  onError={() => setPhotoFailed(true)}
+                  className="absolute inset-0 w-full h-full object-contain"
+                />
+              </>
+            )}
           </div>
 
           <div
