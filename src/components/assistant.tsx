@@ -480,37 +480,32 @@ export default function Assistant() {
           }`}
         >
           <div className="relative h-40 sm:h-44 w-full overflow-hidden bg-neutral-100">
-            {opt.imgs ? (
+            {opt.imgs && opt.imgs.length > 0 ? (
               <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-[3px]">
                 {opt.imgs.map((src, i) => (
                   <div
                     key={src}
                     className={`relative overflow-hidden bg-neutral-200 ${i === 0 ? "col-span-2 row-span-2" : ""}`}
                   >
+                    <span className="absolute inset-0 krona-skeleton" aria-hidden="true" />
                     <img
                       src={src}
-                      alt={`${opt.label} — ${captions[i] ?? ""}`}
-                      loading="eager"
+                      alt={`${opt.label} — ${captions[i] ?? "пример работы"}`}
+                      loading="lazy"
                       decoding="async"
                       width={640}
                       height={480}
-                      referrerPolicy="no-referrer"
-                      onError={(e) => {
-                        const img = e.currentTarget;
-                        if (img.dataset["retried"]) {
-                          img.style.visibility = "hidden";
-                          return;
-                        }
-                        img.dataset["retried"] = "1";
-                        img.src = `${src.split("?")[0]}?auto=format&fit=crop&w=480&q=70`;
+                      onLoad={(e) => {
+                        e.currentTarget.style.opacity = "1";
                       }}
+                      style={{ opacity: 0, transition: "opacity .5s ease" }}
                       className="absolute inset-0 h-full w-full object-cover krona-media"
                     />
                   </div>
-
                 ))}
               </div>
             ) : (
+
               <div
                 className="flex h-full w-full items-center justify-center krona-media"
                 style={{ background: opt.grad }}
