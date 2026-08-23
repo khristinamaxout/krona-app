@@ -495,10 +495,6 @@ export default function Assistant() {
                       decoding="async"
                       width={640}
                       height={480}
-                      onLoad={(e) => {
-                        e.currentTarget.style.opacity = "1";
-                      }}
-                      style={{ opacity: 0, transition: "opacity .5s ease" }}
                       className="absolute inset-0 h-full w-full object-cover krona-media"
                     />
                   </div>
