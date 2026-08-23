@@ -202,62 +202,39 @@ const steps: Step[] = [
         label: "Современный",
         hint: "Чистые линии и функциональность",
         grad: "linear-gradient(135deg,#D9D4CB,#8E8B84)",
-        imgs: [
-          u("photo-1600210492486-724fe5c67fb0"),
-          u("photo-1616486338812-3dadae4b4ace"),
-          u("photo-1600607687939-ce8a6c25118c"),
-        ],
+        imgs: styleShots("Современный"),
       },
       {
         label: "Неоклассика",
         hint: "Современная классика",
         grad: "linear-gradient(135deg,#EFE7DA,#B9A78C)",
-        imgs: [
-          u("photo-1556909212-d5b604d0c90d"),
-          u("photo-1600566753086-00f18fb6b3ea"),
-          u("photo-1583847268964-b28dc8f51f92"),
-        ],
+        imgs: styleShots("Неоклассика"),
       },
       {
         label: "Минимализм",
         hint: "Ничего лишнего",
         grad: "linear-gradient(135deg,#F2F0EB,#C9C5BC)",
-        imgs: [
-          u("photo-1567767292278-a4f21aa2d36e"),
-          u("photo-1540518614846-7eded433c457"),
-          u("photo-1493809842364-78817add7ffb"),
-        ],
+        imgs: styleShots("Минимализм"),
       },
       {
         label: "Лофт",
         hint: "Бетон, металл, дерево",
         grad: "linear-gradient(135deg,#6E6862,#2E2B28)",
-        imgs: [
-          u("photo-1524758631624-e2822e304c36"),
-          u("photo-1505693416388-ac5ce068fe85"),
-          u("photo-1595526114035-0d45ed16cfbf"),
-        ],
+        imgs: styleShots("Лофт"),
       },
       {
         label: "Скандинавский",
         hint: "Свет, дерево, уют",
         grad: "linear-gradient(135deg,#FAF7F0,#D7C9AE)",
-        imgs: [
-          u("photo-1618221195710-dd6b41faaea6"),
-          u("photo-1586023492125-27b2c045efd7"),
-          u("photo-1522708323590-d24dbb6b0267"),
-        ],
+        imgs: styleShots("Скандинавский"),
       },
       {
         label: "Классика",
         hint: "Традиции и элегантность",
         grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)",
-        imgs: [
-          u("photo-1560448204-e02f11c3d0e2"),
-          u("photo-1502005229762-cf1b2da7c5d6"),
-          u("photo-1484154218962-a197022b5858"),
-        ],
+        imgs: styleShots("Неоклассика", "Современный").slice().reverse(),
       },
+
       {
         label: "Помогите подобрать",
         hint: "Не уверены? Поможем",
