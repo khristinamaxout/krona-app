@@ -84,7 +84,8 @@ export default function SmartImage({
     if (preloadFullOnHover) preloadImage(full);
   }, [full, preloadFullOnHover]);
 
-  const srcSet = full && full !== thumb ? `${thumb} 800w, ${full} 1600w` : undefined;
+  const srcSet =
+    full && full !== thumb ? `${bust(thumb)} 800w, ${bust(full)} 1600w` : undefined;
 
   return (
     <div
