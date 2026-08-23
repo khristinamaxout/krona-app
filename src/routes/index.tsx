@@ -935,7 +935,7 @@ function Portfolio() {
           role="dialog"
           aria-modal="true"
           aria-label={`${project.title} — просмотр фото`}
-          className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 sm:p-8"
+          className="krona-dark-scope fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 sm:p-8"
           onClick={() => setPhotoIdx(null)}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
