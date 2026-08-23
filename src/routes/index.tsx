@@ -693,15 +693,17 @@ function Portfolio() {
   }, [project, photoIdx, goPhoto]);
 
   // Фокус переходит в полноэкранный просмотр и возвращается назад при закрытии
+  const lightboxOpen = photoIdx !== null;
   useEffect(() => {
-    if (photoIdx === null) {
-      lastFocusRef.current?.focus?.();
+    if (!lightboxOpen) {
+      const back = lastFocusRef.current;
       lastFocusRef.current = null;
+      if (back?.isConnected) back.focus();
       return;
     }
     lastFocusRef.current = (document.activeElement as HTMLElement) ?? null;
     lightboxCloseRef.current?.focus();
-  }, [photoIdx]);
+  }, [lightboxOpen]);
 
   // Агрессивная предзагрузка ближайших кадров (±2) — после первого рендера
   useEffect(() => {
