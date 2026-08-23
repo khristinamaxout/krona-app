@@ -392,6 +392,23 @@
   }
 }
 
+@keyframes krona-intro-logo {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+    filter: blur(2px) contrast(1) saturate(1);
+  }
+  55% {
+    opacity: 0.88;
+    filter: blur(0.4px) contrast(1.04) saturate(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0) contrast(1.07) saturate(1.05);
+  }
+}
+
 @keyframes krona-intro-out {
   0% {
     opacity: 1;
@@ -407,9 +424,7 @@
 }
 
 .krona-intro-mark {
-  animation: krona-intro-mark 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
-  /* чуть более плотная подача знака в момент проявления */
-  filter: contrast(1.06) saturate(1.04);
+  animation: krona-intro-logo 1.7s cubic-bezier(0.22, 0.61, 0.36, 1) both;
 }
 
 .krona-intro-sub {
