@@ -870,11 +870,17 @@ function Portfolio() {
           aria-label={`${project.title} — просмотр фото`}
           className="fixed inset-0 z-[60] bg-black/95 flex items-center justify-center p-4 sm:p-8"
           onClick={() => setPhotoIdx(null)}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
         >
           <button
-            className="absolute top-5 right-5 z-10 text-white/80 hover:text-white"
+            ref={lightboxCloseRef}
+            className="absolute top-5 right-5 z-10 w-11 h-11 flex items-center justify-center text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
             aria-label="Закрыть просмотр"
-            onClick={() => setPhotoIdx(null)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setPhotoIdx(null);
+            }}
           >
             <X className="w-7 h-7" strokeWidth={1.5} />
           </button>
@@ -883,21 +889,23 @@ function Portfolio() {
             <>
               <button
                 aria-label="Предыдущее фото"
+                aria-controls="krona-lightbox-image"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setPhotoIdx((photoIdx - 1 + project.photos.length) % project.photos.length);
+                  goPhoto(-1);
                 }}
-                className="absolute left-2 sm:left-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors"
+                className="absolute left-2 sm:left-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <ChevronLeft className="w-6 h-6" strokeWidth={1.5} />
               </button>
               <button
                 aria-label="Следующее фото"
+                aria-controls="krona-lightbox-image"
                 onClick={(e) => {
                   e.stopPropagation();
-                  setPhotoIdx((photoIdx + 1) % project.photos.length);
+                  goPhoto(1);
                 }}
-                className="absolute right-2 sm:right-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors"
+                className="absolute right-2 sm:right-6 z-10 w-12 h-12 flex items-center justify-center text-white/70 hover:text-white border border-white/20 hover:border-white/60 transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black"
               >
                 <ChevronRight className="w-6 h-6" strokeWidth={1.5} />
               </button>
@@ -905,7 +913,8 @@ function Portfolio() {
           )}
 
           <div
-            className="relative max-h-[84vh] max-w-full overflow-hidden"
+            id="krona-lightbox-image"
+            className="relative max-h-[84vh] max-w-full overflow-hidden select-none"
             onClick={(e) => e.stopPropagation()}
           >
             {/* мгновенное превью, пока грузится полноразмерное фото */}
@@ -914,22 +923,30 @@ function Portfolio() {
               src={thumbOf(project.photos[photoIdx])}
               alt=""
               aria-hidden="true"
+              draggable={false}
               className="max-h-[84vh] max-w-full object-contain blur-md"
             />
             <img
               key={`f-${photoIdx}`}
               src={project.photos[photoIdx]}
-              alt={`${project.title} — фото ${photoIdx + 1}`}
+              alt={`${project.title} — фото ${photoIdx + 1} из ${project.photos.length}`}
               decoding="async"
+              draggable={false}
               className="absolute inset-0 w-full h-full object-contain"
             />
           </div>
 
-          <div className="absolute bottom-6 left-0 right-0 text-center text-[11px] tracking-[0.25em] uppercase text-white/60 tabular-nums">
+          <div
+            aria-live="polite"
+            aria-atomic="true"
+            className="absolute bottom-6 left-0 right-0 text-center text-[11px] tracking-[0.25em] uppercase text-white/60 tabular-nums"
+          >
             {photoIdx + 1} / {project.photos.length}
+            <span className="sr-only"> — листайте стрелками или свайпом, Esc — закрыть</span>
           </div>
         </div>
       )}
+
 
 
     </section>
