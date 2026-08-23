@@ -694,6 +694,12 @@ function Portfolio() {
     return () => window.removeEventListener("keydown", onKey);
   }, [project, photoIdx, goPhoto]);
 
+  // Сброс состояния ошибки при смене кадра
+  useEffect(() => {
+    setPhotoFailed(false);
+    setPhotoAttempt(0);
+  }, [photoIdx, project]);
+
   // Фокус переходит в полноэкранный просмотр и возвращается назад при закрытии
   const lightboxOpen = photoIdx !== null;
   const openedFromRef = useRef<number | null>(null);
