@@ -656,7 +656,8 @@ export default function Assistant() {
             </div>
 
             {!done ? (
-              <div key={step.key} className="flex flex-col flex-1 krona-veil">
+              <div key={step.key} className="flex flex-col flex-1 min-h-0 krona-veil">
+                <div className="flex-1 min-h-0 overflow-y-auto pr-1 -mr-1 krona-scroll">
                 <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500 krona-rise">
                   {step.title}
                 </div>
