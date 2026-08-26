@@ -104,32 +104,20 @@ type Step = {
 const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 
 /**
- * Изображения стилей — собственные фото реализованных проектов студии.
- * Для каждого стиля показываем самые продающие кадры: гостиная (зал), кухня, спальня.
+ * Изображения стилей — премиальные визуализации: гостиная (зал), кухня, спальня.
  */
-const ROOMS: { key: string; match: RegExp }[] = [
-  { key: "Гостиная", match: /гостин|зал/i },
-  { key: "Кухня", match: /кухн/i },
-  { key: "Спальня", match: /спальн|детск|молодёжн|гардероб|шкаф/i },
-];
+const ROOMS = ["Гостиная", "Кухня", "Спальня"] as const;
 
-const bestShot = (style: string, match: RegExp): string | null => {
-  const byStyle = projects.filter((p) => p.style === style);
-  const pools = [byStyle, projects];
-  for (const pool of pools) {
-    const hit = pool.find((p) => match.test(p.title) || match.test(p.category));
-    if (hit?.photos?.[0]) return thumbOf(hit.photos[0]);
-  }
-  return null;
+const STYLE_SHOTS: Record<string, string[]> = {
+  Современный: [sModernLiving, sModernKitchen, sModernBedroom],
+  Неоклассика: [sNeoLiving, sNeoKitchen, sNeoBedroom],
+  Минимализм: [sMinLiving, sMinKitchen, sMinBedroom],
+  Лофт: [sLoftLiving, sLoftKitchen, sLoftBedroom],
+  Скандинавский: [sScandLiving, sScandKitchen, sScandBedroom],
+  Классика: [sClassicLiving, sClassicKitchen, sClassicBedroom],
 };
 
-const styleShots = (style: string, fallback?: string): string[] => {
-  const shots = ROOMS.map(
-    (r) => bestShot(style, r.match) ?? (fallback ? bestShot(fallback, r.match) : null),
-  ).filter((s): s is string => Boolean(s));
-  const unique = Array.from(new Set(shots));
-  return unique.slice(0, 3);
-};
+const styleShots = (style: string): string[] => STYLE_SHOTS[style] ?? [];
 
 
 const steps: Step[] = [
