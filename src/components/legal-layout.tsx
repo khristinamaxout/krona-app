@@ -64,9 +64,11 @@ export function LegalLayout({
           </Link>
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-xs sm:text-sm text-[#EDE6D3] hover:text-white transition whitespace-nowrap"
+            aria-label="На главную"
+            className="inline-flex shrink-0 items-center gap-2 text-xs sm:text-sm text-[#EDE6D3] hover:text-white transition whitespace-nowrap"
           >
-            <ArrowLeft className="w-4 h-4" /> На главную
+            <ArrowLeft className="w-4 h-4" />
+            <span className="hidden xs:inline sm:inline">На главную</span>
           </Link>
         </div>
       </header>
