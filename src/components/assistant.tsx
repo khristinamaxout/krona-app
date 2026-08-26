@@ -67,6 +67,7 @@ import sScandBedroom from "@/assets/styles/scand-bedroom.jpg";
 import sClassicLiving from "@/assets/styles/classic-living.jpg";
 import sClassicKitchen from "@/assets/styles/classic-kitchen.jpg";
 import sClassicBedroom from "@/assets/styles/classic-bedroom.jpg";
+import { ConsentCheckbox } from "@/components/consent-checkbox";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
@@ -487,6 +488,7 @@ type Texts = Record<string, string>;
 
 export default function Assistant() {
   const [i, setI] = useState(0);
+  const [agree, setAgree] = useState(false);
   const [ans, setAns] = useState<Answers>({});
   const [texts, setTexts] = useState<Texts>({});
   const [files, setFiles] = useState<string[]>([]);
