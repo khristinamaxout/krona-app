@@ -249,7 +249,7 @@ const steps: Step[] = [
         label: "Классика",
         hint: "Традиции и элегантность",
         grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)",
-        imgs: styleShots("Классика", "Неоклассика"),
+        imgs: styleShots("Классика"),
       },
 
       {
