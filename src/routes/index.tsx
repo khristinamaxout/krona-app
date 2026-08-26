@@ -43,6 +43,9 @@ import logoKastamonu from "@/assets/brands/kastamonu.png.asset.json";
 import logoAgt from "@/assets/brands/agt.svg.asset.json";
 import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
 import { projects, thumbOf, type Project } from "@/data/projects";
+import { ConsentCheckbox } from "@/components/consent-checkbox";
+import { Link } from "@tanstack/react-router";
+import { LEGAL_LINKS } from "@/data/legal";
 
 
 export const Route = createFileRoute("/")({
