@@ -119,6 +119,77 @@ const STYLE_SHOTS: Record<string, string[]> = {
 
 const styleShots = (style: string): string[] => STYLE_SHOTS[style] ?? [];
 
+const ALL_STYLE_SHOTS: string[] = Object.values(STYLE_SHOTS).flat();
+
+type LightboxState = { imgs: string[]; captions: string[]; index: number };
+
+/** Плитка изображения стиля: ленивая загрузка, скелетон, ошибка с повтором, открытие на весь экран. */
+function StyleTile({
+  src,
+  alt,
+  large,
+  priority,
+  onOpen,
+}: {
+  src: string;
+  alt: string;
+  large?: boolean;
+  priority?: boolean;
+  onOpen: () => void;
+}) {
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+  const [bust, setBust] = useState(0);
+
+  return (
+    <div
+      className={`relative overflow-hidden bg-neutral-200 ${large ? "col-span-2 row-span-2" : ""}`}
+    >
+      {status === "loading" && <span className="absolute inset-0 krona-skeleton" aria-hidden="true" />}
+      {status === "error" ? (
+        <button
+          type="button"
+          onClick={(e) => {
+            e.stopPropagation();
+            setStatus("loading");
+            setBust((b) => b + 1);
+          }}
+          className="absolute inset-0 flex flex-col items-center justify-center gap-1 bg-neutral-100 px-2 text-center text-[10px] leading-tight text-neutral-500"
+        >
+          <span role="alert">Фото не загрузилось</span>
+          <span className="underline underline-offset-2">Повторить</span>
+        </button>
+      ) : (
+        <button
+          type="button"
+          aria-label={`Открыть на весь экран: ${alt}`}
+          onClick={(e) => {
+            e.stopPropagation();
+            onOpen();
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") e.stopPropagation();
+          }}
+          className="absolute inset-0 h-full w-full cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
+        >
+          <img
+            src={bust ? `${src}${src.includes("?") ? "&" : "?"}r=${bust}` : src}
+            alt={alt}
+            loading={priority ? "eager" : "lazy"}
+            fetchPriority={priority ? "high" : "low"}
+            decoding="async"
+            width={640}
+            height={480}
+            onLoad={() => setStatus("ready")}
+            onError={() => setStatus("error")}
+            className="absolute inset-0 h-full w-full object-cover krona-media"
+          />
+        </button>
+      )}
+    </div>
+  );
+}
+
+
 
 const steps: Step[] = [
   {
@@ -426,6 +497,44 @@ export default function Assistant() {
     scrollRef.current?.scrollTo({ top: 0 });
   }, [i]);
 
+  // Полноэкранный просмотр изображений стиля
+  const [lightbox, setLightbox] = useState<LightboxState | null>(null);
+  const [lbError, setLbError] = useState(false);
+  const lbRef = useRef<HTMLDivElement | null>(null);
+
+  // Префетч изображений стиля заранее (в простое), чтобы шаг «Стиль» открывался мгновенно
+  useEffect(() => {
+    const styleIdx = steps.findIndex((s) => s.key === "style");
+    if (styleIdx < 0 || i < styleIdx - 2 || i > styleIdx) return;
+    const run = () => ALL_STYLE_SHOTS.forEach((src) => { const im = new Image(); im.src = src; });
+    const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
+    if (w.requestIdleCallback) w.requestIdleCallback(run);
+    else setTimeout(run, 400);
+  }, [i]);
+
+  // Клавиатура и блокировка скролла для полноэкранного просмотра
+  useEffect(() => {
+    if (!lightbox) return;
+    setLbError(false);
+    lbRef.current?.focus();
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightbox(null);
+      if (e.key === "ArrowRight")
+        setLightbox((s) => (s ? { ...s, index: (s.index + 1) % s.imgs.length } : s));
+      if (e.key === "ArrowLeft")
+        setLightbox((s) => (s ? { ...s, index: (s.index - 1 + s.imgs.length) % s.imgs.length } : s));
+    };
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [lightbox?.index, lightbox !== null]);
+
+
+
   const get = (k: string) => ans[k] ?? [];
 
   const toggle = (k: string, label: string, mode: "single" | "multi", max?: number) => {
@@ -486,11 +595,20 @@ export default function Assistant() {
     const Icon = opt.icon;
     if (variant === "card") {
       const captions = ["Гостиная", "Кухня", "Спальня"];
+      const imgs = opt.imgs ?? [];
       return (
-        <button
+        <div
           key={opt.label}
-          type="button"
+          role="button"
+          tabIndex={0}
+          aria-pressed={active}
           onClick={onClick}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onClick();
+            }
+          }}
           style={{
             ...delay,
             borderRadius: 20,
@@ -498,33 +616,33 @@ export default function Assistant() {
               ? `0 0 0 2px ${forest}, 0 22px 50px -30px rgba(26,26,26,0.55)`
               : "0 14px 34px -26px rgba(26,26,26,0.45)",
           }}
-          className={`group relative flex h-full flex-col text-left overflow-hidden border bg-white krona-rise krona-lift ${
+          className={`group relative flex h-full cursor-pointer flex-col text-left overflow-hidden border bg-white krona-rise krona-lift focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 ${
             active ? "border-transparent" : "border-black/10 hover:border-black/30"
           }`}
         >
-          <div className="relative h-40 sm:h-44 w-full overflow-hidden bg-neutral-100">
-            {opt.imgs && opt.imgs.length > 0 ? (
+          <div className="relative aspect-[16/10] w-full overflow-hidden bg-neutral-100">
+            {imgs.length > 0 ? (
               <div className="grid h-full w-full grid-cols-3 grid-rows-2 gap-[3px]">
-                {opt.imgs.map((src, i) => (
-                  <div
+                {imgs.map((src, i) => (
+                  <StyleTile
                     key={src}
-                    className={`relative overflow-hidden bg-neutral-200 ${i === 0 ? "col-span-2 row-span-2" : ""}`}
-                  >
-                    <span className="absolute inset-0 krona-skeleton" aria-hidden="true" />
-                    <img
-                      src={src}
-                      alt={`${opt.label} — ${captions[i] ?? "пример работы"}`}
-                      loading="lazy"
-                      decoding="async"
-                      width={640}
-                      height={480}
-                      className="absolute inset-0 h-full w-full object-cover krona-media"
-                    />
-                  </div>
+                    src={src}
+                    large={i === 0}
+                    alt={`${opt.label} — ${captions[i] ?? "пример работы"}`}
+                    priority={idx < 2}
+                    onOpen={() =>
+                      setLightbox({
+                        imgs,
+                        captions: imgs.map(
+                          (_, k) => `${opt.label} — ${captions[k] ?? "пример работы"}`,
+                        ),
+                        index: i,
+                      })
+                    }
+                  />
                 ))}
               </div>
             ) : (
-
               <div
                 className="flex h-full w-full items-center justify-center krona-media"
                 style={{ background: opt.grad }}
@@ -534,11 +652,31 @@ export default function Assistant() {
             )}
           </div>
           <div className="p-5">
-            <div className="text-[15px] leading-snug">{opt.label}</div>
+            <div className="flex items-start justify-between gap-3">
+              <div className="text-[15px] leading-snug">{opt.label}</div>
+              {imgs.length > 0 && (
+                <span
+                  className="shrink-0 rounded-full border px-2.5 py-1 text-[10px] uppercase tracking-[0.16em]"
+                  style={{
+                    color: active ? "#FFFFFF" : forest,
+                    backgroundColor: active ? forest : "transparent",
+                    borderColor: active ? forest : "rgba(31,58,46,0.35)",
+                  }}
+                >
+                  {active ? "Выбрано" : "Выбрать"}
+                </span>
+              )}
+            </div>
             {opt.hint && (
               <div className="mt-1.5 text-xs text-neutral-500 leading-snug">{opt.hint}</div>
             )}
+            {imgs.length > 0 && (
+              <div className="mt-2 text-[11px] text-neutral-400">
+                Нажмите на фото — откроется во весь экран
+              </div>
+            )}
           </div>
+
           {active && (
             <span
               className="absolute top-3 right-3 w-6 h-6 rounded-full flex items-center justify-center krona-check"
@@ -547,9 +685,10 @@ export default function Assistant() {
               <Check className="w-3.5 h-3.5 text-white" />
             </span>
           )}
-        </button>
+        </div>
       );
     }
+
     if (variant === "swatch") {
       return (
         <button
@@ -918,6 +1057,73 @@ export default function Assistant() {
           </div>
         </div>
       </div>
+
+      {lightbox && (
+        <div
+          ref={lbRef}
+          tabIndex={-1}
+          role="dialog"
+          aria-modal="true"
+          aria-label={lightbox.captions[lightbox.index]}
+          onClick={() => setLightbox(null)}
+          className="fixed inset-0 z-[120] flex items-center justify-center bg-black/92 p-4 outline-none"
+        >
+          <button
+            type="button"
+            aria-label="Закрыть просмотр"
+            onClick={() => setLightbox(null)}
+            className="absolute top-4 right-4 z-10 rounded-full border border-white/25 px-4 py-2 text-xs uppercase tracking-[0.18em] text-white"
+          >
+            Esc
+          </button>
+          {lightbox.imgs.length > 1 && (
+            <>
+              <button
+                type="button"
+                aria-label="Предыдущее фото"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightbox((s) =>
+                    s ? { ...s, index: (s.index - 1 + s.imgs.length) % s.imgs.length } : s,
+                  );
+                }}
+                className="absolute left-3 sm:left-6 z-10 rounded-full border border-white/25 p-3 text-white"
+              >
+                <ArrowRight className="w-5 h-5 rotate-180" strokeWidth={1.4} />
+              </button>
+              <button
+                type="button"
+                aria-label="Следующее фото"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setLightbox((s) => (s ? { ...s, index: (s.index + 1) % s.imgs.length } : s));
+                }}
+                className="absolute right-3 sm:right-6 z-10 rounded-full border border-white/25 p-3 text-white"
+              >
+                <ArrowRight className="w-5 h-5" strokeWidth={1.4} />
+              </button>
+            </>
+          )}
+          <figure className="max-h-[88vh] max-w-[92vw]" onClick={(e) => e.stopPropagation()}>
+            {lbError ? (
+              <div role="alert" className="text-center text-sm text-white/80">
+                Не удалось загрузить изображение. Попробуйте ещё раз или выберите другое фото.
+              </div>
+            ) : (
+              <img
+                src={lightbox.imgs[lightbox.index]}
+                alt={lightbox.captions[lightbox.index]}
+                onError={() => setLbError(true)}
+                className="max-h-[82vh] max-w-[92vw] object-contain"
+              />
+            )}
+            <figcaption className="mt-3 text-center text-xs uppercase tracking-[0.18em] text-white/70">
+              {lightbox.captions[lightbox.index]} · {lightbox.index + 1} / {lightbox.imgs.length}
+            </figcaption>
+          </figure>
+        </div>
+      )}
     </section>
+
   );
 }
