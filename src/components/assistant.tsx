@@ -786,9 +786,11 @@ export default function Assistant() {
                     )}
                   </div>
                 )}
+                </div>
 
                 {/* Навигация */}
-                <div className="mt-auto pt-10 flex items-center justify-between gap-4">
+                <div className="pt-6 flex items-center justify-between gap-4">
+
                   <button
                     type="button"
                     onClick={() => setI(Math.max(0, i - 1))}
