@@ -17,7 +17,7 @@ export default function BrandIntro() {
       return;
     }
     sessionStorage.setItem("krona-intro", "1");
-    const t = setTimeout(() => setGone(true), 2900);
+    const t = setTimeout(() => setGone(true), 4700);
     return () => clearTimeout(t);
   }, []);
 
