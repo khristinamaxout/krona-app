@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -87,22 +87,33 @@ type Step = {
 const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 
 /**
- * Изображения стилей — собственные фото реализованных проектов студии
- * (локальные превью, доступны без внешних сервисов).
+ * Изображения стилей — собственные фото реализованных проектов студии.
+ * Для каждого стиля показываем самые продающие кадры: гостиная (зал), кухня, спальня.
  */
-const styleShots = (style: string, fallback?: string): string[] => {
-  const pool = projects
-    .filter((p) => p.style === style)
-    .flatMap((p) => p.photos)
-    .map((src) => thumbOf(src));
-  const extra = fallback
-    ? projects
-        .filter((p) => p.style === fallback)
-        .flatMap((p) => p.photos)
-        .map((src) => thumbOf(src))
-    : [];
-  return [...pool, ...extra].slice(0, 3);
+const ROOMS: { key: string; match: RegExp }[] = [
+  { key: "Гостиная", match: /гостин|зал/i },
+  { key: "Кухня", match: /кухн/i },
+  { key: "Спальня", match: /спальн|детск|молодёжн|гардероб|шкаф/i },
+];
+
+const bestShot = (style: string, match: RegExp): string | null => {
+  const byStyle = projects.filter((p) => p.style === style);
+  const pools = [byStyle, projects];
+  for (const pool of pools) {
+    const hit = pool.find((p) => match.test(p.title) || match.test(p.category));
+    if (hit?.photos?.[0]) return thumbOf(hit.photos[0]);
+  }
+  return null;
 };
+
+const styleShots = (style: string, fallback?: string): string[] => {
+  const shots = ROOMS.map(
+    (r) => bestShot(style, r.match) ?? (fallback ? bestShot(fallback, r.match) : null),
+  ).filter((s): s is string => Boolean(s));
+  const unique = Array.from(new Set(shots));
+  return unique.slice(0, 3);
+};
+
 
 const steps: Step[] = [
   {
@@ -233,7 +244,7 @@ const steps: Step[] = [
         label: "Классика",
         hint: "Традиции и элегантность",
         grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)",
-        imgs: styleShots("Неоклассика", "Современный").slice().reverse(),
+        imgs: styleShots("Классика", "Неоклассика"),
       },
 
       {
@@ -399,9 +410,16 @@ export default function Assistant() {
   const [ans, setAns] = useState<Answers>({});
   const [texts, setTexts] = useState<Texts>({});
   const [files, setFiles] = useState<string[]>([]);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const done = i >= steps.length;
   const step = steps[i];
   const progress = Math.round((Math.min(i, steps.length) / steps.length) * 100);
+
+  // Окно ассистента фиксированной высоты: при смене шага возвращаем внутренний скролл наверх,
+  // чтобы страница не «перепрыгивала».
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [i]);
 
   const get = (k: string) => ans[k] ?? [];
 
@@ -462,7 +480,7 @@ export default function Assistant() {
     const delay = { animationDelay: `${Math.min(idx, 16) * 35}ms` };
     const Icon = opt.icon;
     if (variant === "card") {
-      const captions = ["Кухня", "Спальня", "Гостиная"];
+      const captions = ["Гостиная", "Кухня", "Спальня"];
       return (
         <button
           key={opt.label}
@@ -626,7 +644,11 @@ export default function Assistant() {
 
         {/* Правая колонка */}
         <div className="lg:col-span-8">
-          <div className="rounded-3xl bg-[#F5F3EE] p-6 sm:p-10 md:p-12 min-h-[520px] flex flex-col">
+          <div
+            className={`rounded-3xl bg-[#F5F3EE] p-6 sm:p-10 md:p-12 flex flex-col ${
+              done ? "min-h-[520px]" : "h-[640px] sm:h-[700px] lg:h-[720px]"
+            }`}
+          >
             {/* Прогресс */}
             <div className="flex items-center gap-4">
               <div className="h-1 flex-1 rounded-full bg-black/10 overflow-hidden">
@@ -641,7 +663,8 @@ export default function Assistant() {
             </div>
 
             {!done ? (
-              <div key={step.key} className="flex flex-col flex-1 krona-veil">
+              <div key={step.key} className="flex flex-col flex-1 min-h-0 krona-veil">
+                <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto pr-1 -mr-1 krona-scroll">
                 <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500 krona-rise">
                   {step.title}
                 </div>
@@ -771,9 +794,11 @@ export default function Assistant() {
                     )}
                   </div>
                 )}
+                </div>
 
                 {/* Навигация */}
-                <div className="mt-auto pt-10 flex items-center justify-between gap-4">
+                <div className="pt-6 flex items-center justify-between gap-4">
+
                   <button
                     type="button"
                     onClick={() => setI(Math.max(0, i - 1))}

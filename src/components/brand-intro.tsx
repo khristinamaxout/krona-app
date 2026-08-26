@@ -28,11 +28,21 @@ export default function BrandIntro() {
       aria-hidden="true"
       className="krona-intro fixed inset-0 z-[70] flex flex-col items-center justify-center pointer-events-none bg-[#FAFAF7]"
     >
-      <img
-        src={kronaWordmark.url}
-        alt=""
-        className="krona-intro-mark h-12 sm:h-16 w-auto"
+      <div
+        className="krona-intro-mark h-12 sm:h-16 w-[280px] sm:w-[380px]"
+        style={{
+          backgroundColor: "rgba(31, 58, 46, 0.78)",
+          WebkitMaskImage: `url(${kronaWordmark.url})`,
+          maskImage: `url(${kronaWordmark.url})`,
+          WebkitMaskRepeat: "no-repeat",
+          maskRepeat: "no-repeat",
+          WebkitMaskPosition: "center",
+          maskPosition: "center",
+          WebkitMaskSize: "contain",
+          maskSize: "contain",
+        }}
       />
+
       <div
         className="krona-intro-sub mt-4 text-[10px] sm:text-xs tracking-[0.28em] uppercase text-neutral-500"
         style={{ fontFamily: "Inter, sans-serif" }}
