@@ -49,7 +49,24 @@ import {
   Wine,
   Home,
 } from "lucide-react";
-import { projects, thumbOf } from "@/data/projects";
+import sModernLiving from "@/assets/styles/modern-living.jpg";
+import sModernKitchen from "@/assets/styles/modern-kitchen.jpg";
+import sModernBedroom from "@/assets/styles/modern-bedroom.jpg";
+import sNeoLiving from "@/assets/styles/neo-living.jpg";
+import sNeoKitchen from "@/assets/styles/neo-kitchen.jpg";
+import sNeoBedroom from "@/assets/styles/neo-bedroom.jpg";
+import sMinLiving from "@/assets/styles/min-living.jpg";
+import sMinKitchen from "@/assets/styles/min-kitchen.jpg";
+import sMinBedroom from "@/assets/styles/min-bedroom.jpg";
+import sLoftLiving from "@/assets/styles/loft-living.jpg";
+import sLoftKitchen from "@/assets/styles/loft-kitchen.jpg";
+import sLoftBedroom from "@/assets/styles/loft-bedroom.jpg";
+import sScandLiving from "@/assets/styles/scand-living.jpg";
+import sScandKitchen from "@/assets/styles/scand-kitchen.jpg";
+import sScandBedroom from "@/assets/styles/scand-bedroom.jpg";
+import sClassicLiving from "@/assets/styles/classic-living.jpg";
+import sClassicKitchen from "@/assets/styles/classic-kitchen.jpg";
+import sClassicBedroom from "@/assets/styles/classic-bedroom.jpg";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
