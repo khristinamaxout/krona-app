@@ -555,13 +555,18 @@ function CTA() {
           <div className="sm:col-span-2">
             <Field label="Пара слов о ваших проектах" />
           </div>
-          <div className="sm:col-span-2 flex items-center justify-between pt-4">
-            <div className="text-xs text-neutral-500 max-w-xs">
-              Отправляя форму, вы соглашаетесь на обработку персональных данных.
+          <div className="sm:col-span-2 flex flex-col gap-5 pt-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="max-w-sm">
+              <ConsentCheckbox
+                id="consent-partners"
+                checked={agree}
+                onChange={setAgree}
+              />
             </div>
             <button
               type="button"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white text-sm transition hover:opacity-90"
+              disabled={!agree}
+              className="inline-flex shrink-0 items-center gap-2 px-6 py-3 rounded-full text-white text-sm transition hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
               style={{ backgroundColor: forest }}
             >
               Отправить <ArrowRight className="w-4 h-4" />
