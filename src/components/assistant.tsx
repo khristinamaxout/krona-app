@@ -1032,7 +1032,13 @@ export default function Assistant() {
                     />
                     <a
                       href="#request"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-white text-sm"
+                      aria-disabled={!agree}
+                      onClick={(e) => {
+                        if (!agree) e.preventDefault();
+                      }}
+                      className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-white text-sm transition ${
+                        agree ? "" : "opacity-40 cursor-not-allowed"
+                      }`}
                       style={{ backgroundColor: forest }}
                     >
                       Получить проект <ArrowRight className="w-4 h-4" />
