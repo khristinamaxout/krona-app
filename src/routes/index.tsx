@@ -1576,6 +1576,16 @@ function Footer() {
           ))}
         </div>
       </div>
+
+      <div className="border-t border-[#EDE6D3]/15">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-6 flex flex-wrap gap-x-8 gap-y-3 text-xs text-[#EDE6D3]/60">
+          {LEGAL_LINKS.map((l) => (
+            <Link key={l.to} to={l.to} className="hover:text-[#EDE6D3] transition">
+              {l.label}
+            </Link>
+          ))}
+        </div>
+      </div>
     </footer>
   );
 }
