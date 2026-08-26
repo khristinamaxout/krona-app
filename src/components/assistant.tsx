@@ -67,6 +67,7 @@ import sScandBedroom from "@/assets/styles/scand-bedroom.jpg";
 import sClassicLiving from "@/assets/styles/classic-living.jpg";
 import sClassicKitchen from "@/assets/styles/classic-kitchen.jpg";
 import sClassicBedroom from "@/assets/styles/classic-bedroom.jpg";
+import { ConsentCheckbox } from "@/components/consent-checkbox";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
@@ -487,6 +488,7 @@ type Texts = Record<string, string>;
 
 export default function Assistant() {
   const [i, setI] = useState(0);
+  const [agree, setAgree] = useState(false);
   const [ans, setAns] = useState<Answers>({});
   const [texts, setTexts] = useState<Texts>({});
   const [files, setFiles] = useState<string[]>([]);
@@ -1030,11 +1032,20 @@ export default function Assistant() {
                     />
                     <a
                       href="#request"
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-white text-sm"
+                      aria-disabled={!agree}
+                      onClick={(e) => {
+                        if (!agree) e.preventDefault();
+                      }}
+                      className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-white text-sm transition ${
+                        agree ? "" : "opacity-40 cursor-not-allowed"
+                      }`}
                       style={{ backgroundColor: forest }}
                     >
                       Получить проект <ArrowRight className="w-4 h-4" />
                     </a>
+                  </div>
+                  <div className="mt-4 max-w-xl">
+                    <ConsentCheckbox id="consent-assistant" checked={agree} onChange={setAgree} />
                   </div>
                   <div className="mt-3 text-xs text-neutral-500 flex items-center gap-2">
                     <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.4} />

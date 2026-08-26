@@ -43,6 +43,9 @@ import logoKastamonu from "@/assets/brands/kastamonu.png.asset.json";
 import logoAgt from "@/assets/brands/agt.svg.asset.json";
 import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
 import { projects, thumbOf, type Project } from "@/data/projects";
+import { ConsentCheckbox } from "@/components/consent-checkbox";
+import { Link } from "@tanstack/react-router";
+import { LEGAL_LINKS } from "@/data/legal";
 
 
 export const Route = createFileRoute("/")({
@@ -1396,6 +1399,7 @@ function Reviews() {
 /* ---------- Request Form ---------- */
 function RequestForm() {
   const [sent, setSent] = useState(false);
+  const [agree, setAgree] = useState(false);
   return (
     <section id="request" className="text-white" style={{ backgroundColor: graphite }}>
       <div className="max-w-7xl mx-auto px-8 py-24 grid md:grid-cols-12 gap-12">
@@ -1447,16 +1451,22 @@ function RequestForm() {
                 options={["Кухня", "Гардеробная", "Спальня", "Гостиная", "Комплексно"]}
               />
               <Textarea label="О пространстве и задаче" />
+              <div className="mt-2 max-w-xl">
+                <ConsentCheckbox
+                  id="consent-request"
+                  tone="light"
+                  checked={agree}
+                  onChange={setAgree}
+                />
+              </div>
               <div className="flex flex-wrap items-center gap-4 mt-2">
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white text-black text-sm"
+                  disabled={!agree}
+                  className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white text-black text-sm transition disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   Отправить заявку <ArrowRight className="w-4 h-4" />
                 </button>
-                <p className="text-xs text-white/40 max-w-xs">
-                  Отправляя заявку, вы соглашаетесь на обработку персональных данных.
-                </p>
               </div>
             </form>
           ) : (
@@ -1563,6 +1573,16 @@ function Footer() {
             <a key={s} href="#" className="text-[#EDE6D3]/80 hover:text-[#EDE6D3] transition">
               {s}
             </a>
+          ))}
+        </div>
+      </div>
+
+      <div className="border-t border-[#EDE6D3]/15">
+        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-6 flex flex-wrap gap-x-8 gap-y-3 text-xs text-[#EDE6D3]/60">
+          {LEGAL_LINKS.map((l) => (
+            <Link key={l.to} to={l.to} className="hover:text-[#EDE6D3] transition">
+              {l.label}
+            </Link>
           ))}
         </div>
       </div>
