@@ -473,7 +473,7 @@ export default function Assistant() {
     const delay = { animationDelay: `${Math.min(idx, 16) * 35}ms` };
     const Icon = opt.icon;
     if (variant === "card") {
-      const captions = ["Кухня", "Спальня", "Гостиная"];
+      const captions = ["Гостиная", "Кухня", "Спальня"];
       return (
         <button
           key={opt.label}
