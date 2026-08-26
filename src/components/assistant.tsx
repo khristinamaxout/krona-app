@@ -637,7 +637,11 @@ export default function Assistant() {
 
         {/* Правая колонка */}
         <div className="lg:col-span-8">
-          <div className="rounded-3xl bg-[#F5F3EE] p-6 sm:p-10 md:p-12 min-h-[520px] flex flex-col">
+          <div
+            className={`rounded-3xl bg-[#F5F3EE] p-6 sm:p-10 md:p-12 flex flex-col ${
+              done ? "min-h-[520px]" : "h-[640px] sm:h-[700px] lg:h-[720px]"
+            }`}
+          >
             {/* Прогресс */}
             <div className="flex items-center gap-4">
               <div className="h-1 flex-1 rounded-full bg-black/10 overflow-hidden">
