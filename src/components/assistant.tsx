@@ -106,7 +106,7 @@ const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 /**
  * Изображения стилей — премиальные визуализации: гостиная (зал), кухня, спальня.
  */
-const ROOMS = ["Гостиная", "Кухня", "Спальня"] as const;
+
 
 const STYLE_SHOTS: Record<string, string[]> = {
   Современный: [sModernLiving, sModernKitchen, sModernBedroom],
