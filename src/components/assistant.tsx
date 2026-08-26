@@ -49,7 +49,24 @@ import {
   Wine,
   Home,
 } from "lucide-react";
-import { projects, thumbOf } from "@/data/projects";
+import sModernLiving from "@/assets/styles/modern-living.jpg";
+import sModernKitchen from "@/assets/styles/modern-kitchen.jpg";
+import sModernBedroom from "@/assets/styles/modern-bedroom.jpg";
+import sNeoLiving from "@/assets/styles/neo-living.jpg";
+import sNeoKitchen from "@/assets/styles/neo-kitchen.jpg";
+import sNeoBedroom from "@/assets/styles/neo-bedroom.jpg";
+import sMinLiving from "@/assets/styles/min-living.jpg";
+import sMinKitchen from "@/assets/styles/min-kitchen.jpg";
+import sMinBedroom from "@/assets/styles/min-bedroom.jpg";
+import sLoftLiving from "@/assets/styles/loft-living.jpg";
+import sLoftKitchen from "@/assets/styles/loft-kitchen.jpg";
+import sLoftBedroom from "@/assets/styles/loft-bedroom.jpg";
+import sScandLiving from "@/assets/styles/scand-living.jpg";
+import sScandKitchen from "@/assets/styles/scand-kitchen.jpg";
+import sScandBedroom from "@/assets/styles/scand-bedroom.jpg";
+import sClassicLiving from "@/assets/styles/classic-living.jpg";
+import sClassicKitchen from "@/assets/styles/classic-kitchen.jpg";
+import sClassicBedroom from "@/assets/styles/classic-bedroom.jpg";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
@@ -87,32 +104,20 @@ type Step = {
 const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
 
 /**
- * Изображения стилей — собственные фото реализованных проектов студии.
- * Для каждого стиля показываем самые продающие кадры: гостиная (зал), кухня, спальня.
+ * Изображения стилей — премиальные визуализации: гостиная (зал), кухня, спальня.
  */
-const ROOMS: { key: string; match: RegExp }[] = [
-  { key: "Гостиная", match: /гостин|зал/i },
-  { key: "Кухня", match: /кухн/i },
-  { key: "Спальня", match: /спальн|детск|молодёжн|гардероб|шкаф/i },
-];
 
-const bestShot = (style: string, match: RegExp): string | null => {
-  const byStyle = projects.filter((p) => p.style === style);
-  const pools = [byStyle, projects];
-  for (const pool of pools) {
-    const hit = pool.find((p) => match.test(p.title) || match.test(p.category));
-    if (hit?.photos?.[0]) return thumbOf(hit.photos[0]);
-  }
-  return null;
+
+const STYLE_SHOTS: Record<string, string[]> = {
+  Современный: [sModernLiving, sModernKitchen, sModernBedroom],
+  Неоклассика: [sNeoLiving, sNeoKitchen, sNeoBedroom],
+  Минимализм: [sMinLiving, sMinKitchen, sMinBedroom],
+  Лофт: [sLoftLiving, sLoftKitchen, sLoftBedroom],
+  Скандинавский: [sScandLiving, sScandKitchen, sScandBedroom],
+  Классика: [sClassicLiving, sClassicKitchen, sClassicBedroom],
 };
 
-const styleShots = (style: string, fallback?: string): string[] => {
-  const shots = ROOMS.map(
-    (r) => bestShot(style, r.match) ?? (fallback ? bestShot(fallback, r.match) : null),
-  ).filter((s): s is string => Boolean(s));
-  const unique = Array.from(new Set(shots));
-  return unique.slice(0, 3);
-};
+const styleShots = (style: string): string[] => STYLE_SHOTS[style] ?? [];
 
 
 const steps: Step[] = [
@@ -244,7 +249,7 @@ const steps: Step[] = [
         label: "Классика",
         hint: "Традиции и элегантность",
         grad: "linear-gradient(135deg,#EDE3D2,#9C7F5C)",
-        imgs: styleShots("Классика", "Неоклассика"),
+        imgs: styleShots("Классика"),
       },
 
       {
