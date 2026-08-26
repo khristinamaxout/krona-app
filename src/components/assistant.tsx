@@ -167,7 +167,11 @@ function StyleTile({
             onOpen();
           }}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") e.stopPropagation();
+            if (e.key === "Enter" || e.key === " ") {
+              e.stopPropagation();
+              e.preventDefault();
+              onOpen();
+            }
           }}
           className="absolute inset-0 h-full w-full cursor-zoom-in focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-white"
         >
