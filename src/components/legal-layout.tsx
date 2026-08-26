@@ -68,7 +68,7 @@ export function LegalLayout({
             className="inline-flex shrink-0 items-center gap-2 text-xs sm:text-sm text-[#EDE6D3] hover:text-white transition whitespace-nowrap"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="hidden xs:inline sm:inline">На главную</span>
+            <span className="hidden sm:inline">На главную</span>
           </Link>
         </div>
       </header>
