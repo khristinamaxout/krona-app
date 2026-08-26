@@ -11,6 +11,8 @@ import {
   X,
 } from "lucide-react";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
+import { ConsentCheckbox } from "@/components/consent-checkbox";
+import { LEGAL_LINKS } from "@/data/legal";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
@@ -527,6 +529,7 @@ function Faq() {
 
 /* ---------- CTA / Request ---------- */
 function CTA() {
+  const [agree, setAgree] = useState(false);
   return (
     <section id="partner-request" className="border-t border-black/10">
       <div className="max-w-7xl mx-auto px-8 py-24 grid md:grid-cols-12 gap-12">
@@ -598,6 +601,13 @@ function Footer() {
     <footer className="border-t border-black/10">
       <div className="max-w-7xl mx-auto px-8 py-10 flex flex-wrap items-center justify-between gap-4 text-xs text-neutral-500">
         <div>© Крона — мебельная студия Елены Трифан</div>
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
+          {LEGAL_LINKS.map((l) => (
+            <Link key={l.to} to={l.to} className="hover:text-black transition">
+              {l.label}
+            </Link>
+          ))}
+        </div>
         <Link to="/" className="hover:text-black transition">
           На главную →
         </Link>
