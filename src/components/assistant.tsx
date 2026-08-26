@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -410,9 +410,16 @@ export default function Assistant() {
   const [ans, setAns] = useState<Answers>({});
   const [texts, setTexts] = useState<Texts>({});
   const [files, setFiles] = useState<string[]>([]);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const done = i >= steps.length;
   const step = steps[i];
   const progress = Math.round((Math.min(i, steps.length) / steps.length) * 100);
+
+  // Окно ассистента фиксированной высоты: при смене шага возвращаем внутренний скролл наверх,
+  // чтобы страница не «перепрыгивала».
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: 0 });
+  }, [i]);
 
   const get = (k: string) => ans[k] ?? [];
 
@@ -657,7 +664,7 @@ export default function Assistant() {
 
             {!done ? (
               <div key={step.key} className="flex flex-col flex-1 min-h-0 krona-veil">
-                <div className="flex-1 min-h-0 overflow-y-auto pr-1 -mr-1 krona-scroll">
+                <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto pr-1 -mr-1 krona-scroll">
                 <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500 krona-rise">
                   {step.title}
                 </div>
