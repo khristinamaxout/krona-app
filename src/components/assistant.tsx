@@ -1036,6 +1036,9 @@ export default function Assistant() {
                       Получить проект <ArrowRight className="w-4 h-4" />
                     </a>
                   </div>
+                  <div className="mt-4 max-w-xl">
+                    <ConsentCheckbox id="consent-assistant" checked={agree} onChange={setAgree} />
+                  </div>
                   <div className="mt-3 text-xs text-neutral-500 flex items-center gap-2">
                     <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.4} />
                     Ответ в течение рабочего дня. Никаких звонков «просто так».
