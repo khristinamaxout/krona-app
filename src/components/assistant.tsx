@@ -489,6 +489,12 @@ type Texts = Record<string, string>;
 export default function Assistant() {
   const [i, setI] = useState(0);
   const [agree, setAgree] = useState(false);
+  const [leadName, setLeadName] = useState("");
+  const [leadPhone, setLeadPhone] = useState("");
+  const [leadBusy, setLeadBusy] = useState(false);
+  const [leadSent, setLeadSent] = useState(false);
+  const [leadError, setLeadError] = useState(false);
+  const submitLead = useServerFn(sendLead);
   const [ans, setAns] = useState<Answers>({});
   const [texts, setTexts] = useState<Texts>({});
   const [files, setFiles] = useState<string[]>([]);
