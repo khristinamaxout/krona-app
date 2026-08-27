@@ -12,7 +12,9 @@ import {
 } from "lucide-react";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
-import { LEGAL_LINKS } from "@/data/legal";
+import { LEGAL, LEGAL_LINKS } from "@/data/legal";
+import { useServerFn } from "@tanstack/react-start";
+import { sendLead } from "@/lib/lead.functions";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
