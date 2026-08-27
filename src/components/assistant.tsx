@@ -1025,40 +1025,89 @@ export default function Assistant() {
                 </p>
 
                 <div className="mt-8 rounded-3xl bg-white p-6 sm:p-8">
-                  <div className="text-sm text-neutral-500">
-                    Оставьте контакты — пришлём индивидуальные решения и расчёт стоимости
-                  </div>
-                  <div className="mt-4 grid sm:grid-cols-3 gap-3">
-                    <input
-                      placeholder="Имя"
-                      className="rounded-full border border-black/10 px-5 py-3.5 text-sm outline-none focus:border-black/50 transition"
-                    />
-                    <input
-                      placeholder="Телефон"
-                      inputMode="tel"
-                      className="rounded-full border border-black/10 px-5 py-3.5 text-sm outline-none focus:border-black/50 transition"
-                    />
-                    <a
-                      href="#request"
-                      aria-disabled={!agree}
-                      onClick={(e) => {
-                        if (!agree) e.preventDefault();
-                      }}
-                      className={`inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-white text-sm transition ${
-                        agree ? "" : "opacity-40 cursor-not-allowed"
-                      }`}
-                      style={{ backgroundColor: forest }}
-                    >
-                      Получить проект <ArrowRight className="w-4 h-4" />
-                    </a>
-                  </div>
-                  <div className="mt-4 max-w-xl">
-                    <ConsentCheckbox id="consent-assistant" checked={agree} onChange={setAgree} />
-                  </div>
-                  <div className="mt-3 text-xs text-neutral-500 flex items-center gap-2">
-                    <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.4} />
-                    Ответ в течение рабочего дня. Никаких звонков «просто так».
-                  </div>
+                  {leadSent ? (
+                    <div className="flex items-start gap-3">
+                      <Check className="w-5 h-5 mt-0.5" style={{ color: forest }} />
+                      <div>
+                        <div className="text-base">Заявка принята.</div>
+                        <div className="mt-1 text-sm text-neutral-500">
+                          Спасибо! Заявка отправлена. Мы свяжемся с вами в ближайшее время.
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <div className="text-sm text-neutral-500">
+                        Оставьте контакты — пришлём индивидуальные решения и расчёт стоимости
+                      </div>
+                      <div className="mt-4 grid sm:grid-cols-3 gap-3">
+                        <input
+                          placeholder="Имя"
+                          value={leadName}
+                          onChange={(e) => setLeadName(e.target.value)}
+                          className="rounded-full border border-black/10 px-5 py-3.5 text-sm outline-none focus:border-black/50 transition"
+                        />
+                        <input
+                          placeholder="Телефон"
+                          inputMode="tel"
+                          value={leadPhone}
+                          onChange={(e) => setLeadPhone(e.target.value)}
+                          className="rounded-full border border-black/10 px-5 py-3.5 text-sm outline-none focus:border-black/50 transition"
+                        />
+                        <button
+                          type="button"
+                          disabled={!agree || leadBusy || !leadName.trim() || !leadPhone.trim()}
+                          onClick={async () => {
+                            if (leadBusy) return;
+                            setLeadBusy(true);
+                            setLeadError(false);
+                            try {
+                              const res = await submitLead({
+                                data: {
+                                  name: leadName.trim(),
+                                  phone: leadPhone.trim(),
+                                  email: "",
+                                  interest: "Заявка из ассистента подбора",
+                                  message:
+                                    summary.map((r) => `${r.label}: ${r.value}`).join("\n") ||
+                                    "Ассистент пройден без выбора",
+                                  source: "Главная — интерактивный ассистент",
+                                },
+                              });
+                              if (res.ok) setLeadSent(true);
+                              else setLeadError(true);
+                            } catch {
+                              setLeadError(true);
+                            } finally {
+                              setLeadBusy(false);
+                            }
+                          }}
+                          className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full text-white text-sm transition disabled:opacity-40 disabled:cursor-not-allowed"
+                          style={{ backgroundColor: forest }}
+                        >
+                          {leadBusy ? "Отправляем…" : "Получить проект"}{" "}
+                          <ArrowRight className="w-4 h-4" />
+                        </button>
+                      </div>
+                      {leadError && (
+                        <p role="alert" className="mt-3 text-sm text-[#8C3A2B]">
+                          Не удалось отправить заявку. Пожалуйста, попробуйте ещё раз или свяжитесь
+                          с нами по телефону.
+                        </p>
+                      )}
+                      <div className="mt-4 max-w-xl">
+                        <ConsentCheckbox
+                          id="consent-assistant"
+                          checked={agree}
+                          onChange={setAgree}
+                        />
+                      </div>
+                      <div className="mt-3 text-xs text-neutral-500 flex items-center gap-2">
+                        <ShieldCheck className="w-3.5 h-3.5" strokeWidth={1.4} />
+                        Ответ в течение рабочего дня. Никаких звонков «просто так».
+                      </div>
+                    </>
+                  )}
                 </div>
 
                 <div className="mt-6">
