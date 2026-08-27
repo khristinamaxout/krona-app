@@ -220,11 +220,11 @@ function Nav() {
         </nav>
 
         <div className="px-6 sm:px-10 mt-10 space-y-3 text-[#EDE6D3]/70 text-sm">
-          <a href="tel:+78120000000" className="flex items-center gap-3">
-            <Phone className="w-4 h-4" /> +7 (812) 000-00-00
+          <a href="tel:+79053839939" className="flex items-center gap-3">
+            <Phone className="w-4 h-4" /> {LEGAL.phone}
           </a>
-          <a href="mailto:hello@krona.studio" className="flex items-center gap-3">
-            <Mail className="w-4 h-4" /> hello@krona.studio
+          <a href={`mailto:${LEGAL.email}`} className="flex items-center gap-3">
+            <Mail className="w-4 h-4" /> {LEGAL.email}
           </a>
           <a
             href="#request"
