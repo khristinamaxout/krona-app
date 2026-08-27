@@ -1610,9 +1610,20 @@ function Footer() {
         </div>
 
         <div className="flex flex-wrap gap-6">
-          {["Instagram", "MAX", "WhatsApp", "Telegram"].map((s) => (
-            <a key={s} href="#" className="text-[#EDE6D3]/80 hover:text-[#EDE6D3] transition">
-              {s}
+          {[
+            { label: "ВКонтакте", href: LEGAL.vk },
+            { label: "MAX", href: LEGAL.whatsapp },
+            { label: "WhatsApp", href: LEGAL.whatsapp },
+            { label: "Telegram", href: LEGAL.telegram },
+          ].map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#EDE6D3]/80 hover:text-[#EDE6D3] transition"
+            >
+              {s.label}
             </a>
           ))}
         </div>
