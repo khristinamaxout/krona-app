@@ -45,7 +45,9 @@ import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
 import { projects, thumbOf, type Project } from "@/data/projects";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { Link } from "@tanstack/react-router";
-import { LEGAL_LINKS } from "@/data/legal";
+import { LEGAL, LEGAL_LINKS } from "@/data/legal";
+import { useServerFn } from "@tanstack/react-start";
+import { sendLead } from "@/lib/lead.functions";
 
 
 export const Route = createFileRoute("/")({
