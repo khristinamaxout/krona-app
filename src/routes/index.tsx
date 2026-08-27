@@ -45,7 +45,9 @@ import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
 import { projects, thumbOf, type Project } from "@/data/projects";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { Link } from "@tanstack/react-router";
-import { LEGAL_LINKS } from "@/data/legal";
+import { LEGAL, LEGAL_LINKS } from "@/data/legal";
+import { useServerFn } from "@tanstack/react-start";
+import { sendLead } from "@/lib/lead.functions";
 
 
 export const Route = createFileRoute("/")({
@@ -218,11 +220,11 @@ function Nav() {
         </nav>
 
         <div className="px-6 sm:px-10 mt-10 space-y-3 text-[#EDE6D3]/70 text-sm">
-          <a href="tel:+78120000000" className="flex items-center gap-3">
-            <Phone className="w-4 h-4" /> +7 (812) 000-00-00
+          <a href="tel:+79053839939" className="flex items-center gap-3">
+            <Phone className="w-4 h-4" /> {LEGAL.phone}
           </a>
-          <a href="mailto:hello@krona.studio" className="flex items-center gap-3">
-            <Mail className="w-4 h-4" /> hello@krona.studio
+          <a href={`mailto:${LEGAL.email}`} className="flex items-center gap-3">
+            <Mail className="w-4 h-4" /> {LEGAL.email}
           </a>
           <a
             href="#request"
@@ -1400,6 +1402,39 @@ function Reviews() {
 function RequestForm() {
   const [sent, setSent] = useState(false);
   const [agree, setAgree] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(false);
+  const submitLead = useServerFn(sendLead);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (busy) return;
+    setBusy(true);
+    setError(false);
+    const fd = new FormData(e.currentTarget);
+    const val = (k: string) => String(fd.get(k) ?? "").trim();
+    try {
+      const res = await submitLead({
+        data: {
+          name: val("name"),
+          phone: val("phone"),
+          email: val("email"),
+          interest: [val("type"), val("city") && `Город: ${val("city")}`, val("budget") && `Бюджет: ${val("budget")}`]
+            .filter(Boolean)
+            .join(" · "),
+          message: val("message"),
+          source: "Главная — блок «05 Заявка»",
+        },
+      });
+      if (res.ok) setSent(true);
+      else setError(true);
+    } catch {
+      setError(true);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <section id="request" className="text-white" style={{ backgroundColor: graphite }}>
       <div className="max-w-7xl mx-auto px-8 py-24 grid md:grid-cols-12 gap-12">
@@ -1419,38 +1454,33 @@ function RequestForm() {
             предварительный эскиз.
           </p>
           <div className="mt-10 space-y-3 text-sm text-white/70">
-            <div className="flex items-center gap-3">
-              <Phone className="w-4 h-4" /> +7 (812) 000-00-00
-            </div>
-            <div className="flex items-center gap-3">
-              <Mail className="w-4 h-4" /> hello@krona.studio
-            </div>
+            <a href={`tel:${LEGAL.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-3 hover:text-white transition">
+              <Phone className="w-4 h-4" /> {LEGAL.phone}
+            </a>
+            <a href={`mailto:${LEGAL.email}`} className="flex items-center gap-3 hover:text-white transition">
+              <Mail className="w-4 h-4" /> {LEGAL.email}
+            </a>
           </div>
         </div>
 
         <div className="md:col-span-7">
           {!sent ? (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSent(true);
-              }}
-              className="grid gap-4"
-            >
+            <form onSubmit={onSubmit} className="grid gap-4">
               <div className="grid md:grid-cols-2 gap-4">
-                <Field label="Как к вам обращаться" required />
-                <Field label="Телефон" required type="tel" />
+                <Field name="name" label="Как к вам обращаться" required />
+                <Field name="phone" label="Телефон" required type="tel" />
               </div>
-              <Field label="Email" type="email" />
+              <Field name="email" label="Email" type="email" />
               <div className="grid md:grid-cols-2 gap-4">
-                <Field label="Город" />
-                <Field label="Бюджет (примерно)" />
+                <Field name="city" label="Город" />
+                <Field name="budget" label="Бюджет (примерно)" />
               </div>
               <Select
+                name="type"
                 label="Тип проекта"
                 options={["Кухня", "Гардеробная", "Спальня", "Гостиная", "Комплексно"]}
               />
-              <Textarea label="О пространстве и задаче" />
+              <Textarea name="message" label="О пространстве и задаче" />
               <div className="mt-2 max-w-xl">
                 <ConsentCheckbox
                   id="consent-request"
@@ -1462,20 +1492,25 @@ function RequestForm() {
               <div className="flex flex-wrap items-center gap-4 mt-2">
                 <button
                   type="submit"
-                  disabled={!agree}
+                  disabled={!agree || busy}
                   className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white text-black text-sm transition disabled:opacity-40 disabled:cursor-not-allowed"
                 >
-                  Отправить заявку <ArrowRight className="w-4 h-4" />
+                  {busy ? "Отправляем…" : "Отправить заявку"} <ArrowRight className="w-4 h-4" />
                 </button>
               </div>
+              {error && (
+                <p role="alert" className="text-sm text-[#E8B4A0] max-w-md">
+                  Не удалось отправить заявку. Пожалуйста, попробуйте ещё раз или свяжитесь с нами
+                  по телефону.
+                </p>
+              )}
             </form>
           ) : (
             <div className="rounded-3xl border border-white/15 p-10 h-full flex flex-col justify-center">
               <Check className="w-8 h-8 mb-6" style={{ color: "#A8C8A0" }} />
               <h3 className="text-3xl font-normal">Заявка принята.</h3>
               <p className="mt-4 text-white/60 max-w-md">
-                Дизайнер Крона позвонит вам в течение рабочего дня. Пока — можно посмотреть наши
-                последние проекты.
+                Спасибо! Заявка отправлена. Мы свяжемся с вами в ближайшее время.
               </p>
             </div>
           )}
@@ -1487,10 +1522,12 @@ function RequestForm() {
 
 function Field({
   label,
+  name,
   type = "text",
   required = false,
 }: {
   label: string;
+  name: string;
   type?: string;
   required?: boolean;
 }) {
@@ -1501,6 +1538,7 @@ function Field({
         {required && " *"}
       </span>
       <input
+        name={name}
         required={required}
         type={type}
         className="mt-2 w-full bg-transparent border-b border-white/20 focus:border-white outline-none py-3 text-white placeholder-white/30"
@@ -1509,11 +1547,12 @@ function Field({
   );
 }
 
-function Select({ label, options }: { label: string; options: string[] }) {
+function Select({ label, name, options }: { label: string; name: string; options: string[] }) {
   return (
     <label className="block">
       <span className="text-xs text-white/50">{label}</span>
       <select
+        name={name}
         className="mt-2 w-full bg-transparent border-b border-white/20 focus:border-white outline-none py-3 text-white"
         defaultValue=""
       >
@@ -1530,17 +1569,19 @@ function Select({ label, options }: { label: string; options: string[] }) {
   );
 }
 
-function Textarea({ label }: { label: string }) {
+function Textarea({ label, name }: { label: string; name: string }) {
   return (
     <label className="block">
       <span className="text-xs text-white/50">{label}</span>
       <textarea
+        name={name}
         rows={4}
         className="mt-2 w-full bg-transparent border-b border-white/20 focus:border-white outline-none py-3 text-white placeholder-white/30 resize-none"
       />
     </label>
   );
 }
+
 
 /* ---------- Footer ---------- */
 function Footer() {
@@ -1569,9 +1610,20 @@ function Footer() {
         </div>
 
         <div className="flex flex-wrap gap-6">
-          {["Instagram", "MAX", "WhatsApp", "Telegram"].map((s) => (
-            <a key={s} href="#" className="text-[#EDE6D3]/80 hover:text-[#EDE6D3] transition">
-              {s}
+          {[
+            { label: "ВКонтакте", href: LEGAL.vk },
+            { label: "MAX", href: LEGAL.whatsapp },
+            { label: "WhatsApp", href: LEGAL.whatsapp },
+            { label: "Telegram", href: LEGAL.telegram },
+          ].map((s) => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-[#EDE6D3]/80 hover:text-[#EDE6D3] transition"
+            >
+              {s.label}
             </a>
           ))}
         </div>

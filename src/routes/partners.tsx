@@ -12,7 +12,9 @@ import {
 } from "lucide-react";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
-import { LEGAL_LINKS } from "@/data/legal";
+import { LEGAL, LEGAL_LINKS } from "@/data/legal";
+import { useServerFn } from "@tanstack/react-start";
+import { sendLead } from "@/lib/lead.functions";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
@@ -530,6 +532,40 @@ function Faq() {
 /* ---------- CTA / Request ---------- */
 function CTA() {
   const [agree, setAgree] = useState(false);
+  const [busy, setBusy] = useState(false);
+  const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
+  const submitLead = useServerFn(sendLead);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (busy) return;
+    setBusy(true);
+    setError(false);
+    const fd = new FormData(e.currentTarget);
+    const val = (k: string) => String(fd.get(k) ?? "").trim();
+    try {
+      const res = await submitLead({
+        data: {
+          name: val("name"),
+          phone: val("phone"),
+          email: val("email"),
+          interest: ["Партнёрство", val("studio") && `Студия: ${val("studio")}`]
+            .filter(Boolean)
+            .join(" · "),
+          message: val("about"),
+          source: "Страница «Партнёрам» — форма сотрудничества",
+        },
+      });
+      if (res.ok) setSent(true);
+      else setError(true);
+    } catch {
+      setError(true);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   return (
     <section id="partner-request" className="border-t border-black/10">
       <div className="max-w-7xl mx-auto px-8 py-24 grid md:grid-cols-12 gap-12">
@@ -546,54 +582,85 @@ function CTA() {
             массовых рассылок и презентаций на 40 слайдов.
           </p>
           <div className="mt-10 space-y-3 text-sm text-neutral-600">
-            <div>partners@krona.studio</div>
-            <div>+7 (000) 000-00-00 — Ирина, партнёрский отдел</div>
+            <div>{LEGAL.email}</div>
+            <div>{LEGAL.phone} — партнёрский отдел</div>
           </div>
         </div>
-        <form className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
-          <Field label="Как к вам обращаться" />
-          <Field label="Студия или бюро" />
-          <Field label="Телефон" />
-          <Field label="Email" />
-          <div className="sm:col-span-2">
-            <Field label="Пара слов о ваших проектах" />
-          </div>
-          <div className="sm:col-span-2 flex flex-col gap-5 pt-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="max-w-sm">
-              <ConsentCheckbox
-                id="consent-partners"
-                checked={agree}
-                onChange={setAgree}
-              />
+        {!sent ? (
+          <form
+            onSubmit={onSubmit}
+            className="md:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6"
+          >
+            <Field name="name" label="Как к вам обращаться" required />
+            <Field name="studio" label="Студия или бюро" />
+            <Field name="phone" label="Телефон" required />
+            <Field name="email" label="Email" />
+            <div className="sm:col-span-2">
+              <Field name="about" label="Пара слов о ваших проектах" />
             </div>
-            <button
-              type="button"
-              disabled={!agree}
-              className="inline-flex shrink-0 items-center gap-2 px-6 py-3 rounded-full text-white text-sm transition hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
-              style={{ backgroundColor: forest }}
-            >
-              Отправить <ArrowRight className="w-4 h-4" />
-            </button>
+            <div className="sm:col-span-2 flex flex-col gap-5 pt-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="max-w-sm">
+                <ConsentCheckbox
+                  id="consent-partners"
+                  checked={agree}
+                  onChange={setAgree}
+                />
+              </div>
+              <button
+                type="submit"
+                disabled={!agree || busy}
+                className="inline-flex shrink-0 items-center gap-2 px-6 py-3 rounded-full text-white text-sm transition hover:opacity-90 disabled:opacity-40 disabled:cursor-not-allowed"
+                style={{ backgroundColor: forest }}
+              >
+                {busy ? "Отправляем…" : "Отправить"} <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+            {error && (
+              <p role="alert" className="sm:col-span-2 text-sm text-[#8C3A2B]">
+                Не удалось отправить заявку. Пожалуйста, попробуйте ещё раз или свяжитесь с нами по
+                телефону.
+              </p>
+            )}
+          </form>
+        ) : (
+          <div className="md:col-span-7 border border-black/10 rounded-3xl p-10 flex flex-col justify-center">
+            <Check className="w-7 h-7 mb-5" style={{ color: forest }} />
+            <h3 className="text-2xl tracking-tight">Заявка принята.</h3>
+            <p className="mt-3 text-neutral-600">
+              Спасибо! Заявка отправлена. Мы свяжемся с вами в ближайшее время.
+            </p>
           </div>
-        </form>
+        )}
       </div>
     </section>
   );
 }
 
-function Field({ label }: { label: string }) {
+function Field({
+  label,
+  name,
+  required = false,
+}: {
+  label: string;
+  name: string;
+  required?: boolean;
+}) {
   return (
     <label className="block">
       <span className="block text-xs uppercase tracking-[0.2em] text-neutral-500 mb-2">
         {label}
+        {required && " *"}
       </span>
       <input
+        name={name}
+        required={required}
         type="text"
         className="w-full bg-transparent border-b border-black/20 focus:border-black outline-none py-2 text-[15px]"
       />
     </label>
   );
 }
+
 
 /* ---------- Footer ---------- */
 function Footer() {
