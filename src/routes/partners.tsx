@@ -31,8 +31,10 @@ export const Route = createFileRoute("/partners")({
         content:
           "Дизайнерам, архитекторам и студиям — партнёрская программа мебельной студии Крона.",
       },
+      { property: "og:url", content: "https://krona-app.lovable.app/partners" },
       { property: "og:type", content: "website" },
     ],
+    links: [{ rel: "canonical", href: "https://krona-app.lovable.app/partners" }],
   }),
   component: PartnersPage,
 });

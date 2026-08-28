@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://krona-app.lovable.app/sitemap.xml

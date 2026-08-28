@@ -16,9 +16,11 @@ export const Route = createFileRoute("/cookie")({
         property: "og:description",
         content: "Типы cookie на сайте студии Крона и управление ими.",
       },
+      { property: "og:url", content: "https://krona-app.lovable.app/cookie" },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://krona-app.lovable.app/cookie" }],
   }),
   component: CookiePage,
 });

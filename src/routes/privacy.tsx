@@ -16,9 +16,11 @@ export const Route = createFileRoute("/privacy")({
         property: "og:description",
         content: "Порядок обработки персональных данных на сайте мебельной студии Крона.",
       },
+      { property: "og:url", content: "https://krona-app.lovable.app/privacy" },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://krona-app.lovable.app/privacy" }],
   }),
   component: PrivacyPage,
 });

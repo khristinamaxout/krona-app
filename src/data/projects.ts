@@ -99,18 +99,38 @@ import p13_595792 from "@/assets/p13-2025031620595792.jpg.asset.json";
 import p13_351005 from "@/assets/p13-1741867351005.jpg.asset.json";
 import p13_364540 from "@/assets/p13-1741867364540.jpg.asset.json";
 
+/**
+ * Единый формат проекта каталога.
+ * Чтобы добавить новый проект — просто допишите объект в массив `projects`:
+ * обязательны no, title, category, style, lead, story, specs, tags, photos.
+ * Фотографий может быть любое количество (3, 5, 7 и больше) — карточка,
+ * галерея и лайтбокс работают с массивом любой длины.
+ * cover — необязательная обложка; по умолчанию берётся первое фото.
+ */
 export type Project = {
+  /** Номер/ID проекта, например "023" */
   no: string;
   title: string;
   category: string;
   style: string;
+  /** Статус работ, по умолчанию — «Реализовано» */
+  status?: string;
   featured?: boolean;
+  /** Краткое описание */
   lead: string;
   story: string[];
+  /** Характеристики */
   specs: { k: string; v: string }[];
   tags: string[];
+  /** Фотографии проекта, произвольное количество */
   photos: string[];
+  /** Обложка (по умолчанию photos[0]) */
+  cover?: string;
 };
+
+/** Обложка проекта: явная cover или первое фото. */
+export const coverOf = (p: Project): string => p.cover ?? p.photos[0];
+
 
 export const projects: Project[] = [
   {
