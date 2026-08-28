@@ -109,8 +109,8 @@ export const sendLead = createServerFn({ method: "POST" })
                 Authorization: `Bearer ${resendKey}`,
               },
           body: JSON.stringify({
-            from: LEAD_FROM,
-            to: [LEAD_RECIPIENT],
+            from: process.env["LEAD_FROM_EMAIL"] || DEFAULT_FROM,
+            to: [process.env["LEAD_RECIPIENT_EMAIL"] || LEAD_RECIPIENT],
             reply_to: data.email || undefined,
             subject: "Новая заявка с сайта КРОНА",
             html,
