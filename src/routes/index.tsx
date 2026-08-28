@@ -53,29 +53,54 @@ import { sendLead } from "@/lib/lead.functions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Крона — Мебельная студия Елены Трифан" },
+      { title: "КРОНА — мебельная студия в Саратове" },
       {
         name: "description",
         content:
-          "Помогаем создать мебель, которая подходит именно вашему пространству. Студия мебели на заказ Крона.",
+          "Мебель на заказ в Саратове: кухни, шкафы, гардеробные и мебель для гостиных. Собственное производство, проект по вашим размерам, замер и монтаж — студия Елены Трифан.",
       },
-      { property: "og:title", content: "Крона — Мебельная студия Елены Трифан" },
+      { property: "og:title", content: "КРОНА — мебельная студия в Саратове" },
       {
         property: "og:description",
         content:
-          "Премиальная студия мебели на заказ. Скандинавский минимализм и натуральные материалы.",
+          "Кухни, шкафы и корпусная мебель на заказ по вашим размерам. 20 лет практики, собственное производство, реализованные проекты в портфолио.",
       },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://krona-app.lovable.app/" },
+      { property: "og:image", content: "https://krona-app.lovable.app/og-image.jpg" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://krona-app.lovable.app/og-image.jpg" },
     ],
     links: [
+      { rel: "canonical", href: "https://krona-app.lovable.app/" },
       {
         rel: "preload",
         as: "image",
         href: photoWardrobe.url,
       },
-
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FurnitureStore",
+          name: "КРОНА — мебельная студия Елены Трифан",
+          url: "https://krona-app.lovable.app/",
+          image: "https://krona-app.lovable.app/og-image.jpg",
+          telephone: "+7 (905) 383-99-39",
+          email: "krona.studio.mebel@yandex.ru",
+          address: {
+            "@type": "PostalAddress",
+            addressLocality: "Саратов",
+            addressCountry: "RU",
+            streetAddress: "ул. Симбирская, д. 154, ТЦ «Мебель Сити»",
+          },
+        }),
+      },
     ],
   }),
+
 
   component: Index,
 });
