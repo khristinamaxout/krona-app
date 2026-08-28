@@ -45,9 +45,11 @@ export const sendLead = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const lovableKey = process.env["LOVABLE_API_KEY"];
     const resendKey = process.env["RESEND_API_KEY"];
+    // Через connector-gateway (если Resend подключён коннектором) или напрямую в Resend API.
+    const useGateway = process.env["RESEND_VIA_GATEWAY"] === "1" && Boolean(lovableKey);
 
-    if (!lovableKey || !resendKey) {
-      console.error("[lead] Missing RESEND_API_KEY or LOVABLE_API_KEY env vars");
+    if (!resendKey) {
+      console.error("[lead] Missing RESEND_API_KEY env var");
       return { ok: false as const };
     }
 
@@ -85,22 +87,30 @@ export const sendLead = createServerFn({ method: "POST" })
       .join("\n");
 
     try {
-      const response = await fetch(`${GATEWAY_URL}/emails`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${lovableKey}`,
-          "X-Connection-Api-Key": resendKey,
+      const response = await fetch(
+        useGateway ? `${GATEWAY_URL}/emails` : "https://api.resend.com/emails",
+        {
+          method: "POST",
+          headers: useGateway
+            ? {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${lovableKey}`,
+                "X-Connection-Api-Key": resendKey,
+              }
+            : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${resendKey}`,
+              },
+          body: JSON.stringify({
+            from: LEAD_FROM,
+            to: [LEAD_RECIPIENT],
+            reply_to: data.email || undefined,
+            subject: "Новая заявка с сайта КРОНА",
+            html,
+            text,
+          }),
         },
-        body: JSON.stringify({
-          from: LEAD_FROM,
-          to: [LEAD_RECIPIENT],
-          reply_to: data.email || undefined,
-          subject: "Новая заявка с сайта КРОНА",
-          html,
-          text,
-        }),
-      });
+      );
 
       if (!response.ok) {
         const body = await response.text();
