@@ -12,7 +12,6 @@ export const LEGAL = {
   phone: "+7 (905) 383-99-39",
   vk: "https://vk.ru/kuhni_krona2010",
   telegram: "https://t.me/kuhni_krona",
-  whatsapp: "https://wa.me/79053839939",
   updatedAt: "26 августа 2026 г.",
 } as const;
 

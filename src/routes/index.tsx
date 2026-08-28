@@ -346,7 +346,7 @@ const advantages = [
   },
   {
     icon: Factory,
-    title: "Собственное производство в Пензе",
+    title: "Собственное производство",
     text: "Наша мастерская находится в одном из крупнейших мебельных центров России. Это позволяет реализовывать нестандартные решения практически любой сложности — с ручной проработкой деталей.",
   },
   {
@@ -1612,8 +1612,6 @@ function Footer() {
         <div className="flex flex-wrap gap-6">
           {[
             { label: "ВКонтакте", href: LEGAL.vk },
-            { label: "MAX", href: LEGAL.whatsapp },
-            { label: "WhatsApp", href: LEGAL.whatsapp },
             { label: "Telegram", href: LEGAL.telegram },
           ].map((s) => (
             <a
