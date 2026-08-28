@@ -45,9 +45,11 @@ export const sendLead = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const lovableKey = process.env["LOVABLE_API_KEY"];
     const resendKey = process.env["RESEND_API_KEY"];
+    // Через connector-gateway (если Resend подключён коннектором) или напрямую в Resend API.
+    const useGateway = process.env["RESEND_VIA_GATEWAY"] === "1" && Boolean(lovableKey);
 
-    if (!lovableKey || !resendKey) {
-      console.error("[lead] Missing RESEND_API_KEY or LOVABLE_API_KEY env vars");
+    if (!resendKey) {
+      console.error("[lead] Missing RESEND_API_KEY env var");
       return { ok: false as const };
     }
 
