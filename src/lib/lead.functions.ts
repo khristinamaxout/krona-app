@@ -6,11 +6,18 @@ import { z } from "zod";
  * Ключи читаются только на сервере, во frontend не попадают.
  */
 
-/** Email получателя заявок — менять здесь. */
+/**
+ * Email получателя заявок — менять здесь (или переменной окружения LEAD_RECIPIENT_EMAIL,
+ * это удобно для тестов, пока в Resend не подтверждён собственный домен).
+ */
 export const LEAD_RECIPIENT = "krona.studio.mebel@yandex.ru";
 
-/** Отправитель. Пока нет своего домена — тестовый sender Resend. */
-const LEAD_FROM = "KRONA <onboarding@resend.dev>";
+/**
+ * Отправитель. Пока нет своего домена — тестовый sender Resend
+ * (он доставляет письма только на адрес владельца аккаунта Resend).
+ * После подтверждения домена задайте LEAD_FROM_EMAIL, например: KRONA <zayavki@krona.ru>
+ */
+const DEFAULT_FROM = "KRONA <onboarding@resend.dev>";
 
 const GATEWAY_URL = "https://connector-gateway.lovable.dev/resend";
 
