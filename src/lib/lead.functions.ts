@@ -101,15 +101,16 @@ export const sendLead = createServerFn({ method: "POST" })
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${resendKey}`,
               },
-        body: JSON.stringify({
-          from: LEAD_FROM,
-          to: [LEAD_RECIPIENT],
-          reply_to: data.email || undefined,
-          subject: "Новая заявка с сайта КРОНА",
-          html,
-          text,
-        }),
-      });
+          body: JSON.stringify({
+            from: LEAD_FROM,
+            to: [LEAD_RECIPIENT],
+            reply_to: data.email || undefined,
+            subject: "Новая заявка с сайта КРОНА",
+            html,
+            text,
+          }),
+        },
+      );
 
       if (!response.ok) {
         const body = await response.text();
