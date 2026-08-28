@@ -16,9 +16,11 @@ export const Route = createFileRoute("/consent")({
         property: "og:description",
         content: "Условия согласия на обработку персональных данных при отправке заявки.",
       },
+      { property: "og:url", content: "https://krona-app.lovable.app/consent" },
       { property: "og:type", content: "article" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
+    links: [{ rel: "canonical", href: "https://krona-app.lovable.app/consent" }],
   }),
   component: ConsentPage,
 });
