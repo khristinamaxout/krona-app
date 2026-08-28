@@ -87,13 +87,20 @@ export const sendLead = createServerFn({ method: "POST" })
       .join("\n");
 
     try {
-      const response = await fetch(`${GATEWAY_URL}/emails`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${lovableKey}`,
-          "X-Connection-Api-Key": resendKey,
-        },
+      const response = await fetch(
+        useGateway ? `${GATEWAY_URL}/emails` : "https://api.resend.com/emails",
+        {
+          method: "POST",
+          headers: useGateway
+            ? {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${lovableKey}`,
+                "X-Connection-Api-Key": resendKey,
+              }
+            : {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${resendKey}`,
+              },
         body: JSON.stringify({
           from: LEAD_FROM,
           to: [LEAD_RECIPIENT],
