@@ -42,7 +42,7 @@ import logoAq from "@/assets/brands/aq.png.asset.json";
 import logoKastamonu from "@/assets/brands/kastamonu.png.asset.json";
 import logoAgt from "@/assets/brands/agt.svg.asset.json";
 import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
-import { projects, thumbOf, type Project } from "@/data/projects";
+import { projects, thumbOf, coverOf, type Project } from "@/data/projects";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { Link } from "@tanstack/react-router";
 import { LEGAL, LEGAL_LINKS } from "@/data/legal";
@@ -552,8 +552,8 @@ function ProjectTile({
       >
         <div className="overflow-hidden bg-neutral-200">
           <SmartImage
-            thumb={thumbOf(p.photos[0])}
-            full={p.photos[0]}
+            thumb={thumbOf(coverOf(p))}
+            full={coverOf(p)}
             alt={`${p.title} — ${p.category}, ${p.style}`}
             ratio={ratio}
             width={big ? 1200 : 800}
@@ -871,14 +871,14 @@ function Portfolio() {
             {/* Доминирующее главное фото */}
             <button
               onClick={() => setPhotoIdx(0)}
-              onMouseEnter={() => preloadImage(project.photos[0])}
+              onMouseEnter={() => preloadImage(coverOf(project))}
               data-photo-trigger={0}
               aria-label={`Открыть фото 1 во весь экран`}
               className="block w-full cursor-zoom-in bg-neutral-200"
             >
               <SmartImage
-                thumb={thumbOf(project.photos[0])}
-                full={project.photos[0]}
+                thumb={thumbOf(coverOf(project))}
+                full={coverOf(project)}
                 alt={project.title}
                 ratio="16 / 10"
                 width={1600}
