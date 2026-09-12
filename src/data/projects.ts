@@ -399,7 +399,7 @@ export const projects: Project[] = [
       p13_419.url,
       p13_416.url,
       p13_233.url,
-      p13_595792.url,, c13_03.url, c13_04.url, c13_05.url, c13_06.url, c13_09.url, c13_13.url],
+      p13_595792.url, c13_03.url, c13_04.url, c13_05.url, c13_06.url, c13_09.url, c13_13.url],
   },
   {
     no: "016",
