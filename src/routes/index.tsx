@@ -30,7 +30,6 @@ import Reveal from "@/components/reveal";
 import BrandIntro from "@/components/brand-intro";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
-import photoWardrobe from "@/assets/wardrobe-gold.png.asset.json";
 import logoBlum from "@/assets/brands/blum.svg.asset.json";
 import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
 import logoEgger from "@/assets/brands/egger.svg.asset.json";
