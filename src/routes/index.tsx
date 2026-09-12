@@ -43,6 +43,10 @@ import logoKastamonu from "@/assets/brands/kastamonu.png.asset.json";
 import logoAgt from "@/assets/brands/agt.svg.asset.json";
 import logoLamarty from "@/assets/brands/lamarty.svg.asset.json";
 import { projects, thumbOf, coverOf, type Project } from "@/data/projects";
+
+/** Обложка сайта — проект №143 «Кухня в изумрудном цвете» */
+const heroProject = projects.find((p) => p.no === "143");
+const heroImage = heroProject ? coverOf(heroProject) : "";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { Link } from "@tanstack/react-router";
 import { LEGAL, LEGAL_LINKS } from "@/data/legal";
@@ -76,7 +80,7 @@ export const Route = createFileRoute("/")({
       {
         rel: "preload",
         as: "image",
-        href: photoWardrobe.url,
+        href: heroImage,
       },
     ],
     scripts: [
@@ -319,8 +323,8 @@ function Hero() {
           <Reveal variant="curtain" delay={base + 200}>
             <div className="krona-hero-zoom aspect-[4/5] overflow-hidden bg-neutral-200">
               <img
-                src={photoWardrobe.url}
-                alt="Встроенный шкаф во всю стену с золотыми вставками"
+                src={heroImage}
+                alt="Кухня в изумрудном цвете с мраморной столешницей и золотой фурнитурой"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -513,7 +517,7 @@ function Brands() {
 /* ---------- Assistant (см. src/components/assistant.tsx) ---------- */
 
 /* ---------- Portfolio ---------- */
-const FEATURED_ORDER = ["007", "005", "008"];
+const FEATURED_ORDER = ["122", "141", "120"];
 
 /** Ритм редакционной сетки: чередование крупных и малых блоков (12 колонок) */
 const RHYTHM: { span: string; ratio: string; big: boolean }[] = [
