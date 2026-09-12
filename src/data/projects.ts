@@ -765,7 +765,7 @@ export const projects: Project[] = [
       { k: "Фурнитура", v: "Hettich" },
     ],
     tags: ["Стеклянный пенал с подсветкой", "Акриловый камень", "Матовое золото"],
-    photos: [c44_00.url, c44_01.url, c44_02.url, c44_03.url, c44_04.url, c44_05.url, c44_06.url, c44_07.url, c44_08.url, c44_09.url, c44_10.url, c44_11.url],
+    photos: [c44_00.url, c44_01.url, c44_02.url, c44_03.url, c44_04.url, c44_05.url, c44_06.url, c44_07.url, c44_08.url, c44_09.url, c44_10.url, c44_11.url, c44_12.url, c44_13.url, c44_14.url, c44_15.url, c44_16.url, c44_17.url, c44_18.url, c44_19.url, c44_20.url, c44_21.url, c44_22.url, c44_23.url, c44_24.url, c44_25.url, c44_26.url, c44_27.url, c44_28.url, c44_29.url, c44_30.url, c44_31.url, c44_32.url, c44_33.url, c44_34.url, c44_35.url, c44_36.url],
   },
   {
     no: "046",
@@ -1317,6 +1317,56 @@ import c44_10 from "@/assets/cat/c44_10.jpg.asset.json";
 import tc44_10 from "@/assets/cat/c44_10_thumb.webp.asset.json";
 import c44_11 from "@/assets/cat/c44_11.jpg.asset.json";
 import tc44_11 from "@/assets/cat/c44_11_thumb.webp.asset.json";
+import c44_12 from "@/assets/cat/c44_12.jpg.asset.json";
+import tc44_12 from "@/assets/cat/c44_12_thumb.webp.asset.json";
+import c44_13 from "@/assets/cat/c44_13.jpg.asset.json";
+import tc44_13 from "@/assets/cat/c44_13_thumb.webp.asset.json";
+import c44_14 from "@/assets/cat/c44_14.jpg.asset.json";
+import tc44_14 from "@/assets/cat/c44_14_thumb.webp.asset.json";
+import c44_15 from "@/assets/cat/c44_15.jpg.asset.json";
+import tc44_15 from "@/assets/cat/c44_15_thumb.webp.asset.json";
+import c44_16 from "@/assets/cat/c44_16.jpg.asset.json";
+import tc44_16 from "@/assets/cat/c44_16_thumb.webp.asset.json";
+import c44_17 from "@/assets/cat/c44_17.jpg.asset.json";
+import tc44_17 from "@/assets/cat/c44_17_thumb.webp.asset.json";
+import c44_18 from "@/assets/cat/c44_18.jpg.asset.json";
+import tc44_18 from "@/assets/cat/c44_18_thumb.webp.asset.json";
+import c44_19 from "@/assets/cat/c44_19.jpg.asset.json";
+import tc44_19 from "@/assets/cat/c44_19_thumb.webp.asset.json";
+import c44_20 from "@/assets/cat/c44_20.jpg.asset.json";
+import tc44_20 from "@/assets/cat/c44_20_thumb.webp.asset.json";
+import c44_21 from "@/assets/cat/c44_21.jpg.asset.json";
+import tc44_21 from "@/assets/cat/c44_21_thumb.webp.asset.json";
+import c44_22 from "@/assets/cat/c44_22.jpg.asset.json";
+import tc44_22 from "@/assets/cat/c44_22_thumb.webp.asset.json";
+import c44_23 from "@/assets/cat/c44_23.jpg.asset.json";
+import tc44_23 from "@/assets/cat/c44_23_thumb.webp.asset.json";
+import c44_24 from "@/assets/cat/c44_24.jpg.asset.json";
+import tc44_24 from "@/assets/cat/c44_24_thumb.webp.asset.json";
+import c44_25 from "@/assets/cat/c44_25.jpg.asset.json";
+import tc44_25 from "@/assets/cat/c44_25_thumb.webp.asset.json";
+import c44_26 from "@/assets/cat/c44_26.jpg.asset.json";
+import tc44_26 from "@/assets/cat/c44_26_thumb.webp.asset.json";
+import c44_27 from "@/assets/cat/c44_27.jpg.asset.json";
+import tc44_27 from "@/assets/cat/c44_27_thumb.webp.asset.json";
+import c44_28 from "@/assets/cat/c44_28.jpg.asset.json";
+import tc44_28 from "@/assets/cat/c44_28_thumb.webp.asset.json";
+import c44_29 from "@/assets/cat/c44_29.jpg.asset.json";
+import tc44_29 from "@/assets/cat/c44_29_thumb.webp.asset.json";
+import c44_30 from "@/assets/cat/c44_30.jpg.asset.json";
+import tc44_30 from "@/assets/cat/c44_30_thumb.webp.asset.json";
+import c44_31 from "@/assets/cat/c44_31.jpg.asset.json";
+import tc44_31 from "@/assets/cat/c44_31_thumb.webp.asset.json";
+import c44_32 from "@/assets/cat/c44_32.jpg.asset.json";
+import tc44_32 from "@/assets/cat/c44_32_thumb.webp.asset.json";
+import c44_33 from "@/assets/cat/c44_33.jpg.asset.json";
+import tc44_33 from "@/assets/cat/c44_33_thumb.webp.asset.json";
+import c44_34 from "@/assets/cat/c44_34.jpg.asset.json";
+import tc44_34 from "@/assets/cat/c44_34_thumb.webp.asset.json";
+import c44_35 from "@/assets/cat/c44_35.jpg.asset.json";
+import tc44_35 from "@/assets/cat/c44_35_thumb.webp.asset.json";
+import c44_36 from "@/assets/cat/c44_36.jpg.asset.json";
+import tc44_36 from "@/assets/cat/c44_36_thumb.webp.asset.json";
 import c46_00 from "@/assets/cat/c46_00.jpg.asset.json";
 import tc46_00 from "@/assets/cat/c46_00_thumb.webp.asset.json";
 import c46_01 from "@/assets/cat/c46_01.jpg.asset.json";
@@ -1657,6 +1707,31 @@ const thumbMap: Record<string, string> = {
   [c44_09.url]: tc44_09.url,
   [c44_10.url]: tc44_10.url,
   [c44_11.url]: tc44_11.url,
+  [c44_12.url]: tc44_12.url,
+  [c44_13.url]: tc44_13.url,
+  [c44_14.url]: tc44_14.url,
+  [c44_15.url]: tc44_15.url,
+  [c44_16.url]: tc44_16.url,
+  [c44_17.url]: tc44_17.url,
+  [c44_18.url]: tc44_18.url,
+  [c44_19.url]: tc44_19.url,
+  [c44_20.url]: tc44_20.url,
+  [c44_21.url]: tc44_21.url,
+  [c44_22.url]: tc44_22.url,
+  [c44_23.url]: tc44_23.url,
+  [c44_24.url]: tc44_24.url,
+  [c44_25.url]: tc44_25.url,
+  [c44_26.url]: tc44_26.url,
+  [c44_27.url]: tc44_27.url,
+  [c44_28.url]: tc44_28.url,
+  [c44_29.url]: tc44_29.url,
+  [c44_30.url]: tc44_30.url,
+  [c44_31.url]: tc44_31.url,
+  [c44_32.url]: tc44_32.url,
+  [c44_33.url]: tc44_33.url,
+  [c44_34.url]: tc44_34.url,
+  [c44_35.url]: tc44_35.url,
+  [c44_36.url]: tc44_36.url,
   [c46_00.url]: tc46_00.url,
   [c46_01.url]: tc46_01.url,
   [c46_02.url]: tc46_02.url,
