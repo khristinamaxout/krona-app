@@ -1465,9 +1465,13 @@ function Reviews() {
                   className="aspect-[3/4] overflow-hidden rounded-xl bg-white border border-black/10 hover:border-black/25 transition-colors"
                 >
                   <img
-                    src={p.src}
+                    src={p.thumb}
                     alt={p.label}
+                    width={360}
+                    height={480}
+                    sizes="(max-width: 1024px) 30vw, 120px"
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top"
                   />
                 </button>
