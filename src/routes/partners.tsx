@@ -601,11 +601,7 @@ function CTA() {
             </div>
             <div className="sm:col-span-2 flex flex-col gap-5 pt-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="max-w-sm">
-                <ConsentCheckbox
-                  id="consent-partners"
-                  checked={agree}
-                  onChange={setAgree}
-                />
+                <ConsentCheckbox id="consent-partners" checked={agree} onChange={setAgree} />
               </div>
               <button
                 type="submit"
@@ -661,7 +657,6 @@ function Field({
     </label>
   );
 }
-
 
 /* ---------- Footer ---------- */
 function Footer() {

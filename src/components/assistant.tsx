@@ -109,7 +109,6 @@ const o = (arr: string[]): Opt[] => arr.map((label) => ({ label }));
  * Изображения стилей — премиальные визуализации: гостиная (зал), кухня, спальня.
  */
 
-
 const STYLE_SHOTS: Record<string, string[]> = {
   Современный: [sModernLiving, sModernKitchen, sModernBedroom],
   Неоклассика: [sNeoLiving, sNeoKitchen, sNeoBedroom],
@@ -146,7 +145,9 @@ function StyleTile({
     <div
       className={`relative overflow-hidden bg-neutral-200 ${large ? "col-span-2 row-span-2" : ""}`}
     >
-      {status === "loading" && <span className="absolute inset-0 krona-skeleton" aria-hidden="true" />}
+      {status === "loading" && (
+        <span className="absolute inset-0 krona-skeleton" aria-hidden="true" />
+      )}
       {status === "error" ? (
         <button
           type="button"
@@ -194,8 +195,6 @@ function StyleTile({
     </div>
   );
 }
-
-
 
 const steps: Step[] = [
   {
@@ -519,7 +518,11 @@ export default function Assistant() {
   useEffect(() => {
     const styleIdx = steps.findIndex((s) => s.key === "style");
     if (styleIdx < 0 || i < styleIdx - 2 || i > styleIdx) return;
-    const run = () => ALL_STYLE_SHOTS.forEach((src) => { const im = new Image(); im.src = src; });
+    const run = () =>
+      ALL_STYLE_SHOTS.forEach((src) => {
+        const im = new Image();
+        im.src = src;
+      });
     const w = window as Window & { requestIdleCallback?: (cb: () => void) => number };
     if (w.requestIdleCallback) w.requestIdleCallback(run);
     else setTimeout(run, 400);
@@ -537,7 +540,9 @@ export default function Assistant() {
       if (e.key === "ArrowRight")
         setLightbox((s) => (s ? { ...s, index: (s.index + 1) % s.imgs.length } : s));
       if (e.key === "ArrowLeft")
-        setLightbox((s) => (s ? { ...s, index: (s.index - 1 + s.imgs.length) % s.imgs.length } : s));
+        setLightbox((s) =>
+          s ? { ...s, index: (s.index - 1 + s.imgs.length) % s.imgs.length } : s,
+        );
     };
     window.addEventListener("keydown", onKey);
     return () => {
@@ -545,8 +550,6 @@ export default function Assistant() {
       document.body.style.overflow = prev;
     };
   }, [lightbox?.index, lightbox !== null]);
-
-
 
   const get = (k: string) => ans[k] ?? [];
 
@@ -821,141 +824,143 @@ export default function Assistant() {
 
             {!done ? (
               <div key={step.key} className="flex flex-col flex-1 min-h-0 krona-veil">
-                <div ref={scrollRef} className="flex-1 min-h-0 overflow-y-auto pr-1 -mr-1 krona-scroll">
-                <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500 krona-rise">
-                  {step.title}
-                </div>
-                <h3
-                  className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight krona-rise"
-                  style={{ animationDelay: "70ms" }}
+                <div
+                  ref={scrollRef}
+                  className="flex-1 min-h-0 overflow-y-auto pr-1 -mr-1 krona-scroll"
                 >
-                  {step.question}
-                </h3>
-                {step.note && (
-                  <p
-                    className="mt-3 text-sm text-neutral-500 krona-rise"
-                    style={{ animationDelay: "120ms" }}
-                  >
-                    {step.note}
-                  </p>
-                )}
-
-                {/* Опции шага */}
-                {step.options && (
-                  <div
-                    className={`mt-8 grid gap-3 ${
-                      step.variant === "card"
-                        ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-stretch"
-                        : step.variant === "swatch"
-                          ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
-                          : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
-                    }`}
-                  >
-                    {step.options.map((opt, oi) => {
-                      const active = get(step.key).includes(opt.label);
-                      const blocked = !!step.max && !active && get(step.key).length >= step.max;
-                      return optionButton(
-                        opt,
-                        active,
-                        () => toggle(step.key, opt.label, step.mode ?? "multi", step.max),
-                        step.variant,
-                        blocked,
-                        oi,
-                      );
-                    })}
+                  <div className="mt-8 text-xs tracking-[0.25em] uppercase text-neutral-500 krona-rise">
+                    {step.title}
                   </div>
-                )}
+                  <h3
+                    className="mt-3 text-2xl sm:text-3xl md:text-[2.1rem] font-normal max-w-xl leading-tight krona-rise"
+                    style={{ animationDelay: "70ms" }}
+                  >
+                    {step.question}
+                  </h3>
+                  {step.note && (
+                    <p
+                      className="mt-3 text-sm text-neutral-500 krona-rise"
+                      style={{ animationDelay: "120ms" }}
+                    >
+                      {step.note}
+                    </p>
+                  )}
 
-                {/* Подвопросы */}
-                {step.subs && (
-                  <div className="mt-8 space-y-7">
-                    {step.subs.map((sub) => (
-                      <div key={sub.key}>
-                        <div className="text-sm text-neutral-500 mb-3">{sub.label}</div>
-                        <div className="flex flex-wrap gap-2.5">
-                          {sub.options.map((opt, oi) => {
-                            const active = get(sub.key).includes(opt.label);
-                            const SubIcon = opt.icon;
-                            return (
-                              <button
-                                key={opt.label}
-                                type="button"
-                                onClick={() => toggle(sub.key, opt.label, sub.mode)}
-                                className={`group inline-flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm krona-rise krona-lift ${
-                                  active
-                                    ? "text-white border-transparent"
-                                    : "bg-white border-black/10 hover:border-black/50"
-                                }`}
-                                style={{
-                                  animationDelay: `${Math.min(oi, 12) * 30}ms`,
-                                  ...(active ? { backgroundColor: forest } : {}),
-                                }}
-                              >
-                                {SubIcon && (
-                                  <SubIcon
-                                    className="w-4 h-4 shrink-0 transition-transform duration-500 group-hover:scale-110"
-                                    strokeWidth={1.4}
-                                    style={{ color: active ? "#FFFFFF" : forest }}
-                                  />
-                                )}
-                                {opt.label}
-                              </button>
-                            );
-                          })}
+                  {/* Опции шага */}
+                  {step.options && (
+                    <div
+                      className={`mt-8 grid gap-3 ${
+                        step.variant === "card"
+                          ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-stretch"
+                          : step.variant === "swatch"
+                            ? "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+                            : "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3"
+                      }`}
+                    >
+                      {step.options.map((opt, oi) => {
+                        const active = get(step.key).includes(opt.label);
+                        const blocked = !!step.max && !active && get(step.key).length >= step.max;
+                        return optionButton(
+                          opt,
+                          active,
+                          () => toggle(step.key, opt.label, step.mode ?? "multi", step.max),
+                          step.variant,
+                          blocked,
+                          oi,
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Подвопросы */}
+                  {step.subs && (
+                    <div className="mt-8 space-y-7">
+                      {step.subs.map((sub) => (
+                        <div key={sub.key}>
+                          <div className="text-sm text-neutral-500 mb-3">{sub.label}</div>
+                          <div className="flex flex-wrap gap-2.5">
+                            {sub.options.map((opt, oi) => {
+                              const active = get(sub.key).includes(opt.label);
+                              const SubIcon = opt.icon;
+                              return (
+                                <button
+                                  key={opt.label}
+                                  type="button"
+                                  onClick={() => toggle(sub.key, opt.label, sub.mode)}
+                                  className={`group inline-flex items-center gap-2 px-4 py-2.5 rounded-full border text-sm krona-rise krona-lift ${
+                                    active
+                                      ? "text-white border-transparent"
+                                      : "bg-white border-black/10 hover:border-black/50"
+                                  }`}
+                                  style={{
+                                    animationDelay: `${Math.min(oi, 12) * 30}ms`,
+                                    ...(active ? { backgroundColor: forest } : {}),
+                                  }}
+                                >
+                                  {SubIcon && (
+                                    <SubIcon
+                                      className="w-4 h-4 shrink-0 transition-transform duration-500 group-hover:scale-110"
+                                      strokeWidth={1.4}
+                                      style={{ color: active ? "#FFFFFF" : forest }}
+                                    />
+                                  )}
+                                  {opt.label}
+                                </button>
+                              );
+                            })}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
+                      ))}
+                    </div>
+                  )}
 
-                {/* Загрузка файлов */}
-                {step.upload && (
-                  <label className="mt-6 flex items-center gap-3 rounded-2xl border border-dashed border-black/20 bg-white/60 px-5 py-4 cursor-pointer hover:border-black/50 transition">
-                    <Upload className="w-5 h-5 shrink-0" style={{ color: forest }} />
-                    <span className="text-sm text-neutral-600">
-                      {files.length
-                        ? `Прикреплено: ${files.length} файл(ов)`
-                        : "Прикрепить фото, план или референсы"}
-                    </span>
-                    <input
-                      type="file"
-                      multiple
-                      accept="image/*,.pdf"
-                      className="hidden"
-                      onChange={(e) =>
-                        setFiles(Array.from(e.target.files ?? []).map((f) => f.name))
-                      }
-                    />
-                  </label>
-                )}
-
-                {/* Свободное поле */}
-                {step.free && (
-                  <div className="mt-6">
-                    <div className="text-sm text-neutral-500 mb-2">{step.free.label}</div>
-                    {step.key === "notes" ? (
-                      <textarea
-                        rows={5}
-                        value={texts[step.free.key] ?? ""}
-                        placeholder={step.free.placeholder}
-                        onChange={(e) => setTexts({ ...texts, [step.free!.key]: e.target.value })}
-                        className="w-full rounded-2xl bg-white border border-black/10 px-5 py-4 text-sm outline-none focus:border-black/50 transition resize-none"
-                      />
-                    ) : (
+                  {/* Загрузка файлов */}
+                  {step.upload && (
+                    <label className="mt-6 flex items-center gap-3 rounded-2xl border border-dashed border-black/20 bg-white/60 px-5 py-4 cursor-pointer hover:border-black/50 transition">
+                      <Upload className="w-5 h-5 shrink-0" style={{ color: forest }} />
+                      <span className="text-sm text-neutral-600">
+                        {files.length
+                          ? `Прикреплено: ${files.length} файл(ов)`
+                          : "Прикрепить фото, план или референсы"}
+                      </span>
                       <input
-                        value={texts[step.free.key] ?? ""}
-                        placeholder={step.free.placeholder}
-                        onChange={(e) => setTexts({ ...texts, [step.free!.key]: e.target.value })}
-                        className="w-full rounded-full bg-white border border-black/10 px-5 py-3.5 text-sm outline-none focus:border-black/50 transition"
+                        type="file"
+                        multiple
+                        accept="image/*,.pdf"
+                        className="hidden"
+                        onChange={(e) =>
+                          setFiles(Array.from(e.target.files ?? []).map((f) => f.name))
+                        }
                       />
-                    )}
-                  </div>
-                )}
+                    </label>
+                  )}
+
+                  {/* Свободное поле */}
+                  {step.free && (
+                    <div className="mt-6">
+                      <div className="text-sm text-neutral-500 mb-2">{step.free.label}</div>
+                      {step.key === "notes" ? (
+                        <textarea
+                          rows={5}
+                          value={texts[step.free.key] ?? ""}
+                          placeholder={step.free.placeholder}
+                          onChange={(e) => setTexts({ ...texts, [step.free!.key]: e.target.value })}
+                          className="w-full rounded-2xl bg-white border border-black/10 px-5 py-4 text-sm outline-none focus:border-black/50 transition resize-none"
+                        />
+                      ) : (
+                        <input
+                          value={texts[step.free.key] ?? ""}
+                          placeholder={step.free.placeholder}
+                          onChange={(e) => setTexts({ ...texts, [step.free!.key]: e.target.value })}
+                          className="w-full rounded-full bg-white border border-black/10 px-5 py-3.5 text-sm outline-none focus:border-black/50 transition"
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* Навигация */}
                 <div className="pt-6 flex items-center justify-between gap-4">
-
                   <button
                     type="button"
                     onClick={() => setI(Math.max(0, i - 1))}
@@ -1195,6 +1200,5 @@ export default function Assistant() {
         </div>
       )}
     </section>
-
   );
 }

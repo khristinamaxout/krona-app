@@ -93,7 +93,6 @@ import { Link } from "@tanstack/react-router";
 import { LEGAL, LEGAL_LINKS } from "@/data/legal";
 import { sendLeadEmail } from "@/lib/emailjs";
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -144,7 +143,6 @@ export const Route = createFileRoute("/")({
       },
     ],
   }),
-
 
   component: Index,
 });
@@ -395,7 +393,6 @@ function Metric({ num, label }: { num: string; label: string }) {
   );
 }
 
-
 /* ---------- Почему выбирают нас ---------- */
 const advantages = [
   {
@@ -459,10 +456,7 @@ function WhyUs() {
               className="group border-t border-black/15 pt-6 transition-colors duration-500 hover:border-black/60"
             >
               <div className="flex items-baseline gap-4">
-                <span
-                  className="text-sm tracking-[0.2em] tabular-nums"
-                  style={{ color: forest }}
-                >
+                <span className="text-sm tracking-[0.2em] tabular-nums" style={{ color: forest }}>
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <a.icon
@@ -492,7 +486,6 @@ function WhyUs() {
   );
 }
 
-
 /* ---------- Партнёры / бренды ---------- */
 const brandLogos: { name: string; src?: string; site: string; tall?: boolean }[] = [
   { name: "Blum", src: logoBlum.url, site: "https://blum-pro.ru/" },
@@ -512,7 +505,6 @@ const brandLogos: { name: string; src?: string; site: string; tall?: boolean }[]
   { name: "AGT", src: logoAgt.url, site: "https://www.agtwood.ru/" },
   { name: "Lamarty", src: logoLamarty.url, site: "https://www.lamarty.ru/lamarty/" },
 ];
-
 
 function Brands() {
   return (
@@ -547,12 +539,10 @@ function Brands() {
             </a>
           ))}
         </div>
-
       </div>
     </section>
   );
 }
-
 
 /* ---------- Assistant (см. src/components/assistant.tsx) ---------- */
 
@@ -616,14 +606,13 @@ function ProjectTile({
           <div className="text-[11px] tracking-[0.22em] uppercase text-neutral-500">
             №{p.no} · {p.category} · {p.style}
           </div>
-          <h3 className={`mt-2 leading-snug ${big ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"}`}>
+          <h3
+            className={`mt-2 leading-snug ${big ? "text-2xl md:text-3xl" : "text-xl md:text-2xl"}`}
+          >
             {p.title}
           </h3>
           <p className="mt-2 max-w-xl text-sm text-neutral-600 leading-relaxed">{p.lead}</p>
-          <span
-            className="mt-4 inline-flex items-center gap-2 text-sm"
-            style={{ color: forest }}
-          >
+          <span className="mt-4 inline-flex items-center gap-2 text-sm" style={{ color: forest }}>
             Смотреть проект
             <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
           </span>
@@ -633,13 +622,7 @@ function ProjectTile({
   );
 }
 
-function ProjectArchive({
-  items,
-  onOpen,
-}: {
-  items: Project[];
-  onOpen: (no: string) => void;
-}) {
+function ProjectArchive({ items, onOpen }: { items: Project[]; onOpen: (no: string) => void }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -837,9 +820,6 @@ function Portfolio() {
     [goPhoto],
   );
 
-
-
-
   return (
     <section id="portfolio" className="max-w-[1280px] mx-auto px-6 md:px-8 py-24 md:py-32">
       <Reveal className="flex flex-wrap items-end justify-between gap-6 mb-16 md:mb-20">
@@ -856,8 +836,8 @@ function Portfolio() {
           </h2>
         </div>
         <p className="text-sm text-neutral-600 max-w-xs">
-          {projects.length} реализованных проектов: кухни, прихожие, спальни, детские,
-          гардеробные. Нажмите на карточку, чтобы посмотреть галерею и характеристики.
+          {projects.length} реализованных проектов: кухни, прихожие, спальни, детские, гардеробные.
+          Нажмите на карточку, чтобы посмотреть галерею и характеристики.
         </p>
       </Reveal>
 
@@ -955,7 +935,10 @@ function Portfolio() {
 
                 <div className="lg:col-span-6 lg:col-start-7">
                   {project.story.map((s) => (
-                    <p key={s} className="mb-5 text-[15px] md:text-base text-neutral-700 leading-relaxed">
+                    <p
+                      key={s}
+                      className="mb-5 text-[15px] md:text-base text-neutral-700 leading-relaxed"
+                    >
                       {s}
                     </p>
                   ))}
@@ -1015,7 +998,6 @@ function Portfolio() {
                   })}
                 </div>
               )}
-
 
               <a
                 href="#request"
@@ -1146,15 +1128,9 @@ function Portfolio() {
           </div>
         </div>
       )}
-
-
-
     </section>
   );
 }
-
-
-
 
 /* ---------- Expert ---------- */
 const articles = [
@@ -1374,8 +1350,7 @@ const reviews = [
     date: "2018",
     dateTime: "2018",
     role: "Кухня по индивидуальному проекту",
-    text:
-      "Я работаю в мебели уже 15 лет и сама разбираюсь в качественном исполнении. Выбирала целый месяц и остановилась на этой компании из-за дизайнера Елены: она учла все мои пожелания, нет того, что они не могли бы выполнить. Уже не один год довольна качеством, функциональностью и дизайном кухни.",
+    text: "Я работаю в мебели уже 15 лет и сама разбираюсь в качественном исполнении. Выбирала целый месяц и остановилась на этой компании из-за дизайнера Елены: она учла все мои пожелания, нет того, что они не могли бы выполнить. Уже не один год довольна качеством, функциональностью и дизайном кухни.",
   },
   {
     name: "Светлана",
@@ -1383,8 +1358,7 @@ const reviews = [
     date: "Январь 2024",
     dateTime: "2024-01",
     role: "Кухня, шкаф-купе и тумба",
-    text:
-      "Огромное спасибо Елене и фирме «Крона» за качественно проделанную работу — от замера до сборки. Помимо кухни заказывали шкаф-купе и тумбу под телевизор, всё выполнено в срок, по качеству мебели и сборки нареканий нет. Будем рекомендовать знакомым и с радостью обратимся снова.",
+    text: "Огромное спасибо Елене и фирме «Крона» за качественно проделанную работу — от замера до сборки. Помимо кухни заказывали шкаф-купе и тумбу под телевизор, всё выполнено в срок, по качеству мебели и сборки нареканий нет. Будем рекомендовать знакомым и с радостью обратимся снова.",
   },
   {
     name: "Наталья",
@@ -1392,8 +1366,7 @@ const reviews = [
     date: "Март 2024",
     dateTime: "2024-03",
     role: "Кухня",
-    text:
-      "Благодарю за работу! Заказывала кухню — доставили в срок, даже чуть раньше. Сборщик собрал всё очень оперативно, за это отдельная благодарность. Елена всегда на связи. Мы только в процессе ремонта, так что уверена, что вернёмся снова.",
+    text: "Благодарю за работу! Заказывала кухню — доставили в срок, даже чуть раньше. Сборщик собрал всё очень оперативно, за это отдельная благодарность. Елена всегда на связи. Мы только в процессе ремонта, так что уверена, что вернёмся снова.",
   },
   {
     name: "Виктория",
@@ -1401,8 +1374,7 @@ const reviews = [
     date: "Январь 2023",
     dateTime: "2023-01",
     role: "Комплект мебели",
-    text:
-      "Дорогая Елена, спасибо вам за проделанную работу. Очень грамотный подход, вы профессионал своего дела: находите в любой ситуации решение и даёте дельные советы. Полученный результат нас очень порадовал и будет радовать долгие годы.",
+    text: "Дорогая Елена, спасибо вам за проделанную работу. Очень грамотный подход, вы профессионал своего дела: находите в любой ситуации решение и даёте дельные советы. Полученный результат нас очень порадовал и будет радовать долгие годы.",
   },
   {
     name: "Надежда",
@@ -1410,8 +1382,7 @@ const reviews = [
     date: "Апрель 2024",
     dateTime: "2024-04",
     role: "Шкаф в спальню",
-    text:
-      "Хочу выразить огромную благодарность за чудесный шкаф для моей спальни. Выполнен качественно, фурнитура на месте. Большое спасибо Кириллу за быструю сборку, а также дизайнеру Елене, которая воплотила мои идеи в эскизе шкафа. Ребятам из бригады номер 1 отдельное спасибо. Вы лучшие, так держать. Скоро приду за вторым шкафом в прихожую.",
+    text: "Хочу выразить огромную благодарность за чудесный шкаф для моей спальни. Выполнен качественно, фурнитура на месте. Большое спасибо Кириллу за быструю сборку, а также дизайнеру Елене, которая воплотила мои идеи в эскизе шкафа. Ребятам из бригады номер 1 отдельное спасибо. Вы лучшие, так держать. Скоро приду за вторым шкафом в прихожую.",
   },
   {
     name: "Владимир Лихоманов",
@@ -1419,8 +1390,7 @@ const reviews = [
     date: "Июнь 2022",
     dateTime: "2022-06",
     role: "Стол из массива",
-    text:
-      "Заказывали стол на кухню из массива — стол в кухне теперь смотрится невероятно круто! Спасибо за качественное предоставление товара и услуг.",
+    text: "Заказывали стол на кухню из массива — стол в кухне теперь смотрится невероятно круто! Спасибо за качественное предоставление товара и услуг.",
   },
   {
     name: "Мартын",
@@ -1428,8 +1398,7 @@ const reviews = [
     date: "Май 2022",
     dateTime: "2022-05",
     role: "Кухня",
-    text:
-      "Огромное спасибо вам за вашу работу, теперь кухня — любимое место в квартире. Однозначно 5 звёзд!",
+    text: "Огромное спасибо вам за вашу работу, теперь кухня — любимое место в квартире. Однозначно 5 звёзд!",
   },
   {
     name: "Виталий",
@@ -1437,8 +1406,7 @@ const reviews = [
     date: "Январь 2015",
     dateTime: "2015-01",
     role: "Прихожая и детская",
-    text:
-      "Хорошая компания, работают без обмана. Цены честные, не завышены. Заказывал у них прихожую и детскую — качество понравилось, спасибо. С новогодними праздниками от души поздравляю весь ваш дружный коллектив!",
+    text: "Хорошая компания, работают без обмана. Цены честные, не завышены. Заказывал у них прихожую и детскую — качество понравилось, спасибо. С новогодними праздниками от души поздравляю весь ваш дружный коллектив!",
   },
   {
     name: "Андрей",
@@ -1446,8 +1414,7 @@ const reviews = [
     date: "Апрель 2024",
     dateTime: "2024-04",
     role: "Стол и стулья",
-    text:
-      "Заказывали стол и стулья, остались довольны качеством мебели — всё очень хорошо выполнено.",
+    text: "Заказывали стол и стулья, остались довольны качеством мебели — всё очень хорошо выполнено.",
   },
   {
     name: "Татьяна",
@@ -1463,8 +1430,7 @@ const reviews = [
     date: "Апрель 2024",
     dateTime: "2024-04",
     role: "Гостиная",
-    text:
-      "Елена, очень благодарны вам за такой прекрасный результат. Всё красиво, аккуратно и, главное, сочетается с другой мебелью. Спасибо дизайнеру и мастерам! Владимиру, сборщику, также очень благодарны за качественную и аккуратную работу. Спасибо команде «Крона Мебель» за внимание к заказчику и профессионализм!",
+    text: "Елена, очень благодарны вам за такой прекрасный результат. Всё красиво, аккуратно и, главное, сочетается с другой мебелью. Спасибо дизайнеру и мастерам! Владимиру, сборщику, также очень благодарны за качественную и аккуратную работу. Спасибо команде «Крона Мебель» за внимание к заказчику и профессионализм!",
   },
   {
     name: "Наталия",
@@ -1472,8 +1438,7 @@ const reviews = [
     date: "2024",
     dateTime: "2024",
     role: "Гостиная с витриной",
-    text:
-      "Елена, по мне так угадали во всех смыслах! Витрина особенно меня радует. Кирилл ваш, конечно, умничка большой — берегите его из всех сил. Словом, для меня вы лучшие в Саратове, теперь только к вам!",
+    text: "Елена, по мне так угадали во всех смыслах! Витрина особенно меня радует. Кирилл ваш, конечно, умничка большой — берегите его из всех сил. Словом, для меня вы лучшие в Саратове, теперь только к вам!",
   },
   {
     name: "Мариам",
@@ -1481,8 +1446,7 @@ const reviews = [
     date: "Декабрь 2023",
     dateTime: "2023-12",
     role: "Детская",
-    text:
-      "Добрый вечер, Елена! Спасибо за мебель! Всё получилось, как мы и хотели. Шкаф со столом встали идеально, ребёнок в восторге.",
+    text: "Добрый вечер, Елена! Спасибо за мебель! Всё получилось, как мы и хотели. Шкаф со столом встали идеально, ребёнок в восторге.",
   },
   {
     name: "Александр",
@@ -1490,8 +1454,7 @@ const reviews = [
     date: "Июнь 2024",
     dateTime: "2024-06",
     role: "Стол и полка",
-    text:
-      "Спасибо за беспокойство. Всё собралось отлично, и по размерам всё влезло тютелька-в-тютельку.",
+    text: "Спасибо за беспокойство. Всё собралось отлично, и по размерам всё влезло тютелька-в-тютельку.",
   },
   {
     name: "Наталия",
@@ -1499,8 +1462,7 @@ const reviews = [
     date: "Май 2024",
     dateTime: "2024-05",
     role: "Кухня",
-    text:
-      "Елена, мы закончили — восторг! Кирилл большая умничка, профи. Вы тоже. Команда высококвалифицированных специалистов — редкость и ценность!",
+    text: "Елена, мы закончили — восторг! Кирилл большая умничка, профи. Вы тоже. Команда высококвалифицированных специалистов — редкость и ценность!",
   },
   {
     name: "Наталия",
@@ -1508,8 +1470,7 @@ const reviews = [
     date: "2023",
     dateTime: "2023",
     role: "Кухня, отзыв спустя годы",
-    text:
-      "Всё прекрасно! Замечаний и нареканий нет, одни благодарности. Столешница моется вовремя, чистить практически не приходится — всё блестит и сияет!",
+    text: "Всё прекрасно! Замечаний и нареканий нет, одни благодарности. Столешница моется вовремя, чистить практически не приходится — всё блестит и сияет!",
   },
   {
     name: "Галина",
@@ -1517,8 +1478,7 @@ const reviews = [
     date: "Ноябрь 2021",
     dateTime: "2021-11",
     role: "Кухня",
-    text:
-      "Кухня — идеальная, спасибо! И ребята-сборщики молодцы: всё делали аккуратно и качественно, спасибо им тоже.",
+    text: "Кухня — идеальная, спасибо! И ребята-сборщики молодцы: всё делали аккуратно и качественно, спасибо им тоже.",
   },
 ];
 
@@ -1536,13 +1496,25 @@ const proofShots = [
   { src: proofChatNataliya.url, thumb: proofChatNataliyaThumb.url, label: "Переписка · витрина" },
   { src: proofChatMarina.url, thumb: proofChatMarinaThumb.url, label: "Переписка · ванная" },
   { src: proofChatAndrey.url, thumb: proofChatAndreyThumb.url, label: "Переписка · подростковая" },
-  { src: proofChatEkaterina.url, thumb: proofChatEkaterinaThumb.url, label: "Переписка · гардеробная" },
+  {
+    src: proofChatEkaterina.url,
+    thumb: proofChatEkaterinaThumb.url,
+    label: "Переписка · гардеробная",
+  },
   { src: proofChatMariam.url, thumb: proofChatMariamThumb.url, label: "Переписка · детская" },
   { src: proofLamia.url, thumb: proofLamiaThumb.url, label: "Переписка · спальня" },
   { src: proofMaksim.url, thumb: proofMaksimThumb.url, label: "Переписка · прихожая" },
-  { src: proofChatAleksandr.url, thumb: proofChatAleksandrThumb.url, label: "Переписка · стол и полка" },
+  {
+    src: proofChatAleksandr.url,
+    thumb: proofChatAleksandrThumb.url,
+    label: "Переписка · стол и полка",
+  },
   { src: proofChatNataliya2.url, thumb: proofChatNataliya2Thumb.url, label: "Переписка · кухня" },
-  { src: proofChatNataliyaDnepr.url, thumb: proofChatNataliyaDneprThumb.url, label: "Переписка · кухня спустя годы" },
+  {
+    src: proofChatNataliyaDnepr.url,
+    thumb: proofChatNataliyaDneprThumb.url,
+    label: "Переписка · кухня спустя годы",
+  },
   { src: proofChatGalina.url, thumb: proofChatGalinaThumb.url, label: "Переписка · кухня Галины" },
   { src: proofChatBoston.url, thumb: proofChatBostonThumb.url, label: "Переписка · белая кухня" },
 ];
@@ -1616,7 +1588,9 @@ function Reviews() {
     <section id="reviews" className="py-20" style={{ backgroundColor: "#F5F3EE" }}>
       <div className="max-w-6xl mx-auto px-8">
         <div className="flex flex-wrap items-baseline justify-between gap-4 mb-10">
-          <div className="text-[11px] tracking-[0.28em] uppercase text-neutral-500">04 — Отзывы</div>
+          <div className="text-[11px] tracking-[0.28em] uppercase text-neutral-500">
+            04 — Отзывы
+          </div>
           <div className="text-[11px] tracking-[0.14em] uppercase text-neutral-500">
             <span className="tabular-nums" style={{ color: forest }}>
               5,0
@@ -1660,7 +1634,10 @@ function Reviews() {
                   style={{ color: forest }}
                 >
                   {String(i + 1).padStart(2, "0")}
-                  <span className="text-neutral-400"> / {String(reviews.length).padStart(2, "0")}</span>
+                  <span className="text-neutral-400">
+                    {" "}
+                    / {String(reviews.length).padStart(2, "0")}
+                  </span>
                 </span>
                 <button
                   type="button"
@@ -1723,7 +1700,8 @@ function Reviews() {
               ))}
             </div>
             <p className="text-[11px] text-neutral-500 mt-4 leading-relaxed tracking-[0.02em]">
-              {proofShots.length} скриншотов отзывов с независимых площадок и переписок с заказчиками.
+              {proofShots.length} скриншотов отзывов с независимых площадок и переписок с
+              заказчиками.
             </p>
           </aside>
         </div>
@@ -1778,9 +1756,6 @@ function Reviews() {
   );
 }
 
-
-
-
 /* ---------- Request Form ---------- */
 function RequestForm() {
   const [sent, setSent] = useState(false);
@@ -1802,7 +1777,11 @@ function RequestForm() {
           name: val("name"),
           phone: val("phone"),
           email: val("email"),
-          interest: [val("type"), val("city") && `Город: ${val("city")}`, val("budget") && `Бюджет: ${val("budget")}`]
+          interest: [
+            val("type"),
+            val("city") && `Город: ${val("city")}`,
+            val("budget") && `Бюджет: ${val("budget")}`,
+          ]
             .filter(Boolean)
             .join(" · "),
           message: val("message"),
@@ -1837,10 +1816,16 @@ function RequestForm() {
             предварительный эскиз.
           </p>
           <div className="mt-10 space-y-3 text-sm text-white/70">
-            <a href={`tel:${LEGAL.phone.replace(/[^+\d]/g, "")}`} className="flex items-center gap-3 hover:text-white transition">
+            <a
+              href={`tel:${LEGAL.phone.replace(/[^+\d]/g, "")}`}
+              className="flex items-center gap-3 hover:text-white transition"
+            >
               <Phone className="w-4 h-4" /> {LEGAL.phone}
             </a>
-            <a href={`mailto:${LEGAL.email}`} className="flex items-center gap-3 hover:text-white transition">
+            <a
+              href={`mailto:${LEGAL.email}`}
+              className="flex items-center gap-3 hover:text-white transition"
+            >
               <Mail className="w-4 h-4" /> {LEGAL.email}
             </a>
           </div>
@@ -1965,7 +1950,6 @@ function Textarea({ label, name }: { label: string; name: string }) {
   );
 }
 
-
 /* ---------- Footer ---------- */
 function Footer() {
   return (
@@ -1982,9 +1966,7 @@ function Footer() {
             style={{ fontFamily: "Inter, sans-serif" }}
           >
             <div className="font-light uppercase">Мебельная студия</div>
-            <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">
-              Елены Трифан
-            </div>
+            <div className="font-extralight tracking-[0.08em] text-[#EDE6D3]/80">Елены Трифан</div>
           </div>
         </div>
 
@@ -2022,4 +2004,3 @@ function Footer() {
     </footer>
   );
 }
-

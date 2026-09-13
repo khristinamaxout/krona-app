@@ -266,7 +266,6 @@
   }
 }
 
-
 /* «Распаковка» архива проектов: карточки раскрываются как створки шкафа */
 @keyframes krona-unfold {
   from {
@@ -343,7 +342,6 @@
     transform: none;
   }
 }
-
 
 /* ---------- Krona editorial: раскрытие при скролле ---------- */
 .krona-reveal {
@@ -475,6 +473,12 @@
 }
 
 @keyframes krona-quote-in {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
