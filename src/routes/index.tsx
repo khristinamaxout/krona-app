@@ -1547,6 +1547,55 @@ const proofShots = [
   { src: proofChatBoston.url, thumb: proofChatBostonThumb.url, label: "Переписка · белая кухня" },
 ];
 
+/** Swipe gestures: left/right with a small distance + direction guard. */
+function useSwipe(onSwipe: (dir: number) => void) {
+  const start = useRef<{ x: number; y: number } | null>(null);
+  return {
+    onTouchStart: (e: React.TouchEvent) => {
+      const t = e.touches[0];
+      start.current = { x: t.clientX, y: t.clientY };
+    },
+    onTouchEnd: (e: React.TouchEvent) => {
+      const s = start.current;
+      start.current = null;
+      if (!s) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - s.x;
+      const dy = t.clientY - s.y;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) onSwipe(dx < 0 ? 1 : -1);
+    },
+  };
+}
+
+/** Thumbnail with shimmer placeholder until the image decodes. */
+function ProofThumb({ src, alt }: { src: string; alt: string }) {
+  const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLImageElement | null>(null);
+  useEffect(() => {
+    if (ref.current?.complete) setLoaded(true);
+  }, []);
+  return (
+    <>
+      {!loaded && <div className="absolute inset-0 krona-skeleton" aria-hidden="true" />}
+      <img
+        ref={ref}
+        src={src}
+        alt={alt}
+        width={300}
+        height={400}
+        sizes="(max-width: 1024px) 22vw, 100px"
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
+        className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </>
+  );
+}
+
 function Reviews() {
   const [i, setI] = useState(0);
   const [zoom, setZoom] = useState<number | null>(null);
