@@ -69,7 +69,7 @@ import sClassicKitchen from "@/assets/styles/classic-kitchen.jpg";
 import sClassicBedroom from "@/assets/styles/classic-bedroom.jpg";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { useServerFn } from "@tanstack/react-start";
-import { sendLead } from "@/lib/lead.functions";
+import { sendLeadEmail } from "@/lib/emailjs";
 
 const forest = "#1F3A2E";
 const graphite = "#1A1A1A";
@@ -496,7 +496,7 @@ export default function Assistant() {
   const [leadBusy, setLeadBusy] = useState(false);
   const [leadSent, setLeadSent] = useState(false);
   const [leadError, setLeadError] = useState(false);
-  const submitLead = useServerFn(sendLead);
+  const submitLead = sendLeadEmail;
   const [ans, setAns] = useState<Answers>({});
   const [texts, setTexts] = useState<Texts>({});
   const [files, setFiles] = useState<string[]>([]);
