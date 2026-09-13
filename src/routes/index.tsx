@@ -1609,6 +1609,8 @@ function Reviews() {
     if (!el) return;
     el.scrollBy({ left: d * el.clientWidth * 0.8, behavior: "smooth" });
   };
+  const quoteSwipe = useSwipe(go);
+  const zoomSwipe = useSwipe(goZoom);
 
   return (
     <section id="reviews" className="py-20" style={{ backgroundColor: "#F5F3EE" }}>
