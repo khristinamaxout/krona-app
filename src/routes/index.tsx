@@ -1547,6 +1547,55 @@ const proofShots = [
   { src: proofChatBoston.url, thumb: proofChatBostonThumb.url, label: "Переписка · белая кухня" },
 ];
 
+/** Swipe gestures: left/right with a small distance + direction guard. */
+function useSwipe(onSwipe: (dir: number) => void) {
+  const start = useRef<{ x: number; y: number } | null>(null);
+  return {
+    onTouchStart: (e: React.TouchEvent) => {
+      const t = e.touches[0];
+      start.current = { x: t.clientX, y: t.clientY };
+    },
+    onTouchEnd: (e: React.TouchEvent) => {
+      const s = start.current;
+      start.current = null;
+      if (!s) return;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - s.x;
+      const dy = t.clientY - s.y;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) onSwipe(dx < 0 ? 1 : -1);
+    },
+  };
+}
+
+/** Thumbnail with shimmer placeholder until the image decodes. */
+function ProofThumb({ src, alt }: { src: string; alt: string }) {
+  const [loaded, setLoaded] = useState(false);
+  const ref = useRef<HTMLImageElement | null>(null);
+  useEffect(() => {
+    if (ref.current?.complete) setLoaded(true);
+  }, []);
+  return (
+    <>
+      {!loaded && <div className="absolute inset-0 krona-skeleton" aria-hidden="true" />}
+      <img
+        ref={ref}
+        src={src}
+        alt={alt}
+        width={300}
+        height={400}
+        sizes="(max-width: 1024px) 22vw, 100px"
+        loading="lazy"
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        onError={() => setLoaded(true)}
+        className={`absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500 ${
+          loaded ? "opacity-100" : "opacity-0"
+        }`}
+      />
+    </>
+  );
+}
+
 function Reviews() {
   const [i, setI] = useState(0);
   const [zoom, setZoom] = useState<number | null>(null);
@@ -1560,6 +1609,8 @@ function Reviews() {
     if (!el) return;
     el.scrollBy({ left: d * el.clientWidth * 0.8, behavior: "smooth" });
   };
+  const quoteSwipe = useSwipe(go);
+  const zoomSwipe = useSwipe(goZoom);
 
   return (
     <section id="reviews" className="py-20" style={{ backgroundColor: "#F5F3EE" }}>
@@ -1575,7 +1626,7 @@ function Reviews() {
         </div>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-7 flex flex-col">
+          <div className="lg:col-span-7 flex flex-col touch-pan-y" {...quoteSwipe}>
             <div className="flex gap-1.5 mb-6" aria-label={`Оценка ${r.rating} из 5`}>
               {[...Array(5)].map((_, s) => (
                 <Star
@@ -1665,18 +1716,9 @@ function Reviews() {
                   type="button"
                   onClick={() => setZoom(idx)}
                   title={p.label}
-                  className="snap-start aspect-[3/4] overflow-hidden rounded-lg bg-white border border-black/10 hover:border-black/25 transition-colors"
+                  className="relative snap-start aspect-[3/4] overflow-hidden rounded-lg bg-white border border-black/10 hover:border-black/25 transition-colors"
                 >
-                  <img
-                    src={p.thumb}
-                    alt={p.label}
-                    width={300}
-                    height={400}
-                    sizes="(max-width: 1024px) 22vw, 100px"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover object-top"
-                  />
+                  <ProofThumb src={p.thumb} alt={p.label} />
                 </button>
               ))}
             </div>
@@ -1689,10 +1731,11 @@ function Reviews() {
 
       {zoom !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6"
+          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6 touch-pan-y"
           onClick={() => setZoom(null)}
           role="dialog"
           aria-modal="true"
+          {...zoomSwipe}
         >
           <img
             src={proofShots[zoom].src}
