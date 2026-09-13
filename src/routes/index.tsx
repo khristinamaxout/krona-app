@@ -61,6 +61,16 @@ import proofChatEkaterina from "@/assets/reviews/chat_ekaterina.jpg.asset.json";
 import proofChatEkaterinaThumb from "@/assets/reviews/chat_ekaterina_thumb.webp.asset.json";
 import proofChatMariam from "@/assets/reviews/chat_mariam.jpg.asset.json";
 import proofChatMariamThumb from "@/assets/reviews/chat_mariam_thumb.webp.asset.json";
+import proofChatAleksandr from "@/assets/reviews/chat_aleksandr.jpg.asset.json";
+import proofChatAleksandrThumb from "@/assets/reviews/chat_aleksandr_thumb.webp.asset.json";
+import proofChatNataliya2 from "@/assets/reviews/chat_nataliya2.jpg.asset.json";
+import proofChatNataliya2Thumb from "@/assets/reviews/chat_nataliya2_thumb.webp.asset.json";
+import proofChatNataliyaDnepr from "@/assets/reviews/chat_nataliya_dnepr.jpg.asset.json";
+import proofChatNataliyaDneprThumb from "@/assets/reviews/chat_nataliya_dnepr_thumb.webp.asset.json";
+import proofChatGalina from "@/assets/reviews/chat_galina.jpg.asset.json";
+import proofChatGalinaThumb from "@/assets/reviews/chat_galina_thumb.webp.asset.json";
+import proofChatBoston from "@/assets/reviews/chat_boston.jpg.asset.json";
+import proofChatBostonThumb from "@/assets/reviews/chat_boston_thumb.webp.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import logoBlum from "@/assets/brands/blum.svg.asset.json";
 import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
@@ -1465,6 +1475,51 @@ const reviews = [
     text:
       "Елена, по мне так угадали во всех смыслах! Витрина особенно меня радует. Кирилл ваш, конечно, умничка большой — берегите его из всех сил. Словом, для меня вы лучшие в Саратове, теперь только к вам!",
   },
+  {
+    name: "Мариам",
+    rating: 5,
+    date: "Декабрь 2023",
+    dateTime: "2023-12",
+    role: "Детская",
+    text:
+      "Добрый вечер, Елена! Спасибо за мебель! Всё получилось, как мы и хотели. Шкаф со столом встали идеально, ребёнок в восторге.",
+  },
+  {
+    name: "Александр",
+    rating: 5,
+    date: "Июнь 2024",
+    dateTime: "2024-06",
+    role: "Стол и полка",
+    text:
+      "Спасибо за беспокойство. Всё собралось отлично, и по размерам всё влезло тютелька-в-тютельку.",
+  },
+  {
+    name: "Наталия",
+    rating: 5,
+    date: "Май 2024",
+    dateTime: "2024-05",
+    role: "Кухня",
+    text:
+      "Елена, мы закончили — восторг! Кирилл большая умничка, профи. Вы тоже. Команда высококвалифицированных специалистов — редкость и ценность!",
+  },
+  {
+    name: "Наталия",
+    rating: 5,
+    date: "2023",
+    dateTime: "2023",
+    role: "Кухня, отзыв спустя годы",
+    text:
+      "Всё прекрасно! Замечаний и нареканий нет, одни благодарности. Столешница моется вовремя, чистить практически не приходится — всё блестит и сияет!",
+  },
+  {
+    name: "Галина",
+    rating: 5,
+    date: "Ноябрь 2021",
+    dateTime: "2021-11",
+    role: "Кухня",
+    text:
+      "Кухня — идеальная, спасибо! И ребята-сборщики молодцы: всё делали аккуратно и качественно, спасибо им тоже.",
+  },
 ];
 
 /* Скриншоты настоящих отзывов и переписок с заказчиками */
@@ -1485,54 +1540,63 @@ const proofShots = [
   { src: proofChatMariam.url, thumb: proofChatMariamThumb.url, label: "Переписка · детская" },
   { src: proofLamia.url, thumb: proofLamiaThumb.url, label: "Переписка · спальня" },
   { src: proofMaksim.url, thumb: proofMaksimThumb.url, label: "Переписка · прихожая" },
+  { src: proofChatAleksandr.url, thumb: proofChatAleksandrThumb.url, label: "Переписка · стол и полка" },
+  { src: proofChatNataliya2.url, thumb: proofChatNataliya2Thumb.url, label: "Переписка · кухня" },
+  { src: proofChatNataliyaDnepr.url, thumb: proofChatNataliyaDneprThumb.url, label: "Переписка · кухня спустя годы" },
+  { src: proofChatGalina.url, thumb: proofChatGalinaThumb.url, label: "Переписка · кухня Галины" },
+  { src: proofChatBoston.url, thumb: proofChatBostonThumb.url, label: "Переписка · белая кухня" },
 ];
-
-const PROOFS_VISIBLE = 8;
 
 function Reviews() {
   const [i, setI] = useState(0);
   const [zoom, setZoom] = useState<number | null>(null);
-  const [allProofs, setAllProofs] = useState(false);
+  const stripRef = useRef<HTMLDivElement | null>(null);
   const r = reviews[i];
   const go = (d: number) => setI((p) => (p + d + reviews.length) % reviews.length);
   const goZoom = (d: number) =>
     setZoom((p) => (p === null ? p : (p + d + proofShots.length) % proofShots.length));
-  const shown = allProofs ? proofShots : proofShots.slice(0, PROOFS_VISIBLE);
+  const scrollStrip = (d: number) => {
+    const el = stripRef.current;
+    if (!el) return;
+    el.scrollBy({ left: d * el.clientWidth * 0.8, behavior: "smooth" });
+  };
 
   return (
     <section id="reviews" className="py-20" style={{ backgroundColor: "#F5F3EE" }}>
       <div className="max-w-6xl mx-auto px-8">
         <div className="flex flex-wrap items-baseline justify-between gap-4 mb-10">
-          <div className="text-xs tracking-[0.25em] uppercase text-neutral-500">04 — Отзывы</div>
-          <div className="text-xs text-neutral-500">
+          <div className="text-[11px] tracking-[0.28em] uppercase text-neutral-500">04 — Отзывы</div>
+          <div className="text-[11px] tracking-[0.14em] uppercase text-neutral-500">
             <span className="tabular-nums" style={{ color: forest }}>
               5,0
             </span>{" "}
-            · {reviews.length} отзыва клиентов · 2ГИС, Рубрикатор, переписки
+            · {reviews.length} отзывов клиентов · 2ГИС, Рубрикатор, переписки
           </div>
         </div>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-7">
-            <div className="flex gap-1 mb-5" aria-label={`Оценка ${r.rating} из 5`}>
+          <div className="lg:col-span-7 flex flex-col">
+            <div className="flex gap-1.5 mb-6" aria-label={`Оценка ${r.rating} из 5`}>
               {[...Array(5)].map((_, s) => (
                 <Star
                   key={s}
-                  className={`w-3.5 h-3.5 ${s < r.rating ? "fill-current" : ""}`}
-                  style={{ color: s < r.rating ? forest : "rgba(0,0,0,0.2)" }}
+                  className={`w-3 h-3 ${s < r.rating ? "fill-current" : ""}`}
+                  style={{ color: s < r.rating ? forest : "rgba(0,0,0,0.18)" }}
                 />
               ))}
             </div>
             <blockquote
               key={i}
-              className="text-xl md:text-[1.6rem] leading-[1.5] font-light animate-[krona-quote-in_.6s_ease]"
+              className="text-lg md:text-[1.45rem] leading-[1.6] font-light tracking-[-0.005em] text-neutral-800 animate-[krona-quote-in_.6s_ease] lg:min-h-[13rem]"
             >
               «{r.text}»
             </blockquote>
-            <div className="mt-7 flex flex-wrap items-center gap-5 justify-between">
+            <div className="mt-8 pt-6 border-t border-black/10 flex flex-wrap items-center gap-5 justify-between">
               <div>
-                <div className="text-sm">{r.name}</div>
-                <div className="text-xs text-neutral-500 mt-0.5">
+                <div className="text-[13px] tracking-[0.16em] uppercase text-neutral-900">
+                  {r.name}
+                </div>
+                <div className="text-[11px] tracking-[0.1em] uppercase text-neutral-500 mt-1.5">
                   {r.role} ·{" "}
                   <time dateTime={r.dateTime} className="tabular-nums">
                     {r.date}
@@ -1540,8 +1604,12 @@ function Reviews() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-xs text-neutral-500 tabular-nums mr-2">
-                  {String(i + 1).padStart(2, "0")} / {String(reviews.length).padStart(2, "0")}
+                <span
+                  className="text-[11px] tabular-nums tracking-[0.14em] mr-2"
+                  style={{ color: forest }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                  <span className="text-neutral-400"> / {String(reviews.length).padStart(2, "0")}</span>
                 </span>
                 <button
                   type="button"
@@ -1564,17 +1632,40 @@ function Reviews() {
           </div>
 
           <aside className="lg:col-span-5 lg:pl-10 lg:border-l border-black/10">
-            <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500 mb-4">
-              Подтверждения
+            <div className="flex items-center justify-between mb-4">
+              <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500">
+                Подтверждения
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  aria-label="Предыдущие скриншоты"
+                  onClick={() => scrollStrip(-1)}
+                  className="w-8 h-8 rounded-full border border-black/15 flex items-center justify-center hover:bg-black/5 transition-colors"
+                >
+                  <ChevronLeft className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Следующие скриншоты"
+                  onClick={() => scrollStrip(1)}
+                  className="w-8 h-8 rounded-full border border-black/15 flex items-center justify-center hover:bg-black/5 transition-colors"
+                >
+                  <ChevronRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
-            <div className="grid grid-cols-4 gap-2">
-              {shown.map((p) => (
+            <div
+              ref={stripRef}
+              className="grid grid-rows-2 grid-flow-col auto-cols-[calc(25%-0.375rem)] gap-2 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+              {proofShots.map((p, idx) => (
                 <button
                   key={p.label}
                   type="button"
-                  onClick={() => setZoom(proofShots.indexOf(p))}
+                  onClick={() => setZoom(idx)}
                   title={p.label}
-                  className="aspect-[3/4] overflow-hidden rounded-lg bg-white border border-black/10 hover:border-black/25 transition-colors"
+                  className="snap-start aspect-[3/4] overflow-hidden rounded-lg bg-white border border-black/10 hover:border-black/25 transition-colors"
                 >
                   <img
                     src={p.thumb}
@@ -1589,17 +1680,8 @@ function Reviews() {
                 </button>
               ))}
             </div>
-            {!allProofs && proofShots.length > PROOFS_VISIBLE && (
-              <button
-                type="button"
-                onClick={() => setAllProofs(true)}
-                className="mt-4 text-xs tracking-[0.14em] uppercase text-neutral-600 border-b border-black/20 hover:text-neutral-900 transition-colors"
-              >
-                Показать все ({proofShots.length})
-              </button>
-            )}
-            <p className="text-xs text-neutral-500 mt-4 leading-relaxed">
-              Скриншоты отзывов с независимых площадок и переписок с заказчиками.
+            <p className="text-[11px] text-neutral-500 mt-4 leading-relaxed tracking-[0.02em]">
+              {proofShots.length} скриншотов отзывов с независимых площадок и переписок с заказчиками.
             </p>
           </aside>
         </div>
