@@ -27,7 +27,6 @@ import Assistant from "@/components/assistant";
 import SmartImage, { preloadImage } from "@/components/smart-image";
 import Reveal from "@/components/reveal";
 import BrandIntro from "@/components/brand-intro";
-import kronaLogo from "@/assets/krona-logo.png.asset.json";
 import proofMarina from "@/assets/reviews/marina.jpg.asset.json";
 import proofSvetlana from "@/assets/reviews/svetlana.jpg.asset.json";
 import proofNatalia from "@/assets/reviews/natalia.jpg.asset.json";
