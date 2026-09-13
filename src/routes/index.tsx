@@ -29,6 +29,12 @@ import SmartImage, { preloadImage } from "@/components/smart-image";
 import Reveal from "@/components/reveal";
 import BrandIntro from "@/components/brand-intro";
 import kronaLogo from "@/assets/krona-logo.png.asset.json";
+import proofMarina from "@/assets/reviews/marina.jpg.asset.json";
+import proofSvetlana from "@/assets/reviews/svetlana.jpg.asset.json";
+import proofNatalia from "@/assets/reviews/natalia.jpg.asset.json";
+import proofVictoria from "@/assets/reviews/victoria.jpg.asset.json";
+import proofLamia from "@/assets/reviews/lamia.jpg.asset.json";
+import proofMaksim from "@/assets/reviews/maksim.jpg.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import logoBlum from "@/assets/brands/blum.svg.asset.json";
 import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
@@ -1327,97 +1333,142 @@ function Expert() {
 /* ---------- Reviews ---------- */
 const reviews = [
   {
-    name: "Анна и Дмитрий",
-    role: "Кухня, 2024",
-    text: "Крона задавали такие вопросы, о которых мы сами не думали. В итоге получили не просто мебель, а решение для нашей семьи.",
+    name: "Марина",
+    role: "Кухня по индивидуальному проекту · 2018",
+    text:
+      "Я работаю в мебели уже 15 лет и сама разбираюсь в качественном исполнении. Выбирала целый месяц и остановилась на этой компании из-за дизайнера Елены: она учла все мои пожелания, нет того, что они не могли бы выполнить. Уже не один год довольна качеством, функциональностью и дизайном кухни.",
   },
   {
-    name: "Мария К.",
-    role: "Гардеробная, 2024",
-    text: "Никакой суеты и продавливания. Три встречи, точные чертежи и монтаж день в день. Всё как обещали.",
+    name: "Светлана",
+    role: "Кухня, шкаф-купе и тумба · январь 2024",
+    text:
+      "Огромное спасибо Елене и фирме «Крона» за качественно проделанную работу — от замера до сборки. Помимо кухни заказывали шкаф-купе и тумбу под телевизор, всё выполнено в срок, по качеству мебели и сборки нареканий нет. Будем рекомендовать знакомым и с радостью обратимся снова.",
   },
   {
-    name: "Studio Nord",
-    role: "Партнёр-архитектор",
-    text: "Работаем с Кроной третий год. Единственная мастерская, которой я доверяю финиш без личного контроля.",
+    name: "Наталья",
+    role: "Кухня · март 2024",
+    text:
+      "Благодарю за работу! Заказывала кухню — доставили в срок, даже чуть раньше. Сборщик собрал всё очень оперативно, за это отдельная благодарность. Елена всегда на связи. Мы только в процессе ремонта, так что уверена, что вернёмся снова.",
+  },
+  {
+    name: "Виктория",
+    role: "Комплект мебели · январь 2023",
+    text:
+      "Дорогая Елена, спасибо вам за проделанную работу. Очень грамотный подход, вы профессионал своего дела: находите в любой ситуации решение и даёте дельные советы. Полученный результат нас очень порадовал и будет радовать долгие годы.",
   },
 ];
 
-/* Реальные переписки с заказчицами, пересобранные в фирменном стиле */
-const chatProofs = [
-  {
-    title: "Живая переписка · проект «Бархат»",
-    caption: "Мариам · детская комната, Саратов, 2025",
-    thread: [
-      { side: "in", text: "Добрый вечер, Елена! Спасибо за мебель! Все получилось, как мы и хотели 👍" },
-      { side: "out", text: "Ой, как я рада 🤍" },
-      { side: "in", text: "Она такая воздушная получилось 😍" },
-      { side: "out", text: "Ребёнок доволен?" },
-      { side: "in", text: "Да, ооооочень. Всё, как она хотела" },
-    ],
-  },
-  {
-    title: "Живая переписка · гардеробная",
-    caption: "Екатерина · гардеробная комната, Саратов",
-    thread: [
-      { side: "in", text: "В идеале классно получилась, и места много" },
-      { side: "in", text: "Спасибо вам 🙏❤️" },
-      { side: "out", text: "Я рада, что угодили. Спасибо за доверие. Ждём ещё ❤️" },
-    ],
-  },
+/* Скриншоты настоящих отзывов и переписок с заказчиками */
+const proofShots = [
+  { src: proofMarina.url, label: "Отзыв Марины" },
+  { src: proofSvetlana.url, label: "Отзыв Светланы" },
+  { src: proofNatalia.url, label: "Отзыв Натальи" },
+  { src: proofVictoria.url, label: "Отзыв Виктории" },
+  { src: proofLamia.url, label: "Переписка · спальня" },
+  { src: proofMaksim.url, label: "Переписка · прихожая" },
 ];
-
-function ChatProof({ title, caption, thread }: (typeof chatProofs)[number]) {
-  return (
-    <div className="rounded-3xl p-8 flex flex-col text-white h-full" style={{ backgroundColor: forest }}>
-      <div className="text-[11px] tracking-[0.2em] uppercase text-white/50 mb-6">{title}</div>
-      <div className="flex flex-col gap-2.5">
-        {thread.map((m, i) => (
-          <div key={i} className={m.side === "in" ? "flex" : "flex justify-end"}>
-            <p
-              className={
-                "max-w-[85%] text-[15px] leading-snug px-4 py-2.5 " +
-                (m.side === "in"
-                  ? "bg-white/10 rounded-2xl rounded-bl-md"
-                  : "bg-white/90 text-neutral-900 rounded-2xl rounded-br-md")
-              }
-            >
-              {m.text}
-            </p>
-          </div>
-        ))}
-      </div>
-      <div className="mt-auto pt-8 text-xs text-white/60 border-t border-white/15 mt-8">{caption}</div>
-    </div>
-  );
-}
 
 function Reviews() {
+  const [i, setI] = useState(0);
+  const [zoom, setZoom] = useState<string | null>(null);
+  const r = reviews[i];
+  const go = (d: number) => setI((p) => (p + d + reviews.length) % reviews.length);
+
   return (
-    <section id="reviews" className="max-w-7xl mx-auto px-8 py-24">
-      <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-4">04 — Отзывы</div>
-      <h2 className="text-4xl md:text-5xl font-normal leading-tight max-w-2xl mb-14">
-        Люди, для которых мы делали дом.
-      </h2>
-      <div className="grid md:grid-cols-3 gap-6">
-        {reviews.map((r) => (
-          <div key={r.name} className="rounded-3xl bg-[#F5F3EE] p-8 flex flex-col">
-            <div className="flex gap-0.5 mb-6">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-current" style={{ color: forest }} />
+    <section id="reviews" className="py-28" style={{ backgroundColor: "#F5F3EE" }}>
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="text-xs tracking-[0.25em] uppercase text-neutral-500 mb-16">04 — Отзывы</div>
+
+        <div className="grid lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-8">
+            <div className="flex gap-1 mb-8">
+              {[...Array(5)].map((_, s) => (
+                <Star key={s} className="w-4 h-4 fill-current" style={{ color: forest }} />
               ))}
             </div>
-            <p className="text-lg leading-relaxed">«{r.text}»</p>
-            <div className="mt-8 pt-6 border-t border-black/10">
-              <div className="text-sm">{r.name}</div>
-              <div className="text-xs text-neutral-500 mt-1">{r.role}</div>
+            <blockquote
+              key={i}
+              className="text-2xl md:text-[2.1rem] leading-[1.45] font-light animate-[krona-quote-in_.6s_ease]"
+            >
+              «{r.text}»
+            </blockquote>
+            <div className="mt-10 flex flex-wrap items-center gap-6 justify-between">
+              <div>
+                <div className="text-base">{r.name}</div>
+                <div className="text-xs text-neutral-500 mt-1">{r.role}</div>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="text-xs text-neutral-500 tabular-nums mr-2">
+                  {String(i + 1).padStart(2, "0")} / {String(reviews.length).padStart(2, "0")}
+                </span>
+                <button
+                  type="button"
+                  aria-label="Предыдущий отзыв"
+                  onClick={() => go(-1)}
+                  className="w-11 h-11 rounded-full border border-black/15 flex items-center justify-center hover:bg-black/5 transition-colors"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Следующий отзыв"
+                  onClick={() => go(1)}
+                  className="w-11 h-11 rounded-full border border-black/15 flex items-center justify-center hover:bg-black/5 transition-colors"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
           </div>
-        ))}
-        {chatProofs.map((c) => (
-          <ChatProof key={c.caption} {...c} />
-        ))}
+
+          <aside className="lg:col-span-4 lg:pl-10 lg:border-l border-black/10">
+            <div className="text-[11px] tracking-[0.2em] uppercase text-neutral-500 mb-5">
+              Подтверждения
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              {proofShots.map((p) => (
+                <button
+                  key={p.label}
+                  type="button"
+                  onClick={() => setZoom(p.src)}
+                  title={p.label}
+                  className="aspect-[3/4] overflow-hidden rounded-xl bg-white border border-black/10 hover:border-black/25 transition-colors"
+                >
+                  <img
+                    src={p.src}
+                    alt={p.label}
+                    loading="lazy"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-neutral-500 mt-5 leading-relaxed">
+              Скриншоты отзывов с независимых площадок и переписок с заказчиками. Нажмите, чтобы
+              открыть.
+            </p>
+          </aside>
+        </div>
       </div>
+
+      {zoom && (
+        <div
+          className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-6"
+          onClick={() => setZoom(null)}
+          role="dialog"
+          aria-modal="true"
+        >
+          <img src={zoom} alt="Отзыв клиента" className="max-h-[90vh] max-w-full rounded-xl" />
+          <button
+            type="button"
+            aria-label="Закрыть"
+            onClick={() => setZoom(null)}
+            className="absolute top-6 right-6 w-11 h-11 rounded-full bg-white/15 text-white flex items-center justify-center"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      )}
     </section>
   );
 }
