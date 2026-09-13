@@ -3,7 +3,7 @@
  * Письма приходят на ящик, указанный в шаблоне EmailJS.
  */
 
-const SERVICE_ID = "service_866ahsf";
+const SERVICE_ID = "service_q67hqgn";
 const TEMPLATE_ID = "template_c7qsayp";
 const PUBLIC_KEY = "L8a6BrHpOuDVWbfFX";
 
