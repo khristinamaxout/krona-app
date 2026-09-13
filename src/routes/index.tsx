@@ -1716,18 +1716,9 @@ function Reviews() {
                   type="button"
                   onClick={() => setZoom(idx)}
                   title={p.label}
-                  className="snap-start aspect-[3/4] overflow-hidden rounded-lg bg-white border border-black/10 hover:border-black/25 transition-colors"
+                  className="relative snap-start aspect-[3/4] overflow-hidden rounded-lg bg-white border border-black/10 hover:border-black/25 transition-colors"
                 >
-                  <img
-                    src={p.thumb}
-                    alt={p.label}
-                    width={300}
-                    height={400}
-                    sizes="(max-width: 1024px) 22vw, 100px"
-                    loading="lazy"
-                    decoding="async"
-                    className="w-full h-full object-cover object-top"
-                  />
+                  <ProofThumb src={p.thumb} alt={p.label} />
                 </button>
               ))}
             </div>
