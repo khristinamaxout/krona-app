@@ -549,7 +549,8 @@ export default function Assistant() {
       window.removeEventListener("keydown", onKey);
       document.body.style.overflow = prev;
     };
-  }, [lightbox?.index, lightbox !== null]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lightboxOpen, lightboxIndex]);
 
   const get = (k: string) => ans[k] ?? [];
 
