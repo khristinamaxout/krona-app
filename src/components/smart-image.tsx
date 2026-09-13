@@ -48,7 +48,8 @@ export default function SmartImage({
   const ref = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const bust = (src: string) => (attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}r=${attempt}`);
+  const bust = (src: string) =>
+    attempt === 0 ? src : `${src}${src.includes("?") ? "&" : "?"}r=${attempt}`;
 
   const retry = useCallback(() => {
     setFailed(false);
@@ -84,8 +85,7 @@ export default function SmartImage({
     if (preloadFullOnHover) preloadImage(full);
   }, [full, preloadFullOnHover]);
 
-  const srcSet =
-    full && full !== thumb ? `${bust(thumb)} 800w, ${bust(full)} 1600w` : undefined;
+  const srcSet = full && full !== thumb ? `${bust(thumb)} 800w, ${bust(full)} 1600w` : undefined;
 
   return (
     <div
@@ -95,9 +95,7 @@ export default function SmartImage({
       className={`relative overflow-hidden ${className}`}
       style={{ aspectRatio: ratio }}
     >
-      {!loaded && !failed && (
-        <div className="absolute inset-0 krona-skeleton" aria-hidden="true" />
-      )}
+      {!loaded && !failed && <div className="absolute inset-0 krona-skeleton" aria-hidden="true" />}
       {!failed && (
         <img
           key={attempt}
@@ -139,7 +137,9 @@ export default function SmartImage({
           >
             Повторить загрузку
           </button>
-          <span className="sr-only">{alt} — изображение недоступно, нажмите «Повторить загрузку»</span>
+          <span className="sr-only">
+            {alt} — изображение недоступно, нажмите «Повторить загрузку»
+          </span>
         </div>
       )}
     </div>
