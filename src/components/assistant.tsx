@@ -529,6 +529,8 @@ export default function Assistant() {
   }, [i]);
 
   // Клавиатура и блокировка скролла для полноэкранного просмотра
+  const lightboxOpen = lightbox !== null;
+  const lightboxIndex = lightbox?.index;
   useEffect(() => {
     if (!lightbox) return;
     setLbError(false);
