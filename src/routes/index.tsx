@@ -1626,7 +1626,7 @@ function Reviews() {
         </div>
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-7 flex flex-col">
+          <div className="lg:col-span-7 flex flex-col touch-pan-y" {...quoteSwipe}>
             <div className="flex gap-1.5 mb-6" aria-label={`Оценка ${r.rating} из 5`}>
               {[...Array(5)].map((_, s) => (
                 <Star
