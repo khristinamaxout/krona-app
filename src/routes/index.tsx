@@ -1388,7 +1388,7 @@ function Reviews() {
             </div>
             <blockquote
               key={i}
-              className="text-2xl md:text-[2.1rem] leading-[1.45] font-light animate-[fadeIn_.6s_ease]"
+              className="text-2xl md:text-[2.1rem] leading-[1.45] font-light animate-[krona-quote-in_.6s_ease]"
             >
               «{r.text}»
             </blockquote>
