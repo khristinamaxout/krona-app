@@ -1731,10 +1731,11 @@ function Reviews() {
 
       {zoom !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6"
+          className="fixed inset-0 z-50 bg-black/85 flex items-center justify-center p-6 touch-pan-y"
           onClick={() => setZoom(null)}
           role="dialog"
           aria-modal="true"
+          {...zoomSwipe}
         >
           <img
             src={proofShots[zoom].src}
