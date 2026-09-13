@@ -35,6 +35,12 @@ import proofNatalia from "@/assets/reviews/natalia.jpg.asset.json";
 import proofVictoria from "@/assets/reviews/victoria.jpg.asset.json";
 import proofLamia from "@/assets/reviews/lamia.jpg.asset.json";
 import proofMaksim from "@/assets/reviews/maksim.jpg.asset.json";
+import proofMarinaThumb from "@/assets/reviews/marina_thumb.webp.asset.json";
+import proofSvetlanaThumb from "@/assets/reviews/svetlana_thumb.webp.asset.json";
+import proofNataliaThumb from "@/assets/reviews/natalia_thumb.webp.asset.json";
+import proofVictoriaThumb from "@/assets/reviews/victoria_thumb.webp.asset.json";
+import proofLamiaThumb from "@/assets/reviews/lamia_thumb.webp.asset.json";
+import proofMaksimThumb from "@/assets/reviews/maksim_thumb.webp.asset.json";
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import logoBlum from "@/assets/brands/blum.svg.asset.json";
 import logoBoyard from "@/assets/brands/boyard.svg.asset.json";
@@ -1334,25 +1340,37 @@ function Expert() {
 const reviews = [
   {
     name: "Марина",
-    role: "Кухня по индивидуальному проекту · 2018",
+    rating: 5,
+    date: "2018",
+    dateTime: "2018",
+    role: "Кухня по индивидуальному проекту",
     text:
       "Я работаю в мебели уже 15 лет и сама разбираюсь в качественном исполнении. Выбирала целый месяц и остановилась на этой компании из-за дизайнера Елены: она учла все мои пожелания, нет того, что они не могли бы выполнить. Уже не один год довольна качеством, функциональностью и дизайном кухни.",
   },
   {
     name: "Светлана",
-    role: "Кухня, шкаф-купе и тумба · январь 2024",
+    rating: 5,
+    date: "Январь 2024",
+    dateTime: "2024-01",
+    role: "Кухня, шкаф-купе и тумба",
     text:
       "Огромное спасибо Елене и фирме «Крона» за качественно проделанную работу — от замера до сборки. Помимо кухни заказывали шкаф-купе и тумбу под телевизор, всё выполнено в срок, по качеству мебели и сборки нареканий нет. Будем рекомендовать знакомым и с радостью обратимся снова.",
   },
   {
     name: "Наталья",
-    role: "Кухня · март 2024",
+    rating: 5,
+    date: "Март 2024",
+    dateTime: "2024-03",
+    role: "Кухня",
     text:
       "Благодарю за работу! Заказывала кухню — доставили в срок, даже чуть раньше. Сборщик собрал всё очень оперативно, за это отдельная благодарность. Елена всегда на связи. Мы только в процессе ремонта, так что уверена, что вернёмся снова.",
   },
   {
     name: "Виктория",
-    role: "Комплект мебели · январь 2023",
+    rating: 5,
+    date: "Январь 2023",
+    dateTime: "2023-01",
+    role: "Комплект мебели",
     text:
       "Дорогая Елена, спасибо вам за проделанную работу. Очень грамотный подход, вы профессионал своего дела: находите в любой ситуации решение и даёте дельные советы. Полученный результат нас очень порадовал и будет радовать долгие годы.",
   },
@@ -1360,12 +1378,12 @@ const reviews = [
 
 /* Скриншоты настоящих отзывов и переписок с заказчиками */
 const proofShots = [
-  { src: proofMarina.url, label: "Отзыв Марины" },
-  { src: proofSvetlana.url, label: "Отзыв Светланы" },
-  { src: proofNatalia.url, label: "Отзыв Натальи" },
-  { src: proofVictoria.url, label: "Отзыв Виктории" },
-  { src: proofLamia.url, label: "Переписка · спальня" },
-  { src: proofMaksim.url, label: "Переписка · прихожая" },
+  { src: proofMarina.url, thumb: proofMarinaThumb.url, label: "Отзыв Марины" },
+  { src: proofSvetlana.url, thumb: proofSvetlanaThumb.url, label: "Отзыв Светланы" },
+  { src: proofNatalia.url, thumb: proofNataliaThumb.url, label: "Отзыв Натальи" },
+  { src: proofVictoria.url, thumb: proofVictoriaThumb.url, label: "Отзыв Виктории" },
+  { src: proofLamia.url, thumb: proofLamiaThumb.url, label: "Переписка · спальня" },
+  { src: proofMaksim.url, thumb: proofMaksimThumb.url, label: "Переписка · прихожая" },
 ];
 
 function Reviews() {
@@ -1381,10 +1399,17 @@ function Reviews() {
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-8">
-            <div className="flex gap-1 mb-8">
-              {[...Array(5)].map((_, s) => (
-                <Star key={s} className="w-4 h-4 fill-current" style={{ color: forest }} />
-              ))}
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex gap-1" aria-label={`Оценка ${r.rating} из 5`}>
+                {[...Array(5)].map((_, s) => (
+                  <Star
+                    key={s}
+                    className={`w-4 h-4 ${s < r.rating ? "fill-current" : ""}`}
+                    style={{ color: s < r.rating ? forest : "rgba(0,0,0,0.2)" }}
+                  />
+                ))}
+              </div>
+              <span className="text-xs text-neutral-500 tabular-nums">{r.rating.toFixed(1)}</span>
             </div>
             <blockquote
               key={i}
@@ -1395,7 +1420,12 @@ function Reviews() {
             <div className="mt-10 flex flex-wrap items-center gap-6 justify-between">
               <div>
                 <div className="text-base">{r.name}</div>
-                <div className="text-xs text-neutral-500 mt-1">{r.role}</div>
+                <div className="text-xs text-neutral-500 mt-1">
+                  {r.role} ·{" "}
+                  <time dateTime={r.dateTime} className="tabular-nums">
+                    {r.date}
+                  </time>
+                </div>
               </div>
               <div className="flex items-center gap-3">
                 <span className="text-xs text-neutral-500 tabular-nums mr-2">
@@ -1435,9 +1465,13 @@ function Reviews() {
                   className="aspect-[3/4] overflow-hidden rounded-xl bg-white border border-black/10 hover:border-black/25 transition-colors"
                 >
                   <img
-                    src={p.src}
+                    src={p.thumb}
                     alt={p.label}
+                    width={360}
+                    height={480}
+                    sizes="(max-width: 1024px) 30vw, 120px"
                     loading="lazy"
+                    decoding="async"
                     className="w-full h-full object-cover object-top"
                   />
                 </button>
