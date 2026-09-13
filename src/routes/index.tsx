@@ -7,7 +7,6 @@ import {
   Leaf,
   Ruler,
   Palette,
-  Sparkles,
   Star,
   ChevronRight,
   ChevronLeft,
