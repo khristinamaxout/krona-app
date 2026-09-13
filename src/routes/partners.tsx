@@ -32,6 +32,17 @@ export const Route = createFileRoute("/partners")({
       },
       { property: "og:url", content: "https://krona-app.lovable.app/partners" },
       { property: "og:type", content: "website" },
+      { property: "og:image", content: "https://krona-app.lovable.app/og-image.jpg" },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Партнёрам — Крона, мебельная студия Елены Трифан" },
+      {
+        name: "twitter:description",
+        content:
+          "Дизайнерам, архитекторам и студиям — партнёрская программа мебельной студии Крона.",
+      },
+      { name: "twitter:image", content: "https://krona-app.lovable.app/og-image.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://krona-app.lovable.app/partners" }],
   }),
