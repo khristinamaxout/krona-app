@@ -13,8 +13,7 @@ import {
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { LEGAL, LEGAL_LINKS } from "@/data/legal";
-import { useServerFn } from "@tanstack/react-start";
-import { sendLead } from "@/lib/lead.functions";
+import { sendLeadEmail } from "@/lib/emailjs";
 
 export const Route = createFileRoute("/partners")({
   head: () => ({
@@ -537,7 +536,7 @@ function CTA() {
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
-  const submitLead = useServerFn(sendLead);
+  const submitLead = sendLeadEmail;
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
