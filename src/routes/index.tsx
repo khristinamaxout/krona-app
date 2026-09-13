@@ -1399,10 +1399,17 @@ function Reviews() {
 
         <div className="grid lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-8">
-            <div className="flex gap-1 mb-8">
-              {[...Array(5)].map((_, s) => (
-                <Star key={s} className="w-4 h-4 fill-current" style={{ color: forest }} />
-              ))}
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex gap-1" aria-label={`Оценка ${r.rating} из 5`}>
+                {[...Array(5)].map((_, s) => (
+                  <Star
+                    key={s}
+                    className={`w-4 h-4 ${s < r.rating ? "fill-current" : ""}`}
+                    style={{ color: s < r.rating ? forest : "rgba(0,0,0,0.2)" }}
+                  />
+                ))}
+              </div>
+              <span className="text-xs text-neutral-500 tabular-nums">{r.rating.toFixed(1)}</span>
             </div>
             <blockquote
               key={i}
