@@ -49,7 +49,6 @@ const heroImage = heroProject ? coverOf(heroProject) : "";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { Link } from "@tanstack/react-router";
 import { LEGAL, LEGAL_LINKS } from "@/data/legal";
-import { useServerFn } from "@tanstack/react-start";
 import { sendLeadEmail } from "@/lib/emailjs";
 
 

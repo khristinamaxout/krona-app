@@ -68,7 +68,6 @@ import sClassicLiving from "@/assets/styles/classic-living.jpg";
 import sClassicKitchen from "@/assets/styles/classic-kitchen.jpg";
 import sClassicBedroom from "@/assets/styles/classic-bedroom.jpg";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
-import { useServerFn } from "@tanstack/react-start";
 import { sendLeadEmail } from "@/lib/emailjs";
 
 const forest = "#1F3A2E";

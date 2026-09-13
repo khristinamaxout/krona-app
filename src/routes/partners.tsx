@@ -13,7 +13,6 @@ import {
 import kronaWordmark from "@/assets/krona-wordmark.png.asset.json";
 import { ConsentCheckbox } from "@/components/consent-checkbox";
 import { LEGAL, LEGAL_LINKS } from "@/data/legal";
-import { useServerFn } from "@tanstack/react-start";
 import { sendLeadEmail } from "@/lib/emailjs";
 
 export const Route = createFileRoute("/partners")({
