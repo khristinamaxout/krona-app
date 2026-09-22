@@ -107,8 +107,8 @@ export const Route = createFileRoute("/")({
           "Кухни, шкафы и корпусная мебель на заказ по вашим размерам. 20 лет практики, собственное производство, реализованные проекты в портфолио.",
       },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "https://krona-app.lovable.app/" },
-      { property: "og:image", content: "https://krona-app.lovable.app/og-image.jpg" },
+      { property: "og:url", content: `${SITE_URL}/` },
+      { property: "og:image", content: `${SITE_URL}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { property: "og:image:alt", content: "КРОНА — мебельная студия Елены Трифан" },
@@ -119,10 +119,10 @@ export const Route = createFileRoute("/")({
         content:
           "Кухни, шкафы и корпусная мебель на заказ по вашим размерам. 20 лет практики, собственное производство.",
       },
-      { name: "twitter:image", content: "https://krona-app.lovable.app/og-image.jpg" },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
     ],
     links: [
-      { rel: "canonical", href: "https://krona-app.lovable.app/" },
+      { rel: "canonical", href: `${SITE_URL}/` },
       {
         rel: "preload",
         as: "image",
@@ -136,8 +136,8 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "FurnitureStore",
           name: "КРОНА — мебельная студия Елены Трифан",
-          url: "https://krona-app.lovable.app/",
-          image: "https://krona-app.lovable.app/og-image.jpg",
+          url: `${SITE_URL}/`,
+          image: `${SITE_URL}/og-image.jpg`,
           telephone: "+7 (905) 383-99-39",
           email: "krona.studio.mebel@yandex.ru",
           address: {
