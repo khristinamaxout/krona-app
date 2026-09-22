@@ -68,6 +68,35 @@ jobs:
           path: audit-report
           retention-days: 30
 
+      - name: Уведомление о найденных уязвимостях
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          COUNT=$(node -e "try{const a=require('./audit-report/audit.json').metadata.vulnerabilities;console.log((a.high||0)+(a.critical||0))}catch(e){console.log(0)}")
+          {
+            echo "## Проверка зависимостей"
+            echo ""
+            if [ "$COUNT" -gt 0 ]; then
+              echo "Найдено серьёзных уязвимостей: **$COUNT**. Отчёт приложен к запуску (dependency-audit-report)."
+            else
+              echo "Серьёзных уязвимостей не найдено."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+          if [ "$COUNT" -gt 0 ] && [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
+            TITLE="Уязвимости в зависимостях"
+            EXISTING=$(gh issue list --repo "$REPO" --state open --search "$TITLE in:title" --json number --jq '.[0].number')
+            BODY="Проверка зависимостей нашла серьёзных уязвимостей: $COUNT.\n\nПодробный отчёт: $RUN_URL"
+            if [ -n "$EXISTING" ]; then
+              printf "%b" "$BODY" | gh issue comment "$EXISTING" --repo "$REPO" --body-file -
+            else
+              printf "%b" "$BODY" | gh issue create --repo "$REPO" --title "$TITLE" --body-file -
+            fi
+          fi
+
   deploy:
     name: Публикация на GitHub Pages
     needs: [build]
