@@ -147,3 +147,27 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Проверка доступности сайта
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          STATUS=0
+          for i in $(seq 1 10); do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -L "$SITE_URL" || echo 0)
+            [ "$STATUS" = "200" ] && break
+            sleep 10
+          done
+          {
+            echo "## Доступность сайта"
+            echo ""
+            echo "Адрес: $SITE_URL"
+            if [ "$STATUS" = "200" ]; then
+              echo ""
+              echo "Сайт открывается, код ответа 200."
+            else
+              echo ""
+              echo "Сайт не отвечает, код ответа $STATUS."
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+          [ "$STATUS" = "200" ]
