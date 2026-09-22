@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalLayout, LegalList, LegalSection } from "@/components/legal-layout";
 import { LEGAL } from "@/data/legal";

@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import type React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
