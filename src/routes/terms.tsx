@@ -1,3 +1,4 @@
+import { SITE_URL } from "@/lib/site";
 import { createFileRoute } from "@tanstack/react-router";
 import { LegalLayout, LegalList, LegalSection } from "@/components/legal-layout";
 import { LEGAL } from "@/data/legal";
@@ -16,15 +17,15 @@ export const Route = createFileRoute("/terms")({
         property: "og:description",
         content: "Правила использования сайта мебельной студии Крона.",
       },
-      { property: "og:url", content: "https://krona-app.lovable.app/terms" },
+      { property: "og:url", content: `${SITE_URL}/terms` },
       { property: "og:type", content: "article" },
-      { property: "og:image", content: "https://krona-app.lovable.app/og-image.jpg" },
+      { property: "og:image", content: `${SITE_URL}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:image", content: "https://krona-app.lovable.app/og-image.jpg" },
+      { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
     ],
-    links: [{ rel: "canonical", href: "https://krona-app.lovable.app/terms" }],
+    links: [{ rel: "canonical", href: `${SITE_URL}/terms` }],
   }),
   component: TermsPage,
 });
