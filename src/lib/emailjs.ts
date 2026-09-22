@@ -3,9 +3,9 @@
  * Письма приходят на ящик, указанный в шаблоне EmailJS.
  */
 
-const SERVICE_ID = "service_q67hqgn";
-const TEMPLATE_ID = "template_c7qsayp";
-const PUBLIC_KEY = "L8a6BrHpOuDVWbfFX";
+const SERVICE_ID = (import.meta.env?.VITE_EMAILJS_SERVICE_ID as string) || "service_q67hqgn";
+const TEMPLATE_ID = (import.meta.env?.VITE_EMAILJS_TEMPLATE_ID as string) || "template_c7qsayp";
+const PUBLIC_KEY = (import.meta.env?.VITE_EMAILJS_PUBLIC_KEY as string) || "L8a6BrHpOuDVWbfFX";
 
 export type LeadInput = {
   name: string;
