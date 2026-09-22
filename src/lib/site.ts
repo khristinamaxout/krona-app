@@ -6,8 +6,7 @@
  * VITE_SITE_URL (например, https://example.ru) — код менять не нужно.
  */
 const RAW_SITE_URL =
-  (import.meta.env?.VITE_SITE_URL as string | undefined)?.trim() ||
-  "https://krona-app.lovable.app";
+  (import.meta.env?.VITE_SITE_URL as string | undefined)?.trim() || "https://krona-app.lovable.app";
 
 /** Адрес без завершающего слэша: https://example.ru */
 export const SITE_URL = RAW_SITE_URL.replace(/\/+$/, "");
