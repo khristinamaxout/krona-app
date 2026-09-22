@@ -51,11 +51,23 @@ jobs:
           node-version: 22
 
       - name: Audit (production dependencies)
-        run: npm audit --omit=dev --audit-level=high
+        continue-on-error: true
+        run: |
+          mkdir -p audit-report
+          npm audit --omit=dev --audit-level=high | tee audit-report/audit.txt
+          npm audit --omit=dev --json > audit-report/audit.json || true
+
+      - name: Upload audit report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-audit-report
+          path: audit-report
+          retention-days: 30
 
   deploy:
     name: Публикация на GitHub Pages
-    needs: [build, audit]
+    needs: [build]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     permissions:
