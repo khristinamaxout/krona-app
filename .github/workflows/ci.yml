@@ -41,6 +41,9 @@ jobs:
   audit:
     name: Проверка зависимостей на уязвимости
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
     steps:
       - name: Checkout
         uses: actions/checkout@v4
